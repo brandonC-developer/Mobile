@@ -37,7 +37,7 @@ Translated from the Spanish source. The source states they "must not be resolved
 
 | ID | Type | Description | Affects | Owner | Status | Resolution |
 |---|---|---|---|---|---|---|
-| OI-010 | Question | Behavior when a month does not contain the registered payment day | DOC-FR | Owner | Open | |
+| OI-010 | Question | Behavior when a month does not contain the registered payment day | DOC-FR | Owner | Resolved | Owner confirmed 2026-10-30: in a month without the registered day, the reminder falls on the last day of that month (the day used is the lesser of the registered day and the last day of the month). Design recommendation, not a norm: RFC 5545 (iCalendar) instead ignores instances with invalid dates, which would skip the month; rejected because a skipped collection reminder defeats the purpose. Alternative not chosen: move to day 1 of the next month. |
 | OI-011 | Question | Rule that determines when an obligation becomes overdue | DOC-FR | Owner | Superseded | Owner decision 2026-10-30 (OI-024): no status concept for now, so nothing becomes overdue. Reopen if statuses are added through a CHG. |
 | OI-012 | Question | How and when an obligation is marked as paid | DOC-FR | Owner | Superseded | Owner decision 2026-10-30 (OI-024): no status concept for now, so there is no "mark as paid". Reopen if statuses are added through a CHG. |
 | OI-013 | Question | Whether amount or payment date may be modified, and how that affects future obligations | DOC-FR | Owner | Open | |
