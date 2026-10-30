@@ -2,7 +2,7 @@
 id: DOC-PEN
 title: Pending Items Register
 status: Draft
-version: 0.2
+version: 0.3
 date: 2026-10-30
 approved_by:
 refs: []
@@ -29,7 +29,8 @@ Raw inputs, kept unchanged and unapproved. Nothing here is a requirement or deci
 
 | ID | Source file | Received | Status |
 |---|---|---|---|
-| CTX-001 | `docs/01-context/contexto_proyecto_app_inquilino.md` (Spanish, kept as provided) | 2026-10-30 | Received, unprocessed |
+| CTX-001 | `docs/01-context/contexto_proyecto_app_inquilino.md` (Spanish, kept as provided) | 2026-10-30 | Received, unprocessed. Contradicted by CTX-002 on the primary user (§3); see OI-026 |
+| CTX-002 | Owner statements in chat, 2026-10-30: (a) "the app is for the landlord (arrendador) to manage collections from tenants (arrendatarios)"; (b) proposed data shape: Property = id, name, description (optional); Tenant = id, full name, phone (optional); Rental = tenant id, property id, amount, payment due date; (c) "for now, only rent"; (d) "the app is offline-first" | 2026-10-30 | Received, unprocessed. Where it contradicts CTX-001, the Owner's later statement prevails (OI-026) |
 
 ## Open items declared by the context source (CTX-001 §10)
 Translated from the Spanish source. The source states they "must not be resolved through assumptions".
@@ -55,9 +56,12 @@ Each cites the source section. These are questions, not findings of error.
 |---|---|---|---|---|---|---|
 | OI-021 | Question | §7 says the initial scope "contemplates SQLite as local storage", while §8 says technologies, SQLite included, are preliminary references and not approved decisions. Is SQLite a constraint or a candidate? | CTX-001 §7, §8 | Owner | Resolved | Owner decision, 2026-10-30: the product is offline-first. Constraint to carry into the NFRs (wording proposed, pending Owner approval of the requirement): core functions (registration, calendar, summary, notifications) work without connection; user data is stored locally on the device as the only source of truth; Internet is used only to open external apps. SQLite is a candidate, to be decided in an ADR with alternatives. Inputs for that ADR: sqlite.org "Appropriate Uses" (device-local storage fits; limits are one writer at a time and simultaneous network access); Expo SQLite docs (persists across restarts; no encryption in Expo Go; no documented user-data backup strategy). |
 | OI-022 | Question | §5.1 mentions maintenance fees and services included in the rent as examples of recurring obligations, but §4.3 describes only rent obligations. Is more than one type of obligation in scope? | CTX-001 §4.3, §5.1 | Owner | Resolved | Owner decision, 2026-10-30: for now, only rent obligations are in scope. Maintenance fees and services are not in the current scope and need a change (CHG) to be added. Consequence logged as OI-025. |
-| OI-023 | Question | §6.1 requires saving landlord contact data (WhatsApp, phone, email), but §4.2 lists only the landlord's name (optional). Where do the landlord's contact data belong? | CTX-001 §4.2, §6.1 | Owner | Open | |
+| OI-023 | Question | §6.1 requires saving landlord contact data (WhatsApp, phone, email), but §4.2 lists only the landlord's name (optional). Where do the landlord's contact data belong? | CTX-001 §4.2, §6.1 | Owner | Resolved | Superseded by OI-026: the user is the landlord, so the contact data the app needs are the tenant's. Owner's proposed shape: the tenant has a full name and an optional phone (CTX-002). Fields omitted from that shape are tracked in OI-027. |
 | OI-024 | Question | The obligation statuses named are pending, overdue (§4.4) and today, upcoming, overdue, paid (§5.3). The exact set of statuses is not stated. | CTX-001 §4.3, §4.4, §5.3 | Owner | Open | |
 | OI-025 | Question | With rent as the only obligation (OI-022), a month has one obligation per property, so the weekly summary and "upcoming obligations of the month" (§5.5) carry little information. Is the weekly summary still wanted as described, or should it be reduced or deferred? | CTX-001 §5.5 | Owner | Open | |
+| OI-026 | Question | Primary user is the landlord (arrendador), who manages collections from tenants (arrendatarios). | CTX-002 vs CTX-001 §3 | Owner | Resolved | Owner confirmed 2026-10-30; replaces CTX-001 §3. Terms: arrendador = landlord (the user); arrendatario = tenant (the payer). Points in CTX-001 that assume a tenant user need review, tracked in OI-028. |
+| OI-027 | Question | The Owner's proposed data shape (CTX-002) omits fields that CTX-001 had: property address (§4.2), email (§4.1), obligation status (§4.3). Are they dropped, or only left out of the message? Also: can a tenant have several rentals, and a property several tenants? | CTX-001 §4.1-4.3, CTX-002 | Owner | Open | |
+| OI-028 | Question | Review the parts of CTX-001 written for a tenant user: purpose and objective (§1, §2), reminders to pay (§4.5, §5.2), landlord contact (§6.1), weekly summary meaning (§5.5, see OI-025), out-of-scope item "landlord portal" (§9), the file name. Which hold with a landlord user, and how do notifications work: reminders to collect, to the landlord only? | CTX-001 | Owner | Open | |
 
 ## Technologies mentioned (not approved)
 React Native, Expo, TypeScript, SQLite, local notifications. The source says they are preliminary references and not approved decisions (CTX-001 §8). They enter the architecture only through ADRs approved by the Owner.
