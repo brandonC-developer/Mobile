@@ -4,11 +4,15 @@ Single source of rules for any AI agent working on this project. `CLAUDE.md` onl
 
 ## Source hierarchy (highest authority first)
 1. Explicit, current instruction from the Owner.
-2. Documents with `status: Approved` (approved ADRs > approved requirements > the rest).
+2. Documents with `status: Approved`. Approved requirements and approved ADRs have no rank between them: if they contradict each other, that is a conflict, not a precedence.
 3. Documents `In review` (guidance only, not binding).
 4. Drafts (context only, never treated as fact).
 
 If two sources contradict each other, do not pick one: report the conflict and ask the Owner to resolve it.
+
+If an Owner instruction contradicts an approved document, follow the instruction but say so explicitly and propose the `CHG` or ADR that formalizes it. Never override an approved document silently.
+
+A document marked "empty template" means **information not provided**, not "there are no requirements/decisions".
 
 ## Before acting
 1. Read `docs/README.md` and the documents relevant to the task.
@@ -19,7 +23,8 @@ If two sources contradict each other, do not pick one: report the conflict and a
 - Creating, changing or deleting requirements on your own initiative.
 - Contradicting or changing an approved ADR, or choosing a technology that is not approved.
 - Implementing functionality that does not trace to an approved requirement.
-- Setting `status: Approved` on anything, or presenting an assumption as a decision.
+- Setting `status: Approved` or `approved_by` on anything, or presenting an assumption as a decision.
+- Making commits whose message starts with `approve:`. Only the Owner makes those. Agent commits carry a `Co-Authored-By` line; an `approve:` commit without it is the Owner's.
 - Inventing quotes, URLs, versions, standard clauses or project facts.
 
 ## Required
