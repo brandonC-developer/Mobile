@@ -18,13 +18,13 @@ Documentation is the source of truth of the project. Rules for AI agents: [`../A
 | Governance | [governance](00-governance/governance.md) · [traceability](00-governance/traceability.md) · [standards note](00-governance/standards-note.md) · [templates](00-governance/templates/) | Draft |
 | Context | [vision-scope](01-context/vision-scope.md) · [glossary](01-context/glossary.md) | Draft (v0.1, proposed) |
 | Requirements | [functional](02-requirements/functional.md) · [non-functional](02-requirements/non-functional.md) · [use-cases](02-requirements/use-cases/) | Draft (v0.1, proposed); use cases empty |
-| Architecture | [architecture](03-architecture/architecture.md) · [adr](03-architecture/adr/) · [diagrams](03-architecture/diagrams/) | Empty template |
+| Architecture | [architecture](03-architecture/architecture.md) · [adr](03-architecture/adr/) · [diagrams](03-architecture/diagrams/) | Draft 0.1 (proposed); ADR-0001 to ADR-0004 Proposed |
 | Design | [components](04-design/components.md) · [data-model](04-design/data-model.md) · [interfaces-integrations](04-design/interfaces-integrations.md) | Draft 0.1 (phase 6, proposed) |
 | Security and privacy | [security-privacy](05-security-privacy/security-privacy.md) | Draft 0.1 (phase 6, proposed) |
 | Quality | [test-plan](06-quality/test-plan.md) | Draft 0.1 (phase 6, proposed) |
 | Development | [development-guide](07-development/development-guide.md) | Empty template |
 | Operations | [deployment-operations](08-operations/deployment-operations.md) | Empty template |
-| Management | [risk-register](09-management/risk-register.md) · [pending-register](09-management/pending-register.md) | Empty template / Draft |
+| Management | [risk-register](09-management/risk-register.md) · [pending-register](09-management/pending-register.md) | Draft |
 
 Changes: [CHANGELOG](CHANGELOG.md).
 
