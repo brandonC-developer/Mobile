@@ -3,7 +3,7 @@
 - **Date:** 2026-11-01
 - **Decided by:** Owner
 - **Approval evidence:** none yet. Only the Owner approves, with an `approve:` commit.
-- **Verification pending:** device behavior (OI-039) is not tested; this decision is provisional until the prototype in "Verification plan" is run.
+- **Verification:** the seven device tests of "Verification plan" were run on 2026-11-01 on the Owner phone (see "Verification results"). The decision is unchanged; the Owner reviews the results before approving.
 
 ## Context
 - Reminders go only to the landlord, are local, and must arrive at the chosen time with at most 5 minutes of delay (NFR-004, OI-017, OI-028). They work offline (NFR-001).
@@ -52,6 +52,28 @@ Prototype on the Owner Android 13 phone, to be run before this ADR is approved:
 5. Revoke and grant the exact-alarm permission; are reminders rebuilt?
 6. Schedule increasing numbers of alarms to find any practical limit.
 7. Deny each permission; is the warning shown and the rest of the app usable?
+
+## Verification results (OI-039)
+Run 2026-11-01 with a throwaway test app (target API 33) driven by adb on one device: moto g72, Android 13 (API 33). Verified facts, for that device only.
+
+| # | Result |
+|---|---|
+| 1 | Fresh install: `SCHEDULE_EXACT_ALARM` was granted by default (`canScheduleExactAlarms()` true); `POST_NOTIFICATIONS` was not granted and had to be requested. |
+| 2 | Screen off, deep Doze forced with `dumpsys deviceidle force-idle`, USB attached: 4 of 4 `setExactAndAllowWhileIdle` alarms (+1, +3, +5, +8 min) fired with 0.0 s measured delay (log resolution 1 s). |
+| 3 | Force stop: the system dropped the app's alarms at once (2 to 0); nothing fired afterwards. The plan only exists again when the app is opened. |
+| 4 | Reboot without opening the app: `BOOT_COMPLETED` reached the app only after the first unlock; it rebuilt the 2 future alarms, which fired with 0.2 s and 0.0 s delay. A first attempt, unlocked after the planned times, rebuilt 0 alarms because they had already passed. |
+| 5 | Exact-alarm permission set to deny (`appops`): the system removed the alarms (2 to 0). On allow, `SCHEDULE_EXACT_ALARM_PERMISSION_STATE_CHANGED` arrived, 2 alarms were rebuilt and fired with 0.0 s delay. |
+| 6 | Limit: 50, 100, 200 and 500 concurrent alarms were accepted; the 501st threw `IllegalStateException: Maximum limit of concurrent alarms 500 reached`. |
+| 7 | Both permissions denied: scheduling did not fail; the inexact fallback (`setAndAllowWhileIdle`) fired 90 s and 30 s late, both at the same moment (batched), and with notifications off nothing was shown and nothing crashed. |
+
+Limits of this evidence: one device; Doze was forced, not natural, and USB was attached; battery-saver and long idle runs were not repeated; permissions were changed with `appops`/`pm`, not through the Settings screens; the in-app warning of FR-024 was not tested because the test app has none.
+
+Consequences for this decision:
+- Steps 1 to 3 of the decision hold on this device: exact allow-while-idle alarms met the 5-minute tolerance, and boot and permission-change rebuilds work.
+- Force stop silences all reminders until the app is opened again. This is a known limit, not covered by the rebuild events; it should be stated in the requirements or the user guide (proposal, pending Owner decision).
+- Window size (decision step 5): the hard limit is 500 concurrent alarms per app; the configured window must stay well below it (value not chosen here).
+- The inexact fallback stayed inside 5 minutes in this single run (90 s), but nothing guarantees it; the FR-024 warning remains necessary.
+- Boot rebuild needs the phone to be unlocked once after the reboot; reminders due before that unlock are not delivered.
 
 ## Refs
 FR-013 · FR-018 · FR-019 · FR-021 · FR-022 · FR-023 · FR-024 · NFR-001 · NFR-004 · ADR-0001 · ADR-0002 · OI-014 · OI-017 · OI-039

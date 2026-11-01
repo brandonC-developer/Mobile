@@ -4,6 +4,7 @@ Format: one entry per approved change, citing IDs.
 
 ## [Unreleased]
 ### Added
+- ADR-0003 "Verification results": the seven device tests of OI-039 were run on the Owner phone with a throwaway app; OI-039 set to "Verified on device, pending Owner review". Decision unchanged; ADR still Proposed.
 - ADR-0003 (exact alarms for reminders, rebuilt on every relevant event) drafted by the agent as Proposed, with a device verification plan (OI-039). Not approved.
 - ADR-0002 (Room over SQLite as the local store) drafted by the agent as Proposed; OI-042 logged (Android automatic backup vs NFR-002). Not approved.
 - Phase 5: ADR-0001 (native Android app in Kotlin) drafted by the agent as Proposed, with alternatives. Not approved.
