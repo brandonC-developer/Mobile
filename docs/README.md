@@ -16,7 +16,7 @@ Documentation is the source of truth of the project. Rules for AI agents: [`../A
 | Area | Document | Status |
 |---|---|---|
 | Governance | [governance](00-governance/governance.md) · [traceability](00-governance/traceability.md) · [standards note](00-governance/standards-note.md) · [templates](00-governance/templates/) | Draft |
-| Context | [vision-scope](01-context/vision-scope.md) · [glossary](01-context/glossary.md) | Empty template |
+| Context | [vision-scope](01-context/vision-scope.md) · [glossary](01-context/glossary.md) | Draft (v0.1, proposed) |
 | Requirements | [functional](02-requirements/functional.md) · [non-functional](02-requirements/non-functional.md) · [use-cases](02-requirements/use-cases/) | Empty template |
 | Architecture | [architecture](03-architecture/architecture.md) · [adr](03-architecture/adr/) · [diagrams](03-architecture/diagrams/) | Empty template |
 | Design | [components](04-design/components.md) · [data-model](04-design/data-model.md) · [interfaces-integrations](04-design/interfaces-integrations.md) | Empty template |
