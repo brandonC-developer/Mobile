@@ -4,6 +4,7 @@ Format: one entry per approved change, citing IDs.
 
 ## [Unreleased]
 ### Added
+- ADR-0002 (Room over SQLite as the local store) drafted by the agent as Proposed; OI-042 logged (Android automatic backup vs NFR-002). Not approved.
 - Phase 5: ADR-0001 (native Android app in Kotlin) drafted by the agent as Proposed, with alternatives. Not approved.
 - Phase 4: DOC-FR 0.1 (FR-001 to FR-029) and DOC-NFR 0.1 (NFR-001 to NFR-010) drafted by the agent, MoSCoW priorities proposed, traced to OBJ-001 to OBJ-005 and to the resolved open items. OI-041 logged for the assumptions they contain and resolved by the Owner as drafted. Proposed, not approved.
 - Phase 3: DOC-VIS 0.1 (vision, objectives OBJ-001 to OBJ-005, scope, constraints) and DOC-GLO 0.1 (glossary) drafted by the agent from the resolved open items. Proposed, not approved.
