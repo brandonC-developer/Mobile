@@ -66,4 +66,4 @@ Success indicators are proposals for the Owner to confirm. Objectives are propos
 ## Assumptions
 - The rental's tenant and property do not change after creation; a new rental is created instead. [OI-035]
 - The minimum Android version is 13, derived from the Owner device. [OI-038]
-- Behavior of reminders after a forced close or a reboot of the phone is unverified. [OI-039]
+- Verified on the Owner phone (2026-11-01, one device): a reboot is recovered after the first unlock, with reminders on time; a forced close cancels all reminders until the app is opened again. Details in ADR-0003. [OI-039]
