@@ -4,6 +4,7 @@ Format: one entry per approved change, citing IDs.
 
 ## [Unreleased]
 ### Added
+- OI-043 resolved by the Owner (all four proposals accepted); DOC-DAT, DOC-INT, DOC-SEC updated.
 - Phase 6: DOC-DAT 0.1 (ENT-001 to ENT-004), DOC-CMP 0.1 (CMP-001 to CMP-009), DOC-INT 0.1 (INT-001 to INT-008), DOC-SEC 0.1 (SEC-001 to SEC-008) and DOC-TST 0.1 (TC-001 to TC-030) drafted by the agent, Proposed, not approved. OI-043 logged for four small decisions found while drafting.
 - ADR-0004 (versioned JSON backup, validated fully before import) drafted by the agent as Proposed. Not approved.
 - OI-042 resolved by the Owner: block all Android backup and device transfer (ADR-0002 updated).

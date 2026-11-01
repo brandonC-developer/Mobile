@@ -36,9 +36,9 @@ Data leaves the device only through the backup export the landlord starts or the
 | SEC-003 | Data copied by Android automatic backup or device transfer | `allowBackup` off and data-extraction rules excluding both (ADR-0002) | Not tested for a sideloaded APK |
 | SEC-004 | Malformed or hostile file imported | Full validation before any write; atomic replacement; reject unknown versions (ADR-0004, FR-029) | Low |
 | SEC-005 | Other apps trigger the alarm receivers or read the data | Receivers not exported except the two system events; database in private app storage | Low |
-| SEC-006 | Notification text visible on the lock screen | Notifications show property, tenant, amount and date (FR-020). Showing them on the lock screen is the phone's setting; hiding the content is a possible option, not decided | Open, see OI-043 |
+| SEC-006 | Notification text visible on the lock screen | Notifications show property, tenant, amount and date (FR-020). Lock-screen display is left to the phone setting (Owner decision, OI-043) | Accepted by the Owner |
 | SEC-007 | Unexpected network use | Do not declare the Internet permission, so NFR-002 can be checked by inspection of the manifest | Low |
 | SEC-008 | Debug builds or logs expose personal data | No personal data in logs; APK built in release mode for daily use | Low |
 
 ## Open points
-Lock-screen content of notifications is logged in OI-043. Tenant phone numbers are personal data of third parties kept for the landlord's own use; the Owner has not asked for a legal review and none is made here.
+Tenant phone numbers are personal data of third parties kept for the landlord's own use; the Owner has not asked for a legal review and none is made here.
