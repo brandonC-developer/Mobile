@@ -29,7 +29,7 @@ Use a Room database on SQLite as the single local store for tenants, properties,
 ## Consequences
 - Positive: recommended path in the platform documentation; relations and cascades enforced by the database; transactions make the import atomic (NFR-005); migrations are supported.
 - Negative: schema changes need migration code; the database is not encrypted (OI-019, OI-040); entity, DAO and backup-JSON mapping must be kept in sync.
-- Risk, unverified: Android may copy app data to the user's Google account through its automatic backup, which would contradict NFR-002. Tracked as OI-042; to verify in the Android documentation before implementation.
+- Risk, verified in the documentation (OI-042): Android Auto Backup is on by default and would copy the Room database to the user's Google Drive, contradicting NFR-002. Proposed mitigation, pending Owner decision: `android:allowBackup="false"` plus `android:dataExtractionRules` excluding the cloud backup; whether to also block device-to-device transfer is open. Whether the feature applies to a sideloaded APK is not documented and should be checked on the device.
 
 ## Refs
 FR-006 · FR-008 · FR-027 · FR-028 · FR-029 · NFR-002 · NFR-003 · NFR-005 · NFR-008 · ADR-0001 · OI-019 · OI-021 · OI-037 · OI-042
