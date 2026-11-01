@@ -4,6 +4,8 @@ Format: one entry per approved change, citing IDs.
 
 ## [Unreleased]
 ### Added
+- ADR-0004 (versioned JSON backup, validated fully before import) drafted by the agent as Proposed. Not approved.
+- OI-042 resolved by the Owner: block all Android backup and device transfer (ADR-0002 updated).
 - OI-042 verified in the Android documentation (Auto Backup is on by default and would copy the database to Google Drive); mitigation proposed in ADR-0002, Owner decision pending.
 - ADR-0003 "Verification results": the seven device tests of OI-039 were run on the Owner phone with a throwaway app; OI-039 set to "Verified on device, pending Owner review". Decision unchanged; ADR still Proposed.
 - ADR-0003 (exact alarms for reminders, rebuilt on every relevant event) drafted by the agent as Proposed, with a device verification plan (OI-039). Not approved.
