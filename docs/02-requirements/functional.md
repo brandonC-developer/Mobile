@@ -17,7 +17,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
 ## Properties
 
 ### FR-001 — Create a property
-- **Status:** Proposed
+- **Status:** Approved
 - **Origin:** OBJ-001 · OI-027
 - **Description:** The system shall let the landlord create a property with a name (required) and a description (optional).
 - **Acceptance criteria:**
@@ -27,7 +27,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
 - **Refs:** none yet
 
 ### FR-002 — Edit a property
-- **Status:** Proposed
+- **Status:** Approved
 - **Origin:** OBJ-001 · OI-032
 - **Description:** The system shall let the landlord edit the name and description of a property at any time.
 - **Acceptance criteria:**
@@ -36,7 +36,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
 - **Refs:** none yet
 
 ### FR-003 — Properties are never deleted
-- **Status:** Proposed
+- **Status:** Approved
 - **Origin:** OBJ-001 · OI-033
 - **Description:** The system shall not offer any way to delete a property.
 - **Acceptance criteria:**
@@ -48,7 +48,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
 ## Tenants
 
 ### FR-004 — Create a tenant
-- **Status:** Proposed
+- **Status:** Approved
 - **Origin:** OBJ-001 · OI-027 · OI-029
 - **Description:** The system shall let the landlord create a tenant with a full name (required) and a phone number (optional). One tenant represents a family or household.
 - **Acceptance criteria:**
@@ -58,7 +58,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
 - **Refs:** none yet
 
 ### FR-005 — Edit a tenant
-- **Status:** Proposed
+- **Status:** Approved
 - **Origin:** OBJ-001 · OI-033
 - **Description:** The system shall let the landlord edit the name and phone of a tenant at any time, including while the tenant has an active rental.
 - **Acceptance criteria:**
@@ -67,7 +67,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
 - **Refs:** none yet
 
 ### FR-006 — Delete a tenant
-- **Status:** Proposed
+- **Status:** Approved
 - **Origin:** OBJ-001 · OI-032 · OI-034
 - **Description:** The system shall let the landlord delete a tenant after a confirmation that states how many rentals will be deleted and that the action cannot be undone. Deleting a tenant shall delete all their rentals, active or ended, and their pending reminders. The properties are kept.
 - **Acceptance criteria:**
@@ -81,7 +81,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
 ## Rentals
 
 ### FR-007 — Create a rental
-- **Status:** Proposed
+- **Status:** Approved
 - **Origin:** OBJ-001 · OI-027 · OI-029 · OI-030
 - **Description:** The system shall let the landlord create a rental that links one tenant and one property, with an amount in whole colones, a payment day of the month (1 to 31) and an optional end date.
 - **Acceptance criteria:**
@@ -92,7 +92,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
 - **Refs:** none yet
 
 ### FR-008 — One active rental per property and per tenant
-- **Status:** Proposed
+- **Status:** Approved
 - **Origin:** OBJ-001 · OI-029 · OI-035
 - **Description:** The system shall not allow a property or a tenant to be in more than one active rental at the same time. A tenant whose rental ended may be linked to another property, and a free property may be linked to another tenant.
 - **Acceptance criteria:**
@@ -103,7 +103,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
 - **Refs:** none yet
 
 ### FR-009 — Fixed tenant and property
-- **Status:** Proposed
+- **Status:** Approved
 - **Origin:** OBJ-001 · OI-035 (assumption)
 - **Description:** The system shall not allow changing the tenant or the property of an existing rental; the landlord creates a new rental instead.
 - **Acceptance criteria:**
@@ -112,7 +112,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
 - **Refs:** none yet
 
 ### FR-010 — Edit a rental
-- **Status:** Proposed
+- **Status:** Approved
 - **Origin:** OBJ-001 · OI-031
 - **Description:** The system shall let the landlord edit the amount, the payment day and the end date of a rental. The change applies from the next reminder onward and already scheduled future reminders are recalculated.
 - **Acceptance criteria:**
@@ -122,7 +122,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
 - **Refs:** none yet
 
 ### FR-011 — End a rental
-- **Status:** Proposed
+- **Status:** Approved
 - **Origin:** OBJ-001 · OI-030 · OI-031 · OI-034
 - **Description:** The system shall let the landlord end a rental by setting its end date. After the end date the rental generates no collections and no reminders, its property is free, and the rental record is kept until its tenant is deleted.
 - **Acceptance criteria:**
@@ -133,7 +133,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
 - **Refs:** none yet
 
 ### FR-012 — Delete a rental
-- **Status:** Proposed
+- **Status:** Approved
 - **Origin:** OBJ-001 · OI-031
 - **Description:** The system shall let the landlord delete a rental after a confirmation that states the action cannot be undone. Deleting a rental shall delete its pending reminders and keep its tenant and its property.
 - **Acceptance criteria:**
@@ -144,7 +144,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
 - **Refs:** none yet
 
 ### FR-013 — Collection date of each month
-- **Status:** Proposed
+- **Status:** Approved
 - **Origin:** OBJ-001 · OI-010 · OI-014
 - **Description:** The system shall derive the collection date of each month from the payment day of the rental, using the last day of the month when the month has no such day. Collections are computed from the rental and not stored in advance.
 - **Acceptance criteria:**
@@ -156,7 +156,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
 ## Calendar and weekly summary
 
 ### FR-014 — Calendar of collections
-- **Status:** Proposed
+- **Status:** Approved
 - **Origin:** OBJ-002 · OI-030 · OI-036
 - **Description:** The system shall show a monthly calendar with the collections due today and on future dates, and the amount of each. It shall not show past dates.
 - **Acceptance criteria:**
@@ -167,7 +167,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
 - **Refs:** none yet
 
 ### FR-015 — Weekly summary
-- **Status:** Proposed
+- **Status:** Approved
 - **Origin:** OBJ-002 · OI-025 · OI-015
 - **Description:** The system shall show a weekly summary that lists the collections due in a week, Monday to Sunday. Each entry shows the property, the tenant, the date and the amount. A collection appears in the week its date falls in, even when that week spans two months. The summary shows no status.
 - **Acceptance criteria:**
@@ -178,7 +178,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
 - **Refs:** none yet
 
 ### FR-016 — Weekly summary navigation
-- **Status:** Proposed
+- **Status:** Approved
 - **Origin:** OBJ-002 · OI-015 · OI-036
 - **Description:** The system shall let the landlord view the previous, the current and the next week, and shall always open on the current week. The previous week is shown only in the summary, not in the calendar.
 - **Acceptance criteria:**
@@ -188,7 +188,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
 - **Refs:** none yet
 
 ### FR-017 — Week total
-- **Status:** Proposed
+- **Status:** Approved
 - **Origin:** OBJ-002 · CTX-001 §5.5 · OI-041 (assumption)
 - **Description:** The system shall show the total amount of the collections of the displayed week.
 - **Acceptance criteria:**
@@ -199,7 +199,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
 ## Reminders
 
 ### FR-018 — Reminder offsets
-- **Status:** Proposed
+- **Status:** Approved
 - **Origin:** OBJ-003 · OI-028
 - **Description:** The system shall let the landlord choose which reminders to receive for the collections: 3 days before, 2 days before, 1 day before and the same day. Each can be turned on or off.
 - **Acceptance criteria:**
@@ -209,7 +209,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
 - **Refs:** none yet
 
 ### FR-019 — Reminder time
-- **Status:** Proposed
+- **Status:** Approved
 - **Origin:** OBJ-003 · OI-028 · OI-041 (assumption)
 - **Description:** The system shall let the landlord choose the time of day of the reminders. The time applies to all reminders.
 - **Acceptance criteria:**
@@ -218,7 +218,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
 - **Refs:** none yet
 
 ### FR-020 — Reminder content
-- **Status:** Proposed
+- **Status:** Approved
 - **Origin:** OBJ-003 · OI-028 · OI-041 (assumption)
 - **Description:** Each reminder shall state the property, the tenant, the amount and the due date. Tapping it opens the app on the current week.
 - **Acceptance criteria:**
@@ -227,7 +227,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
 - **Refs:** none yet
 
 ### FR-021 — Rolling schedule of reminders
-- **Status:** Proposed
+- **Status:** Approved
 - **Origin:** OBJ-003 · OI-014
 - **Description:** The system shall schedule only the nearest reminders, up to a limit to be verified on the device (OI-039), and shall reschedule them each time the app is opened and each time a rental is created, edited, ended or deleted.
 - **Acceptance criteria:**
@@ -237,7 +237,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
 - **Refs:** none yet
 
 ### FR-022 — Renewal reminder
-- **Status:** Proposed
+- **Status:** Approved
 - **Origin:** OBJ-003 · OI-014
 - **Description:** The system shall schedule a last reminder at the end of the scheduled window that asks the landlord to open the app so the reminders are renewed.
 - **Acceptance criteria:**
@@ -246,7 +246,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
 - **Refs:** none yet
 
 ### FR-023 — Notification permissions
-- **Status:** Proposed
+- **Status:** Approved
 - **Origin:** OBJ-003 · OI-017 · OI-039
 - **Description:** The system shall ask for the notification permission, and for the exact-alarm permission by sending the landlord to Alarms and reminders, the first time a rental is created, after a short explanation.
 - **Acceptance criteria:**
@@ -256,7 +256,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
 - **Refs:** none yet
 
 ### FR-024 — Warning when permissions are denied
-- **Status:** Proposed
+- **Status:** Approved
 - **Origin:** OBJ-003 · OI-017
 - **Description:** The system shall show a visible warning that reminders may not arrive on time when either permission is denied, without blocking the use of the app.
 - **Acceptance criteria:**
@@ -268,7 +268,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
 ## Contact
 
 ### FR-025 — Contact the tenant by WhatsApp
-- **Status:** Proposed
+- **Status:** Approved
 - **Origin:** OBJ-004 · OI-028
 - **Description:** The system shall open WhatsApp on the phone number of the tenant from a rental. If the tenant has no phone, the action is not available.
 - **Acceptance criteria:**
@@ -278,7 +278,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
 - **Refs:** none yet
 
 ### FR-026 — Call the tenant
-- **Status:** Proposed
+- **Status:** Approved
 - **Origin:** OBJ-004 · OI-028
 - **Description:** The system shall open the phone dialer on the phone number of the tenant from a rental. If the tenant has no phone, the action is not available.
 - **Acceptance criteria:**
@@ -290,7 +290,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
 ## Backup
 
 ### FR-027 — Export a backup
-- **Status:** Proposed
+- **Status:** Approved
 - **Origin:** OBJ-005 · OI-016 · OI-037 · OI-040
 - **Description:** The system shall export all data (tenants, properties, rentals and reminder settings) to a single JSON file with a schema version, and offer it through the device share menu. Before exporting it shall warn that the file contains personal data in plain text.
 - **Acceptance criteria:**
@@ -300,7 +300,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
 - **Refs:** none yet
 
 ### FR-028 — Import a backup
-- **Status:** Proposed
+- **Status:** Approved
 - **Origin:** OBJ-005 · OI-016 · OI-037
 - **Description:** The system shall import a backup file, replacing all current data after an explicit confirmation that states the current data will be lost, and shall reschedule the reminders.
 - **Acceptance criteria:**
@@ -311,7 +311,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
 - **Refs:** none yet
 
 ### FR-029 — Reject an invalid backup
-- **Status:** Proposed
+- **Status:** Approved
 - **Origin:** OBJ-005 · OI-037
 - **Description:** The system shall reject a file that is not a valid backup or whose schema version is unknown or newer than the app supports, with a message, leaving the current data unchanged.
 - **Acceptance criteria:**
