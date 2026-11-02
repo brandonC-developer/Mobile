@@ -55,6 +55,7 @@ Entry: the requirements and ADRs of the item are approved. Exit: every Must case
 | TC-028 | NFR-006 | Device | Install the APK on the Owner phone | Installs and runs on Android 13 | Planned |
 | TC-029 | NFR-007, NFR-008 | Manual | Review all texts and amounts | Spanish; colon symbol; no cents | Planned |
 | TC-030 | NFR-009 | Device | Largest phone font size | Readable, no control cut off | Planned |
+| TC-031 | AC-FR-013-3 (CHG-001) | Unit | Create a rental on the 5th with payment day 3; list collections for the previous week and the current month; create one on its payment day | No collection before the creation date; first collection on the 3rd of next month; collection of the creation day included | Planned |
 
 ## Results
 None yet. Evidence will be linked here when cases are run.

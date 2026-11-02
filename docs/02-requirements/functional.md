@@ -146,10 +146,11 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
 ### FR-013 — Collection date of each month
 - **Status:** Approved
 - **Origin:** OBJ-001 · OI-010 · OI-014
-- **Description:** The system shall derive the collection date of each month from the payment day of the rental, using the last day of the month when the month has no such day. Collections are computed from the rental and not stored in advance.
+- **Description:** The system shall derive the collection date of each month from the payment day of the rental, using the last day of the month when the month has no such day. Collections are computed from the rental and not stored in advance. A rental has a start date, set to the day it is created and not editable (CHG-001); it generates no collection dated before its start date.
 - **Acceptance criteria:**
   - AC-FR-013-1: With payment day 31, the February collection falls on 28 (29 in a leap year) and the April collection on 30.
   - AC-FR-013-2: With payment day 15, every collection falls on the 15th.
+  - AC-FR-013-3 (CHG-001): A rental created on the 5th with payment day 3 shows no collection on the 3rd of that month, not even in the weekly summary of the previous week; its first collection is on the 3rd of the next month. A rental created on its payment day shows that day's collection.
 - **Priority:** Must
 - **Refs:** none yet
 

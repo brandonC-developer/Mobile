@@ -65,6 +65,7 @@ A tenant and a property each have at most one active rental at a time (FR-008). 
 | propertyId | reference to ENT-001 | yes | Fixed after creation (FR-009) |
 | amount | integer, whole colones | yes | Greater than zero (AC-FR-007-2, NFR-008) |
 | paymentDay | integer 1 to 31 | yes | Last day of the month when missing (FR-013) |
+| startDate | date | yes | Set to the creation date, not editable; no collection before it (FR-013, CHG-001) |
 | endDate | date | no | Not earlier than today when set (AC-FR-007-3). Empty means open-ended |
 
 - **Relationships:** exactly one tenant and one property.

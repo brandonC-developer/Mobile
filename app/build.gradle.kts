@@ -14,6 +14,7 @@ android {
         targetSdk = 33 // as verified on the Owner device (ADR-0003)
         versionCode = 1
         versionName = "0.1.0"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -51,4 +52,11 @@ dependencies {
     ksp(libs.androidx.room.compiler)
 
     testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    androidTestImplementation(libs.androidx.test.runner)
+}
+
+// Room keeps a JSON copy of each schema version so migrations can be tested (ADR-0002).
+ksp {
+    arg("room.schemaLocation", "$projectDir/schemas")
 }
