@@ -58,3 +58,5 @@ The debug APK is `app/build/outputs/apk/debug/app-debug.apk`. Install with `adb 
 4. No user text is hardcoded outside `res/values/strings.xml` (NFR-007).
 5. Documents that say "to be verified" are checked against the open items.
 6. Approved documents are changed only through a CHG.
+- Scenarios that need the test to end first (reboot, forced stop; TC-019): install the app and test APKs with `adb install -r`, then `adb shell am instrument -w -e scenario <name> -e minutes <n> -e class app.apartment.mobile.reminders.ReminderScenarioSetupTest app.apartment.mobile.test/androidx.test.runner.AndroidJUnitRunner`. It seeds a rental with one same-day reminder and leaves the data in place.
+- Release file: `./gradlew :app:assembleRelease` (signing key and passwords: DOC-OPS section 2).

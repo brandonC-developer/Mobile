@@ -18,9 +18,24 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    // The release key lives outside the repository (see DOC-OPS); the passwords are in the Gradle user properties.
+    signingConfigs {
+        create("release") {
+            val storePath = providers.gradleProperty("APARTMENT_STORE_FILE").orNull
+            if (storePath != null) {
+                storeFile = file(storePath)
+                storePassword = providers.gradleProperty("APARTMENT_STORE_PASSWORD").get()
+                keyAlias = providers.gradleProperty("APARTMENT_KEY_ALIAS").get()
+                keyPassword = providers.gradleProperty("APARTMENT_KEY_PASSWORD").get()
+            }
+        }
+    }
     buildTypes {
         release {
             isMinifyEnabled = false
+            if (providers.gradleProperty("APARTMENT_STORE_FILE").orNull != null) {
+                signingConfig = signingConfigs.getByName("release")
+            }
         }
     }
     compileOptions {

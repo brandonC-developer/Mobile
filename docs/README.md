@@ -23,7 +23,7 @@ Documentation is the source of truth of the project. Rules for AI agents: [`../A
 | Security and privacy | [security-privacy](05-security-privacy/security-privacy.md) | Approved 0.1 |
 | Quality | [test-plan](06-quality/test-plan.md) | Approved 0.1 |
 | Development | [development-guide](07-development/development-guide.md) | Draft 0.1 |
-| Operations | [deployment-operations](08-operations/deployment-operations.md) | Empty template |
+| Operations | [deployment-operations](08-operations/deployment-operations.md) | Draft 0.1 |
 | Management | [risk-register](09-management/risk-register.md) · [pending-register](09-management/pending-register.md) · [roadmap page](09-management/roadmap.html) (Artifact source, updated after every commit) | Draft |
 
 Changes: [CHANGELOG](CHANGELOG.md).
