@@ -27,7 +27,7 @@ The Owner asked whether a very small language model can run on the phone, offlin
 | NFR-001 works offline | OK | Local inference needs no connection (documented, LiteRT-LM and llama.cpp run on the device). |
 | NFR-002 data stays on the phone; SEC-007 no Internet permission | **Needs change in how the model arrives** | The app cannot download a model (no Internet permission). The model file must be bundled in the APK or loaded from a file picked by the landlord, like a backup. Cloud inference conflicts outright. |
 | NFR-005 and data integrity | OK if designed so | The model must never write data. It only turns a phrase into a structured request; the app validates it, asks the existing confirmations and runs the existing repository operations. |
-| NFR-006 Android 13+, APK, no store account | OK | llama.cpp builds for `android-28` and `arm64-v8a`; LiteRT-LM has a stable Kotlin API (documented). Minimum Android of LiteRT-LM: unknown. |
+| NFR-006 Android 13+, APK, no store account | OK | llama.cpp builds for `android-28` and `arm64-v8a`; LiteRT-LM has a stable Kotlin API (documented). The Kotlin guide states no minimum API level (documented: not specified), so compatibility with minSdk 33 is to be confirmed by building. |
 | NFR-007 all text in Spanish | **Unknown, main risk** | FunctionGemma card lists no languages and says its safety evaluation used English prompts only; Gemma 3 claims 140+ languages without a per-size benchmark; Qwen3-0.6B claims 100+ languages without naming Spanish. |
 | NFR-004 and ADR-0003 reminders | OK | Assistant runs only while the app is open; no background load. Must be re-tested after integration. |
 | ADR-0001 native Kotlin | Needs a decision | LiteRT-LM Kotlin API fits. llama.cpp adds C++ through JNI and the NDK, which the project does not use today. |
@@ -49,10 +49,10 @@ Estimate for the cloud comparison, assumptions mine: 600 requests per month, 500
 ## 5. Software load
 | Item | Finding | Grade |
 |------|---------|-------|
-| Model file | Gemma 3 270M about 240 to 320 MB quantized (reported by Google material); the 1B and 0.6B models are larger, size not verified | documented / unknown |
+| Model file | Qwen3-0.6B official GGUF: only one file, Q8_0, **639 MB** (measured from the Hugging Face listing, 2026-11-02). Gemma 3 270M about 240 to 320 MB quantized (reported by Google material). FunctionGemma and Gemma LiteRT files sit in gated repositories (HTTP 401 without accepting the Gemma terms), so their size is not verified | measured / reported / unknown |
 | Added size of the runtime libraries | Unknown, to measure (the release file is about 18 MB today) | unknown |
 | Runtime memory | Google aims at "under 300 MB" for the 270M model after quantization; other models unknown | documented / unknown |
-| Native code and build | llama.cpp needs the NDK and CMake; LiteRT-LM needs its Kotlin dependency, coordinates not given on the repository page | documented |
+| Native code and build | LiteRT-LM: Gradle artifact `com.google.ai.edge.litertlm:litertlm-android` (the guide uses `latest.release`, to be pinned), loads a `.litertlm` model from a file path, so sideloading fits NFR-002; the first load can take up to 10 seconds (documented); the GPU backend needs two `uses-native-library` manifest entries, `libOpenCL.so` and `libvndksupport.so`, with `required="false"`, which are not permissions. llama.cpp: the latest release has no prebuilt Android files (its only asset is a text file) and the NDK and CMake are **not installed** on this computer (measured), so using it means installing them and building | documented / measured |
 | Permissions | None added if the model is a local file | assumed |
 | Licences to carry | Apache-2.0 and MIT notices, plus the Gemma notice file if Gemma is used | documented |
 | Test suites | New accuracy tests (a Spanish phrase set) plus device tests of memory and speed | assumed |
@@ -104,7 +104,7 @@ Owner phone: Motorola moto g72, MediaTek Helio G99 with 2 Cortex-A76 and 6 Corte
 |------|----------|--------|---------------------------|--------|
 | Device probe `device_probe.sh` | Chipset, cores, RAM, free storage | moto g72 | Free RAM above the model plus 1 GB | Pending: the phone was disconnected; the emulator could not answer |
 | Spanish phrase set | Intent and slot accuracy | none (offline set) | At least 90% intents and 85% slots for the chosen option | Pending: needs the Owner's 6 to 10 real phrases to build 60 to 100 |
-| Option A baseline | Accuracy and cost of rules | JVM | Reaches the same targets without a model, or shows its limits | Pending |
+| Option A baseline | Accuracy and cost of rules | JVM | Reaches the same targets without a model, or shows its limits | Pending: needs the Owner phrases |
 | Models B1 and B2 on phone | Tokens per second, peak RAM, time to answer, battery per 20 requests | moto g72 | Answer in under 3 s on the phone; no out-of-memory; battery under 1% per 20 requests (all proposals) | Pending |
 | Size added | Release file and storage | build machine | Under 60 MB without the model; model loaded by file | Pending |
 | Regression | Existing 74 unit and 60 device tests, TC-026 manifest (no Internet) | emulator and phone | All pass | Pending |
@@ -112,8 +112,8 @@ Throwaway spike code needs the Owner's authorization and is deleted afterwards u
 
 ## 11. Verified, unverified, sources
 **Verified (documented):** FunctionGemma is a 270M function-calling model, not a chat model, 32K context, tagged call format, accuracy 58% to 85% after fine-tuning on Mobile Actions ([card](https://huggingface.co/google/functiongemma-270m-it), [docs](https://ai.google.dev/gemma/docs/functiongemma)); LiteRT-LM supports Android with a stable Kotlin API and lists FunctionGemma, Gemma3-1B, Qwen2.5 0.5B and 1.5B, Qwen3-0.6B ([overview](https://developers.google.com/edge/litert-lm/overview)); Gemma 3 270M and 1B have 32K context and the family claims 140+ languages ([model card](https://ai.google.dev/gemma/docs/core/model_card_3)); Gemini Nano access goes through AICore and ML Kit ([Android](https://developer.android.com/ai/gemini-nano), [ML Kit](https://developers.google.com/ml-kit/genai)); llama.cpp Android build notes ([guide](https://github.com/ggml-org/llama.cpp/blob/master/docs/android.md)); SmolChat is Apache-2.0 and embeds llama.cpp through JNI ([repository](https://github.com/shubham0204/SmolChat-Android)); licences and prices as in section 4.
-**Not verified:** Spanish accuracy of every candidate; speed, memory and battery on the moto g72; added app size; RAM of this phone variant; minimum Android of LiteRT-LM; the Gradle coordinates of LiteRT-LM; the battery figure for Gemma 3 270M; whether the Helio G99 neural unit is usable.
+**Not verified:** Spanish accuracy of every candidate; speed, memory and battery on the moto g72; added app size of the runtime; RAM of this phone variant; compatibility of the LiteRT-LM Kotlin library with minSdk 33, Kotlin 1.9.24 and AGP 8.5.2 (the guide states no minimums); sizes of the FunctionGemma and Gemma files; the battery figure for Gemma 3 270M; whether the Helio G99 neural unit is usable.
 
 ## 12. Recommendation and decisions needed
-Recommendation (not an approval): do not start with a model. Build or prototype the rule-based baseline for the few requests that matter, and measure the two small models on the phone with a Spanish phrase set; decide with an ADR after the numbers. Keep the model away from the data and behind the existing confirmations.
+Practical note from the 2026-11-02 checks: LiteRT-LM is the cheaper first try for a spike because it needs no NDK, while llama.cpp needs the NDK and CMake installed first. Recommendation (not an approval): do not start with a model. Build or prototype the rule-based baseline for the few requests that matter, and measure the two small models on the phone with a Spanish phrase set; decide with an ADR after the numbers. Keep the model away from the data and behind the existing confirmations.
 Decisions needed from the Owner: (1) which 6 to 10 requests the assistant must understand, including what "cuál quita" means; (2) whether voice input is wanted; (3) authorization for a throwaway spike on the phone; (4) reconnecting the phone so the probe and the speed tests can run.
