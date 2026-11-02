@@ -143,7 +143,7 @@ footer { margin-top: 64px; padding-top: 20px; border-top: 1px solid var(--line);
 
 <div class="wrap">
 <header class="hero">
-  <span class="label">Apartment Mobile · app Android para arrendador · actualizado tras el commit f87d3b4 · 2 nov 2026</span>
+  <span class="label">Apartment Mobile · app Android para arrendador · actualizado tras el commit 0c96da7 · 2 nov 2026</span>
   <h1>Del borrador aprobado a la app en tu teléfono</h1>
   <p>Roadmap por fases, hitos de desarrollo, mockups, framework de UX, casos de uso y secuencias. Los documentos están aprobados; el código avanza por hitos. Esta página se actualiza después de cada commit.</p>
   <div class="facts">
@@ -521,7 +521,7 @@ sequenceDiagram
   <div class="grid">
     <article class="card"><h3>Pruebas</h3><ul>
       <li><b>74</b> pruebas unitarias y <b>60</b> en el emulador, todas verdes (1 omitida a propósito: la de entrega real de avisos, que dura 2 minutos).</li>
-      <li>Lint: <b>0 errores</b>. Los avisos restantes son versiones más nuevas de librerías (deuda RSK-015).</li>
+      <li>Lint: <b>0 errores</b>. Los avisos restantes son versiones más nuevas de librerías (deuda RSK-015).</li><li><b>Regla de pruebas:</b> primero el emulador, después tu teléfono, para no dañar nada. La app de pruebas ahora es otra app en el teléfono (<code>Apartment (debug)</code>, con sus propios datos), así que ninguna prueba toca la app que usas. Etapa 1 pasada en el emulador (74 unitarias y 60 de dispositivo); falta la etapa 2 en el teléfono.</li>
       <li>Plan de pruebas: <b>34</b> casos, <b>31</b> con resultado; 3 sin ejecutar y 8 parciales (textos y red por revisar, edición de propiedad, entre otros).</li>
     </ul></article>
     <article class="card"><h3>Documentación</h3><ul>
