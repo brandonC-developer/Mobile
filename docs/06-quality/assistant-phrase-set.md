@@ -29,7 +29,7 @@ Data file: `assistant-phrase-set.psv` (pipe-separated, UTF-8, header row). 90 ph
 ## Known limits
 - 90 phrases give wide error bars (a single phrase is about 1.1 points). It is a screening set, not a benchmark.
 - Written by one author: style bias. The Owner's own phrases should replace or extend it; real phrases weigh more than invented ones.
-- Phrases P076 to P080 need test data (two tenants named María, no tenant named Pedro).
+- The roster used to evaluate has one María, Luis, Carlos, Ana and Rosa and no Pedro (P080 expects an unknown name). Ambiguous names (two tenants with the same first name) are not covered yet.
 - No speech-recognition errors yet. Voice needs a separate set made from transcripts.
 
 ## Scoring (proposal)

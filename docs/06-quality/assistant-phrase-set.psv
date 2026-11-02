@@ -56,7 +56,7 @@ P054|quiero que Ana pague el 1|change_day|tenant=Ana,day=1|statement|test
 P055|Ehh, mueve... mueve el pago de Carlos al 12|change_day|tenant=Carlos,day=12|disfluency|test
 P056|Cambia a María al 20, no, al 22|change_day|tenant=María,day=22|self_correction|test
 P057|Pasa el cobro de doña Rosa para el último día del mes|change_day|tenant=Rosa,day=month_end|imperative_tu,relative|test
-P058|cambiá el día de Luis|change_day|tenant=Luis|voseo,missing_slot|test
+P058|cambiá el día de Luis|clarify|tenant=Luis,missing=day|voseo,missing_slot|test
 P059|Sube el alquiler de Luis a 250 000|change_amount|tenant=Luis,amount=250000|imperative_tu|dev
 P060|Súbale a María a 300 mil|change_amount|tenant=María,amount=300000|usted,number_mil|test
 P061|Ahora Carlos paga doscientos cincuenta mil|change_amount|tenant=Carlos,amount=250000|statement,number_words|test
@@ -75,7 +75,7 @@ P073|Elimine el alquiler de Carlos|delete_rental|tenant=Carlos|usted|test
 P074|Borrá a Ana, fue un error|delete_rental|tenant=Ana|voseo,reason|test
 P075|Elimina el registro de Luis|delete_rental|tenant=Luis|imperative_tu|test
 P076|Cambia el día de pago de María|clarify|tenant=María,missing=day|missing_slot|test
-P077|Escríbele a María Gómez|clarify_name|tenant=María,candidates=2 (needs test data with two Marías)|ambiguous_name|test
+P077|Escríbele a María Gómez|whatsapp|tenant=María|surname|test
 P078|Sube el alquiler|clarify|missing=tenant,missing=amount|missing_slot|test
 P079|Mueve el cobro de Luis para después|clarify|tenant=Luis,missing=day|vague|test
 P080|Quita a Pedro|unknown_tenant|tenant=Pedro|unknown_name|test
