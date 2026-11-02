@@ -6,7 +6,6 @@
     <string name="nav_calendar">Calendario</string>
     <string name="nav_rentals">Alquileres</string>
     <string name="nav_settings">Ajustes</string>
-    <string name="soon">Próximamente</string>
 
     <string name="action_save">Guardar</string>
     <string name="action_cancel">Cancelar</string>
@@ -17,7 +16,14 @@
 
     <!-- Rentals list -->
     <string name="rentals_title">Alquileres</string>
-    <string name="rentals_summary">%1$d activos · %2$d terminados</string>
+    <plurals name="rentals_active">
+        <item quantity="one">%1$d activo</item>
+        <item quantity="other">%1$d activos</item>
+    </plurals>
+    <plurals name="rentals_ended_count">
+        <item quantity="one">%1$d terminado</item>
+        <item quantity="other">%1$d terminados</item>
+    </plurals>
     <string name="rentals_ended">Terminados</string>
     <string name="rentals_empty_title">Aún no hay alquileres</string>
     <string name="rentals_empty_body">Registra un inquilino y una propiedad, y crea el primer alquiler.</string>
@@ -47,9 +53,15 @@
     <string name="tenant_with_rental">Con alquiler activo</string>
     <string name="tenant_delete_title">¿Eliminar a %1$s?</string>
     <string name="tenant_delete_body_none">No tiene alquileres. No se puede deshacer.</string>
-    <string name="tenant_delete_body">Se eliminarán también sus %1$d alquileres. Las propiedades se conservan. No se puede deshacer.</string>
+    <plurals name="tenant_delete_body">
+        <item quantity="one">Se eliminará también su alquiler. La propiedad se conserva. No se puede deshacer.</item>
+        <item quantity="other">Se eliminarán también sus %1$d alquileres. Las propiedades se conservan. No se puede deshacer.</item>
+    </plurals>
     <string name="tenant_delete_confirm_none">Eliminar inquilino</string>
-    <string name="tenant_delete_confirm">Eliminar inquilino y %1$d alquileres</string>
+    <plurals name="tenant_delete_confirm">
+        <item quantity="one">Eliminar inquilino y %1$d alquiler</item>
+        <item quantity="other">Eliminar inquilino y %1$d alquileres</item>
+    </plurals>
 
     <!-- Rental form -->
     <string name="form_title_new">Nuevo alquiler</string>
@@ -84,9 +96,7 @@
     <string name="detail_delete">Eliminar alquiler</string>
     <string name="delete_rental_title">¿Eliminar este alquiler?</string>
     <string name="delete_rental_body">Se eliminan también sus avisos pendientes. El inquilino y la propiedad se conservan. No se puede deshacer.</string>
-    <string name="end_dialog_title">Terminar alquiler</string>
     <string name="end_dialog_body">Elige el último día del alquiler. Ese día todavía se cobra.</string>
-    <string name="end_dialog_confirm">Terminar</string>
     <!-- Week (UC-004) -->
     <string name="week_title">Semana</string>
     <string name="week_subtitle_current">Semana actual</string>

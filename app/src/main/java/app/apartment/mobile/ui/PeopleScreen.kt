@@ -158,8 +158,8 @@ fun PeopleScreen(
         } else {
             ConfirmDialog(
                 title = stringResource(R.string.tenant_delete_title, tenant.fullName),
-                body = if (deletingCount == 0) stringResource(R.string.tenant_delete_body_none) else stringResource(R.string.tenant_delete_body, deletingCount),
-                confirmLabel = if (deletingCount == 0) stringResource(R.string.tenant_delete_confirm_none) else stringResource(R.string.tenant_delete_confirm, deletingCount),
+                body = if (deletingCount == 0) stringResource(R.string.tenant_delete_body_none) else plural(R.plurals.tenant_delete_body, deletingCount),
+                confirmLabel = if (deletingCount == 0) stringResource(R.string.tenant_delete_confirm_none) else plural(R.plurals.tenant_delete_confirm, deletingCount),
                 destructive = true,
                 onConfirm = { onDeleteTenant(id); deleting = null },
                 onDismiss = { deleting = null },

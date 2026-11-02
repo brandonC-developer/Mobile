@@ -22,7 +22,7 @@ Documentation is the source of truth of the project. Rules for AI agents: [`../A
 | Design | [components](04-design/components.md) · [data-model](04-design/data-model.md) · [interfaces-integrations](04-design/interfaces-integrations.md) · [ux-framework](04-design/ux-framework.md) | Approved 0.1 |
 | Security and privacy | [security-privacy](05-security-privacy/security-privacy.md) | Approved 0.1 |
 | Quality | [test-plan](06-quality/test-plan.md) | Approved 0.1 |
-| Development | [development-guide](07-development/development-guide.md) | Empty template |
+| Development | [development-guide](07-development/development-guide.md) | Draft 0.1 |
 | Operations | [deployment-operations](08-operations/deployment-operations.md) | Empty template |
 | Management | [risk-register](09-management/risk-register.md) · [pending-register](09-management/pending-register.md) | Draft |
 

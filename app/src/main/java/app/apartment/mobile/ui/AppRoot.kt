@@ -3,7 +3,6 @@
 package app.apartment.mobile.ui
 
 import android.Manifest
-import android.os.Build
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -73,10 +72,8 @@ fun AppRoot(vm: AppViewModel = viewModel()) {
     fun fixPermissions(banner: Boolean) {
         fromBanner = banner
         vm.refreshPermissions()
-        if (!vm.permissions.notificationsEnabled && Build.VERSION.SDK_INT >= 33) {
+        if (!vm.permissions.notificationsEnabled) {
             notificationLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-        } else if (!vm.permissions.notificationsEnabled) {
-            context.startActivity(ReminderPermissions.notificationSettings(context))
         } else {
             openExactAlarmSettings()
         }

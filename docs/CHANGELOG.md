@@ -5,6 +5,7 @@ Format: one entry per approved change, citing IDs.
 ## [Unreleased]
 ### Added
 - ADR-0005 (Jetpack Compose and Material 3) drafted as Proposed; Owner chose it 2026-11-02. Milestone H0 built: Gradle project in `app/`, Compose placeholder activity, Room dependencies, no permissions, Android backup blocked, unit tests for TC-026 pass. OI-045 logs the technical values chosen by the agent. DOC-DEV 0.1 drafted.
+- QA of 2026-11-02: cross-references and traceability checked; TC-032 to TC-034 added; statuses of 22 test cases recorded; CHG-001 and CHG-002 recorded (apply: FR-013, FR-021, NFR-004, ADR-0004, architecture); risks updated (RSK-005, RSK-010, RSK-012; RSK-015 to RSK-017 added); plural forms, launcher icon and unused strings fixed in the app; roadmap page kept in `docs/09-management/roadmap.html` and updated after every commit.
 - Milestone H4 built: reminders (ADR-0003). Planner of the nearest 100 reminders plus a renewal reminder, exact alarms rebuilt from the database when the app opens and after every rental, tenant or settings change, at boot and when the exact-alarm permission changes; notification with property, tenant, amount and date that opens the current week; Settings screen with the four offsets and the time; permission explanation after the first rental and a non-blocking warning. 13 planner tests, 5 manifest tests, 7 device tests of the scheduler and notification, 5 screen tests of settings and warning. OI-046 logs the details chosen by the agent.
 - Milestone H3 built: weekly summary (Monday to Sunday, previous/current/next only, total, grouped by day, empty state, always back to the current week after the app is left) and calendar (today and future only, month navigation not before the current month, amounts on selection); 7 new unit tests and 6 screen tests. FR-014 to FR-017, TC-012 to TC-014.
 - Milestone H2 built: screens for rentals, tenants and properties in Jetpack Compose with the four-destination bottom bar (OI-044 a, c partly, e), Spanish strings, repository with atomic rules (FR-001 to FR-012), 9 device tests of the repository and 6 unit tests of formats and validation. Week, Calendar and Settings show "Próximamente" until H3 and H4; the WhatsApp message of OI-044 c arrives with the contact actions in H5.
@@ -38,3 +39,18 @@ Format: one entry per approved change, citing IDs.
 
 ### Added
 - Initial documentation skeleton (phase 1): folders, empty templates, governance, traceability rules, agent instructions.
+
+## Change records (CHG)
+Changes to approved elements, as `governance.md` requires: reason, impact, approval. Both are proposed by the agent and wait for an Owner commit `approve: CHG-001, CHG-002`.
+
+### CHG-001 — Rental start date
+- **Status:** Proposed (applied in the documents by Owner instruction of 2026-11-02, pending approval).
+- **Reason:** without a creation date, the previous-week view of FR-016 could show collections that never existed.
+- **Changes:** FR-013 (new sentence and AC-FR-013-3), ENT-003 (`startDate`).
+- **Impact:** CMP-003 and CMP-004 skip dates before the start date; TC-031 added; code in milestone H1.
+
+### CHG-002 — Documentation sync after milestones H0 to H4 (QA of 2026-11-02)
+- **Status:** Proposed (applied in the documents by Owner instruction "sincronizar todo", pending approval). No requirement changes meaning.
+- **Reason:** verified facts and built behavior replaced statements that said "to be verified" or "unwritten".
+- **Changes:** FR-021 (limit now stated: below 500 alarms, window of 100 plus renewal, OI-039, OI-046); FR "Not yet covered" (use cases exist); NFR-004 verification note (reboot and force stop verified); NFR "Not yet covered" (alarm limit verified); ADR-0004 context (data model exists); architecture solution table (ADR-0005 row, component-to-code map); test plan (TC statuses, TC-032 to TC-034 added so every AC has a test case); risk register (RSK-005, RSK-010 mitigated, RSK-012 closed, RSK-015 to RSK-017 added).
+- **Impact:** none on code.

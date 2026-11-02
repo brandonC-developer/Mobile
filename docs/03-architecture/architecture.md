@@ -36,11 +36,26 @@ Landlord ⇄ [ App ] ⇄ Android system ⇢ WhatsApp / dialer / share menu
 | Room on SQLite as the only store | ADR-0002 |
 | Exact alarms for reminders, rebuilt on every relevant event | ADR-0003 |
 | Versioned JSON backup, validated before import | ADR-0004 |
+| Jetpack Compose and Material 3 for the screens (Proposed; chosen by the Owner 2026-11-02, approval pending) | ADR-0005 |
 
 Collections and reminders are computed from rentals and settings, not stored (FR-013, FR-021).
 
 ## 5. Building block view (VW-002)
 Nine components, CMP-001 to CMP-009, defined in [components](../04-design/components.md): screens, data store, collection calculator, reminder scheduler, reminder receiver and notifier, system event receiver, backup service, external actions, permissions helper. Data entities ENT-001 to ENT-004 in [data-model](../04-design/data-model.md).
+
+**Where each component lives in the code** (status 2026-11-02; package `app.apartment.mobile`):
+
+| Component | Code | State |
+|-----------|------|-------|
+| CMP-001 Screens | `ui/` (`AppRoot`, `WeekScreen`, `CalendarScreen`, `RentalsScreen`, `RentalFormScreen`, `RentalDetailScreen`, `PeopleScreen`, `SettingsScreen`) | Built, except backup screens |
+| CMP-002 Data store | `data/` (`AppDatabase`, entities, DAOs, `Repository`) | Built |
+| CMP-003 Collection calculator | `domain/CollectionCalculator.kt`, `CalendarNavigation.kt`, `RentalRules.kt`, `Format.kt` | Built |
+| CMP-004 Reminder scheduler | `domain/ReminderPlanner.kt`, `reminders/ReminderScheduler.kt` | Built |
+| CMP-005 Reminder receiver and notifier | `reminders/Notifier.kt`, `reminders/Receivers.kt` (`AlarmReceiver`) | Built |
+| CMP-006 System event receiver | `reminders/Receivers.kt` (`SystemEventReceiver`) | Built |
+| CMP-007 Backup service | none yet | Milestone H5 |
+| CMP-008 External actions | none yet | Milestone H5 |
+| CMP-009 Permissions helper | `reminders/ReminderPermissions.kt`, permission flow in `ui/AppRoot.kt` | Built |
 
 ## 6. Runtime view (VW-003)
 - **Create a rental:** screens validate, the data store checks the one-active-rental rule and saves in one transaction, the scheduler rebuilds the reminders (FR-007, FR-008, FR-021).

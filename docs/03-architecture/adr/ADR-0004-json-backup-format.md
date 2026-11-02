@@ -11,7 +11,7 @@
 - Export then import on a clean install must give the same data (AC-FR-028-3), and reminders are rebuilt after import (FR-028, ADR-0003).
 - Android's automatic backup and device-to-device transfer are disabled (ADR-0002, OI-042), so this file is the only way to move data to a new phone.
 - Reminder dates are computed from the rental rule, and rentals have no payment status (FR-013), so there is nothing derived to store.
-- Entities are not yet defined in a data model (phase 6). The field list below comes from the requirements and is provisional until that document exists.
+- The entities are defined in the data model (DOC-DAT, ENT-001 to ENT-004). The field list below comes from the requirements and follows that document.
 
 ## Decision
 1. **Container.** One UTF-8 JSON object:

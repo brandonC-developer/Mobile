@@ -41,7 +41,7 @@ refs: [DOC-VIS, DOC-PEN]
 - **Origin:** OBJ-003 · OI-017
 - **Quality category:** Timeliness
 - **Measurable requirement:** Each reminder arrives at the time chosen by the landlord with a delay of at most 5 minutes, with the notification and exact-alarm permissions granted.
-- **Verification method:** Test on the Owner device with scheduled reminders, including the phone idle and battery optimization on. Open: behavior after a forced close or a reboot (OI-039).
+- **Verification method:** Test on the Owner device with scheduled reminders, including the phone idle and battery optimization on. Verified on the Owner phone on 2026-11-01 (ADR-0003): after a reboot the reminders are rebuilt once the phone is unlocked; after a forced close none arrive until the app is opened again (RSK-001).
 - **Refs:** none yet
 
 ### NFR-005 — Backup integrity
@@ -94,4 +94,4 @@ refs: [DOC-VIS, DOC-PEN]
 
 ## Not yet covered
 - Performance targets (screen load times), storage size and similar: not requested by the Owner; to ask if relevant.
-- Notification limit per app on Android: unverified (OI-039).
+- Alarm limit per app on Android: 500 concurrent alarms, verified on the Owner phone (OI-039). A limit on notifications was not found in the documentation consulted.

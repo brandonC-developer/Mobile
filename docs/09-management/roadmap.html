@@ -1,0 +1,499 @@
+<title>Roadmap Apartment Mobile</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;700&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout concept: one long document with a sticky section nav; roadmap as a vertical phase rail, mockups as a horizontal strip of phone frames, diagrams in scroll containers. */
+:root {
+  --bg: #f2f4f3; --surface: #ffffff; --ink: #16211e; --muted: #55655f; --line: #d5ddd9;
+  --accent: #0b6b5c; --accent-ink: #ffffff; --accent-soft: #dcefe9;
+  --warn: #8a4b00; --warn-soft: #fdf0d9; --done: #0b6b5c; --done-soft: #dcefe9; --lock: #5d6b66; --lock-soft: #e6ebe9;
+  --f-display: "Sora", system-ui, sans-serif; --f-body: "Source Sans 3", system-ui, sans-serif; --f-mono: "JetBrains Mono", ui-monospace, monospace;
+  /* phone screens keep their own fixed light look */
+  --m-bg: #f8faf9; --m-surface: #ffffff; --m-ink: #1a2420; --m-muted: #5e6e68; --m-line: #dde5e1; --m-accent: #0b6b5c; --m-accent-soft: #dcefe9; --m-warn: #fdf0d9; --m-warn-ink: #7a4300; --m-danger: #b3261e;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #101715; --surface: #17211e; --ink: #e6efec; --muted: #9db0a9; --line: #2a3a35;
+  --accent: #4fc3ad; --accent-ink: #06241e; --accent-soft: #19332d;
+  --warn: #f0b45a; --warn-soft: #2c2312; --done: #4fc3ad; --done-soft: #19332d; --lock: #9db0a9; --lock-soft: #222e2a; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #101715; --surface: #17211e; --ink: #e6efec; --muted: #9db0a9; --line: #2a3a35;
+  --accent: #4fc3ad; --accent-ink: #06241e; --accent-soft: #19332d;
+  --warn: #f0b45a; --warn-soft: #2c2312; --done: #4fc3ad; --done-soft: #19332d; --lock: #9db0a9; --lock-soft: #222e2a; color-scheme: dark; }
+
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 17px; line-height: 1.55;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 0 64px; }
+.wrap { max-width: 1040px; margin: 0 auto; }
+h1, h2, h3 { font-family: var(--f-display); line-height: 1.2; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(28px, 5vw, 44px); }
+h2 { font-size: clamp(22px, 3.4vw, 30px); margin-bottom: 8px; }
+h3 { font-size: 18px; }
+p { margin: 0 0 12px; max-width: 68ch; }
+a { color: var(--accent); }
+code, .id { font-family: var(--f-mono); font-size: 0.86em; }
+.id { background: var(--accent-soft); color: var(--accent); padding: 1px 6px; border-radius: 4px; white-space: nowrap; }
+.label { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 20; background: var(--bg); }
+nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 15; background: var(--bg); border-bottom: 1px solid var(--line); }
+nav .wrap { display: flex; gap: 4px; overflow-x: auto; padding: 8px 0; }
+nav a { text-decoration: none; color: var(--ink); padding: 8px 14px; border-radius: 999px; white-space: nowrap; font-weight: 600; font-size: 15px; min-height: 40px; display: inline-flex; align-items: center; }
+nav a:hover, nav a:focus-visible { background: var(--accent-soft); color: var(--accent); outline: none; }
+
+header.hero { padding: 40px 0 8px; }
+header.hero p { color: var(--muted); font-size: 18px; margin-top: 12px; }
+.facts { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-top: 20px; padding: 14px 0; border-block: 1px solid var(--line); }
+.facts div { min-width: 0; } .facts b { display: block; font-family: var(--f-display); font-size: 20px; }
+.facts span { color: var(--muted); font-size: 14px; }
+
+section { padding-top: 56px; }
+section > .lead { color: var(--muted); }
+
+/* roadmap rail */
+.rail { list-style: none; margin: 24px 0 0; padding: 0; position: relative; }
+.rail::before { content: ""; position: absolute; left: 15px; top: 8px; bottom: 8px; width: 2px; background: var(--line); }
+.rail li { position: relative; padding: 0 0 22px 48px; }
+.rail .dot { position: absolute; left: 6px; top: 6px; width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--line); background: var(--bg); }
+.rail .done .dot { background: var(--done); border-color: var(--done); }
+.rail .review .dot { border-color: var(--warn); background: var(--warn-soft); }
+.rail .lock .dot { border-color: var(--lock); }
+.rail h3 { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+.rail p { margin: 4px 0 0; color: var(--muted); font-size: 16px; }
+.chip { font-family: var(--f-body); font-size: 12px; font-weight: 600; padding: 2px 10px; border-radius: 999px; letter-spacing: .02em; }
+.chip.done { background: var(--done-soft); color: var(--done); }
+.chip.review { background: var(--warn-soft); color: var(--warn); }
+.chip.lock { background: var(--lock-soft); color: var(--lock); }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 16px; margin-top: 20px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px; min-width: 0; }
+.card h3 { margin-bottom: 6px; }
+.card p { font-size: 16px; color: var(--muted); }
+.card ul { margin: 8px 0 0; padding-left: 18px; font-size: 16px; }
+.card .meta { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.gate { background: var(--warn-soft); color: var(--ink); border-left: 4px solid var(--warn); padding: 14px 16px; border-radius: 0 8px 8px 0; margin-top: 20px; max-width: 78ch; }
+.gate b { color: var(--warn); }
+
+.scroll { overflow-x: auto; margin-top: 16px; }
+table { border-collapse: collapse; width: 100%; min-width: 620px; background: var(--surface); font-size: 15.5px; }
+th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+
+/* phones */
+.phones { display: flex; gap: 28px; overflow-x: auto; padding: 8px 4px 24px; margin-top: 16px; scroll-snap-type: x proximity; }
+.phone-col { flex: 0 0 auto; width: 276px; scroll-snap-align: start; }
+.phone-col figcaption { margin-top: 12px; font-size: 15px; color: var(--muted); }
+.phone-col figcaption b { display: block; color: var(--ink); font-family: var(--f-display); font-size: 16px; margin-bottom: 2px; }
+.phone { width: 276px; height: 560px; border-radius: 34px; border: 8px solid #1b2623; background: var(--m-bg); overflow: hidden; display: flex; flex-direction: column; color: var(--m-ink); font-size: 13.5px; line-height: 1.35; position: relative; }
+.m-status { display: flex; justify-content: space-between; padding: 8px 18px 2px; font-size: 11px; color: var(--m-muted); }
+.m-top { padding: 8px 16px 10px; }
+.m-top .t { font-family: var(--f-display); font-weight: 700; font-size: 20px; }
+.m-top .s { color: var(--m-muted); font-size: 12px; }
+.m-body { flex: 1; overflow: hidden; padding: 0 12px; display: flex; flex-direction: column; gap: 8px; }
+.m-weeknav { display: flex; align-items: center; justify-content: space-between; background: var(--m-surface); border: 1px solid var(--m-line); border-radius: 12px; padding: 6px 8px; }
+.m-weeknav .btn { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: var(--m-accent-soft); color: var(--m-accent); font-weight: 700; }
+.m-weeknav .cur { text-align: center; font-weight: 600; } .m-weeknav .cur small { display: block; color: var(--m-muted); font-weight: 400; font-size: 11px; }
+.m-day { font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--m-muted); font-weight: 600; margin-top: 4px; }
+.m-row { background: var(--m-surface); border: 1px solid var(--m-line); border-radius: 12px; padding: 10px 12px; display: flex; justify-content: space-between; gap: 8px; align-items: center; }
+.m-row b { display: block; } .m-row small { color: var(--m-muted); }
+.m-amt { font-weight: 700; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.m-total { display: flex; justify-content: space-between; padding: 10px 12px; border-radius: 12px; background: var(--m-accent); color: #fff; font-weight: 600; }
+.m-nav { display: flex; border-top: 1px solid var(--m-line); background: var(--m-surface); }
+.m-nav div { flex: 1; text-align: center; padding: 8px 0 10px; font-size: 10.5px; color: var(--m-muted); }
+.m-nav div i { display: block; width: 44px; height: 24px; margin: 0 auto 2px; border-radius: 12px; font-style: normal; font-size: 14px; line-height: 24px; }
+.m-nav .on { color: var(--m-accent); font-weight: 600; } .m-nav .on i { background: var(--m-accent-soft); }
+.m-fab { position: absolute; right: 14px; bottom: 74px; background: var(--m-accent); color: #fff; border-radius: 16px; padding: 0 16px; height: 48px; display: flex; align-items: center; gap: 6px; font-weight: 600; box-shadow: 0 3px 10px rgba(0,0,0,.25); }
+.m-banner { background: var(--m-warn); color: var(--m-warn-ink); border-radius: 10px; padding: 8px 10px; font-size: 12px; }
+.m-field { background: var(--m-surface); border: 1px solid var(--m-line); border-radius: 10px; padding: 7px 10px; }
+.m-field small { display: block; color: var(--m-muted); font-size: 10.5px; } .m-field.off { opacity: .55; }
+.m-btn { background: var(--m-accent); color: #fff; text-align: center; border-radius: 12px; padding: 13px; font-weight: 600; }
+.m-btn.ghost { background: transparent; color: var(--m-accent); border: 1px solid var(--m-line); }
+.m-btn.danger { background: var(--m-danger); }
+.m-cal { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; text-align: center; font-size: 11.5px; background: var(--m-surface); border: 1px solid var(--m-line); border-radius: 12px; padding: 8px; }
+.m-cal span { padding: 6px 0; border-radius: 50%; } .m-cal .h { color: var(--m-muted); font-size: 10px; } .m-cal .past { color: #b4bfba; }
+.m-cal .has { background: var(--m-accent-soft); color: var(--m-accent); font-weight: 700; } .m-cal .sel { background: var(--m-accent); color: #fff; font-weight: 700; } .m-cal .today { outline: 1.5px solid var(--m-accent); }
+.m-switch { display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; background: var(--m-surface); border: 1px solid var(--m-line); border-radius: 12px; }
+.m-switch i { width: 38px; height: 22px; border-radius: 11px; background: var(--m-accent); position: relative; } .m-switch i::after { content: ""; position: absolute; right: 3px; top: 3px; width: 16px; height: 16px; border-radius: 50%; background: #fff; }
+.m-switch i.off { background: #b4bfba; } .m-switch i.off::after { right: auto; left: 3px; }
+.m-scrim { position: absolute; inset: 0; background: rgba(0,0,0,.5); display: flex; align-items: center; padding: 18px; }
+.m-dialog { background: var(--m-surface); border-radius: 22px; padding: 18px; display: flex; flex-direction: column; gap: 10px; width: 100%; }
+.m-dialog h4 { margin: 0; font-family: var(--f-display); font-size: 17px; }
+.lock-screen { background: linear-gradient(170deg, #22443d, #11201d); color: #fff; }
+.lock-screen .clock { text-align: center; font-family: var(--f-display); font-size: 50px; margin-top: 60px; font-weight: 500; }
+.m-notif { background: rgba(255,255,255,.95); color: #1a2420; border-radius: 18px; padding: 12px 14px; margin: 0 12px; }
+.m-notif small { color: #5e6e68; } .m-notif b { display: block; margin: 2px 0; }
+.eg { font-size: 12px; color: var(--muted); margin-top: 8px; }
+
+/* framework */
+.law { display: grid; grid-template-columns: minmax(150px, 220px) 1fr; gap: 4px 20px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.law b { font-family: var(--f-display); } .law p { margin: 0; } .law .src { color: var(--muted); font-size: 14px; }
+.not { background: var(--lock-soft); border-radius: 10px; padding: 14px 16px; margin-top: 16px; max-width: 78ch; }
+
+/* diagrams */
+.uc { margin-top: 28px; } .uc h3 { margin-bottom: 4px; }
+pre.mermaid { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px; overflow-x: auto; margin: 12px 0 0; }
+.next li { margin-bottom: 8px; }
+footer { margin-top: 64px; padding-top: 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: 15px; }
+@media (max-width: 560px) { .law { grid-template-columns: 1fr; } .rail li { padding-left: 42px; } }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+</style>
+
+<nav aria-label="Secciones"><div class="wrap">
+  <a href="#ruta">Roadmap</a><a href="#hitos">Desarrollo</a><a href="#mockups">Mockups</a><a href="#ux">Framework UX</a><a href="#qa">QA</a><a href="#casos">Casos de uso</a><a href="#secuencias">Secuencias</a><a href="#pendiente">Pendiente</a>
+</div></nav>
+
+<div class="wrap">
+<header class="hero">
+  <span class="label">Apartment Mobile · app Android para arrendador · actualizado tras el commit c102049 · 2 nov 2026</span>
+  <h1>Del borrador aprobado a la app en tu teléfono</h1>
+  <p>Roadmap por fases, hitos de desarrollo, mockups, framework de UX, casos de uso y secuencias. Los documentos están aprobados; el código avanza por hitos. Esta página se actualiza después de cada commit.</p>
+  <div class="facts">
+    <div><b>Fase 7</b><span>H0 a H4 construidos, 2 pendientes</span></div>
+    <div><b>89</b><span>pruebas automáticas, todas verdes</span></div>
+    <div><b>17</b><span>documentos aprobados</span></div>
+    <div><b>22 de 34</b><span>casos de prueba con resultado</span></div>
+    <div><b>2</b><span>cambios esperan tu aprobación</span></div>
+  </div>
+</header>
+
+<section id="ruta">
+  <h2>Roadmap por fases</h2>
+  <p class="lead">Las fases son las del plan de <code>docs/README.md</code>. Cada una cierra con tu aprobación. No pongo fechas: no conozco tu tiempo disponible, y una fecha inventada no sirve.</p>
+  <ol class="rail">
+    <li class="done"><span class="dot"></span><h3>1 · Esqueleto <span class="chip done">Hecha</span></h3><p>Estructura de documentos, plantillas y reglas del proyecto.</p></li>
+    <li class="done"><span class="dot"></span><h3>2 · Contexto en bruto <span class="chip done">Hecha</span></h3><p>Tus decisiones registradas una por una en el registro de pendientes (OI).</p></li>
+    <li class="done"><span class="dot"></span><h3>3 · Visión, alcance y glosario <span class="chip done">Aprobada</span></h3><p>Objetivos <span class="id">OBJ-001</span> a <span class="id">OBJ-005</span>.</p></li>
+    <li class="done"><span class="dot"></span><h3>4 · Requisitos <span class="chip done">Aprobada</span></h3><p>29 funcionales y 10 no funcionales, 15 casos de uso. Aprobación válida en el commit <span class="id">a1bc3ba</span>. Cambios posteriores en trámite: CHG-001 y CHG-002.</p></li>
+    <li class="done"><span class="dot"></span><h3>5 · Arquitectura <span class="chip done">Aprobada</span></h3><p>ADR-0001 a ADR-0004 aprobados. ADR-0005 (Compose y Material 3), elegido por ti, está propuesto.</p></li>
+    <li class="done"><span class="dot"></span><h3>6 · Diseño, datos, seguridad y pruebas <span class="chip done">Aprobada</span></h3><p>Modelo de datos, componentes, interfaces, seguridad, plan de pruebas, riesgos, casos de uso y framework de UX.</p></li>
+    <li class="review"><span class="dot"></span><h3>7 · Desarrollo <span class="chip review">En curso: H0 a H4 construidos</span></h3><p>Siguen H5 (contacto y copia de seguridad) y H6 (cierre).</p></li>
+  </ol>
+  <div class="gate"><b>Fase 7 en curso.</b> Tus aprobaciones de las fases 3 a 6 están en el commit <code>a1bc3ba</code> (válido). Cada hito termina cuando sus pruebas pasan en tu teléfono; hoy H0 a H4 pasan en el emulador. <b>Falta aprobar:</b> CHG-001, CHG-002 y ADR-0005.</div>
+</section>
+
+<section id="hitos">
+  <h2>Hitos de desarrollo (fase 7)</h2>
+  <p class="lead">Buenas prácticas aplicadas: rebanadas verticales que se pueden probar en tu teléfono, lógica pura con pruebas primero, y los Must antes que los Should. Los avisos van en el hito 4 porque son el mayor riesgo; ya se probó que la idea funciona en tu teléfono, falta construirlo bien. El orden sale de las dependencias, no de plazos.</p>
+  <div class="grid">
+    <article class="card"><h3>H0 · Proyecto base <span class="chip done">Hecho</span></h3><p>Proyecto Kotlin con JDK 17, Room, estructura de componentes, permisos mínimos sin Internet, copia automática desactivada.</p><div class="meta"><span class="id">ADR-0001</span><span class="id">ADR-0002</span><span class="id">TC-026</span></div></article>
+    <article class="card"><h3>H1 · Datos y cálculo <span class="chip done">Hecho</span></h3><p>Entidades y reglas; calculadora de cobros (último día del mes, semana lunes a domingo) con pruebas unitarias.</p><div class="meta"><span class="id">FR-013</span><span class="id">TC-011</span><span class="id">TC-013</span><span class="id">TC-005</span><span class="id">TC-006</span><span class="id">TC-009</span></div></article>
+    <article class="card"><h3>H2 · Propiedades, inquilinos y alquileres <span class="chip done">Hecho</span></h3><p>Altas, ediciones, fin, borrado con confirmación, un alquiler activo por propiedad y por inquilino.</p><div class="meta"><span class="id">FR-001–012</span><span class="id">TC-001–004</span><span class="id">TC-007</span><span class="id">TC-010</span></div></article>
+    <article class="card"><h3>H3 · Semana y calendario <span class="chip done">Hecho</span></h3><p>Resumen semanal que siempre abre en la semana actual, con total; calendario desde hoy.</p><div class="meta"><span class="id">FR-014–017</span><span class="id">TC-012–014</span></div></article>
+    <article class="card"><h3>H4 · Avisos <span class="chip review">Hecho en emulador, falta tu teléfono</span></h3><p>Alarmas exactas, ventana móvil, aviso de renovación, reconstrucción al abrir, reiniciar y cambiar el permiso; advertencia si falta un permiso.</p><div class="meta"><span class="id">FR-018–024</span><span class="id">ADR-0003</span><span class="id">TC-008</span><span class="id">TC-015–020</span></div></article>
+    <article class="card"><h3>H5 · Contacto y copia de seguridad <span class="chip lock">Pendiente</span></h3><p>WhatsApp y llamada; exportar e importar JSON validado y atómico.</p><div class="meta"><span class="id">FR-025–029</span><span class="id">ADR-0004</span><span class="id">TC-021–024</span></div></article>
+    <article class="card"><h3>H6 · Cierre <span class="chip lock">Pendiente</span></h3><p>Sin conexión, persistencia tras reiniciar, letra grande, textos en español, APK firmado instalado en tu teléfono, y todo el plan de pruebas ejecutado.</p><div class="meta"><span class="id">NFR-001–010</span><span class="id">TC-025–030</span></div></article>
+  </div>
+  <p class="eg">Cada hito termina cuando sus casos de prueba pasan en tu teléfono. Los Should (FR-009, 017, 020, 022, 025, 026) se pueden mover al final si hace falta recortar.</p>
+</section>
+
+<section id="mockups">
+  <h2>Mockups de pantallas</h2>
+  <p class="lead">Diseño de referencia en español, con datos de ejemplo. Las pantallas reales ya existen en la app y siguen este diseño (semana, calendario, alquileres, formulario, ajustes y aviso). Desliza para ver las ocho.</p>
+  <div class="phones" role="list">
+
+    <figure class="phone-col" role="listitem"><div class="phone">
+      <div class="m-status"><span>9:41</span><span>●●●</span></div>
+      <div class="m-top"><div class="t">Semana</div><div class="s">Cobros de esta semana</div></div>
+      <div class="m-body">
+        <div class="m-weeknav"><div class="btn">‹</div><div class="cur">2 – 8 nov<small>Semana actual</small></div><div class="btn">›</div></div>
+        <div class="m-day">Lunes 3</div>
+        <div class="m-row"><div><b>Apto 3</b><small>María Rojas</small></div><div class="m-amt">₡250.000</div></div>
+        <div class="m-day">Viernes 7</div>
+        <div class="m-row"><div><b>Casa Esquina</b><small>Luis Mora</small></div><div class="m-amt">₡380.000</div></div>
+        <div class="m-row"><div><b>Local 1</b><small>Ana Vargas</small></div><div class="m-amt">₡420.000</div></div>
+        <div class="m-total"><span>Total de la semana</span><span class="m-amt">₡1.050.000</span></div>
+      </div>
+      <div class="m-nav"><div class="on"><i>▦</i>Semana</div><div><i>◫</i>Calendario</div><div><i>⌂</i>Alquileres</div><div><i>⚙</i>Ajustes</div></div>
+    </div><figcaption><b>Semana (inicio)</b>Responde "¿qué cobro esta semana?" al abrir. Sin estados de pago. <span class="id">UC-004</span></figcaption></figure>
+
+    <figure class="phone-col" role="listitem"><div class="phone">
+      <div class="m-status"><span>9:41</span><span>●●●</span></div>
+      <div class="m-top"><div class="t">Calendario</div><div class="s">Noviembre 2026</div></div>
+      <div class="m-body">
+        <div class="m-cal">
+          <span class="h">L</span><span class="h">M</span><span class="h">M</span><span class="h">J</span><span class="h">V</span><span class="h">S</span><span class="h">D</span>
+          <span class="past">26</span><span class="past">27</span><span class="past">28</span><span class="past">29</span><span class="past">30</span><span class="past">31</span><span class="past">1</span>
+          <span class="today">2</span><span class="has sel">3</span><span>4</span><span>5</span><span>6</span><span class="has">7</span><span>8</span>
+          <span>9</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span><span>15</span>
+          <span class="has">16</span><span>17</span><span>18</span><span>19</span><span>20</span><span>21</span><span>22</span>
+        </div>
+        <div class="m-day">Lunes 3 de noviembre</div>
+        <div class="m-row"><div><b>Apto 3</b><small>María Rojas</small></div><div class="m-amt">₡250.000</div></div>
+      </div>
+      <div class="m-nav"><div><i>▦</i>Semana</div><div class="on"><i>◫</i>Calendario</div><div><i>⌂</i>Alquileres</div><div><i>⚙</i>Ajustes</div></div>
+    </div><figcaption><b>Calendario</b>Solo hoy y fechas futuras; los días anteriores se atenúan. <span class="id">UC-005</span></figcaption></figure>
+
+    <figure class="phone-col" role="listitem"><div class="phone">
+      <div class="m-status"><span>9:41</span><span>●●●</span></div>
+      <div class="m-top"><div class="t">Alquileres</div><div class="s">3 activos · 1 terminado</div></div>
+      <div class="m-body">
+        <div class="m-row"><div><b>Apto 3</b><small>María Rojas · día 3</small></div><div class="m-amt">₡250.000</div></div>
+        <div class="m-row"><div><b>Casa Esquina</b><small>Luis Mora · día 7</small></div><div class="m-amt">₡380.000</div></div>
+        <div class="m-row"><div><b>Local 1</b><small>Ana Vargas · día 7</small></div><div class="m-amt">₡420.000</div></div>
+        <div class="m-day">Terminados</div>
+        <div class="m-row" style="opacity:.65"><div><b>Apto 5</b><small>Pedro Solís · hasta 30 sep</small></div><div class="m-amt">₡230.000</div></div>
+        <div class="m-day">Más</div>
+        <div class="m-row"><div><b>Inquilinos y propiedades</b></div><div>›</div></div>
+      </div>
+      <div class="m-fab">＋ Nuevo alquiler</div>
+      <div class="m-nav"><div><i>▦</i>Semana</div><div><i>◫</i>Calendario</div><div class="on"><i>⌂</i>Alquileres</div><div><i>⚙</i>Ajustes</div></div>
+    </div><figcaption><b>Alquileres</b>Activos primero, terminados atenuados. Un solo botón principal abajo, al alcance del pulgar. <span class="id">UC-003</span></figcaption></figure>
+
+    <figure class="phone-col" role="listitem"><div class="phone">
+      <div class="m-status"><span>9:41</span><span>●●●</span></div>
+      <div class="m-top"><div class="t">Nuevo alquiler</div><div class="s">Cinco datos y listo</div></div>
+      <div class="m-body">
+        <div class="m-field"><small>Inquilino</small>Ana Vargas ▾</div>
+        <div class="m-field"><small>Propiedad (ocupadas no disponibles)</small>Apto 7 ▾</div>
+        <div class="m-field"><small>Monto mensual</small>₡ 300000</div>
+        <div class="m-field"><small>Día de pago (1 a 31)</small>31</div>
+        <div class="m-field off"><small>Fecha de fin (opcional)</small>Sin fecha</div>
+        <div class="eg" style="color:var(--m-muted)">En meses cortos se cobra el último día del mes.</div>
+        <div style="flex:1"></div>
+        <div class="m-btn">Guardar alquiler</div>
+        <div class="m-btn ghost">Cancelar</div>
+      </div>
+      <div style="height:12px"></div>
+    </div><figcaption><b>Formulario de alquiler</b>Teclado numérico, ayuda breve sobre el día 31, propiedades ocupadas deshabilitadas para evitar el error. <span class="id">UC-003</span> <span class="id">OI-044</span></figcaption></figure>
+
+    <figure class="phone-col" role="listitem"><div class="phone">
+      <div class="m-status"><span>9:41</span><span>●●●</span></div>
+      <div class="m-top"><div class="t">Ajustes</div><div class="s">Avisos y copia de seguridad</div></div>
+      <div class="m-body">
+        <div class="m-banner">Los avisos pueden llegar tarde: falta el permiso de alarmas. <u>Arreglar</u></div>
+        <div class="m-day">Avisos</div>
+        <div class="m-switch"><span>3 días antes</span><i></i></div>
+        <div class="m-switch"><span>2 días antes</span><i class="off"></i></div>
+        <div class="m-switch"><span>1 día antes</span><i></i></div>
+        <div class="m-switch"><span>El mismo día</span><i></i></div>
+        <div class="m-row"><div><b>Hora del aviso</b></div><div class="m-amt">8:00</div></div>
+        <div class="m-day">Copia de seguridad</div>
+        <div class="m-row"><div><b>Exportar copia</b></div><div>›</div></div>
+        <div class="m-row"><div><b>Importar copia</b></div><div>›</div></div>
+      </div>
+      <div class="m-nav"><div><i>▦</i>Semana</div><div><i>◫</i>Calendario</div><div><i>⌂</i>Alquileres</div><div class="on"><i>⚙</i>Ajustes</div></div>
+    </div><figcaption><b>Ajustes</b>Aviso visible si falta un permiso, sin bloquear la app. Valores por defecto: tu decisión OI-043. <span class="id">UC-012</span> <span class="id">FR-024</span></figcaption></figure>
+
+    <figure class="phone-col" role="listitem"><div class="phone lock-screen">
+      <div class="m-status" style="color:#c9d8d3"><span>9:41</span><span>●●●</span></div>
+      <div class="clock">8:00</div>
+      <div style="text-align:center;opacity:.8;margin-bottom:28px">lunes 3 de noviembre</div>
+      <div class="m-notif"><small>Apartment · Cobro en 3 días</small><b>Apto 3 · María Rojas</b>₡250.000 · vence el jueves 6 de noviembre</div>
+    </div><figcaption><b>Aviso</b>El momento clave: propiedad, inquilino, monto y fecha de un vistazo. Al tocarlo abre la semana actual. <span class="id">UC-006</span></figcaption></figure>
+
+    <figure class="phone-col" role="listitem"><div class="phone">
+      <div class="m-status"><span>9:41</span><span>●●●</span></div>
+      <div class="m-top"><div class="t">Inquilinos</div><div class="s">Propiedades en la otra pestaña</div></div>
+      <div class="m-body">
+        <div class="m-row"><div><b>María Rojas</b><small>8888 1111 · Apto 3</small></div><div>⋮</div></div>
+        <div class="m-row"><div><b>Luis Mora</b><small>sin teléfono · Casa Esquina</small></div><div>⋮</div></div>
+      </div>
+      <div class="m-scrim"><div class="m-dialog">
+        <h4>¿Eliminar a María Rojas?</h4>
+        <div>Se eliminarán también sus <b>2 alquileres</b>. Las propiedades se conservan. No se puede deshacer.</div>
+        <div class="m-btn danger">Eliminar inquilino y 2 alquileres</div>
+        <div class="m-btn ghost">Cancelar</div>
+      </div></div>
+    </div><figcaption><b>Confirmar eliminación</b>Dice cuántos alquileres se borran y que no hay vuelta atrás. El botón nombra la consecuencia. <span class="id">UC-011</span></figcaption></figure>
+
+    <figure class="phone-col" role="listitem"><div class="phone">
+      <div class="m-status"><span>9:41</span><span>●●●</span></div>
+      <div class="m-top"><div class="t">Alquiler Apto 3</div><div class="s">María Rojas · día 3 · ₡250.000</div></div>
+      <div class="m-body">
+        <div class="m-row"><div><b>Próximo cobro</b><small>Lunes 3 de noviembre</small></div></div>
+        <div class="m-btn">Escribir por WhatsApp</div>
+        <div class="m-btn ghost">Llamar</div>
+        <div class="m-day">Alquiler</div>
+        <div class="m-row"><div><b>Editar monto, día o fin</b></div><div>›</div></div>
+        <div class="m-row"><div><b>Terminar alquiler</b></div><div>›</div></div>
+        <div class="m-row"><div><b style="color:var(--m-danger)">Eliminar alquiler</b></div><div>›</div></div>
+      </div>
+      <div style="height:12px"></div>
+    </div><figcaption><b>Detalle de alquiler</b>Contacto a un toque; lo destructivo, separado y al final. Sin teléfono, los botones se ocultan. <span class="id">UC-007</span> <span class="id">UC-008–010</span></figcaption></figure>
+  </div>
+  <p class="eg">Los nombres, montos y fechas son ejemplos, no datos tuyos. Pantallas de propiedades, importación y la estructura exacta de la navegación se afinan con tu revisión.</p>
+</section>
+
+<section id="ux">
+  <h2>Framework de diseño UX/UI</h2>
+  <p class="lead">Reglas concretas sacadas de principios reconocidos de usabilidad y comportamiento. Son una guía de diseño, no requisitos. Lo que cambiaría un requisito se marca como propuesta (OI-044). Documento completo: <code>docs/04-design/ux-framework.md</code>.</p>
+  <div>
+    <div class="law"><b>Visibilidad del estado</b><div><p>Se nombra la semana mostrada; hay un aviso visible si falta un permiso; al guardar, se dice qué avisos se programaron.</p><span class="src">Nielsen, heurística 1</span></div></div>
+    <div class="law"><b>Lenguaje del mundo real</b><div><p>"Alquiler", "inquilino", "cobro", "día de pago"; ₡ con separador de miles; fechas como "lunes 3 de noviembre".</p><span class="src">Nielsen, heurística 2</span></div></div>
+    <div class="law"><b>Control y prevención de errores</b><div><p>Cancelar siempre disponible; propiedades ocupadas deshabilitadas en vez de rechazar después; teclado numérico.</p><span class="src">Nielsen, heurísticas 3 y 5</span></div></div>
+    <div class="law"><b>Convenciones de la plataforma</b><div><p>Barra inferior, botón flotante, menú de compartir y selector de archivos del sistema.</p><span class="src">Ley de Jakob · Nielsen, heurística 4</span></div></div>
+    <div class="law"><b>Menos opciones por pantalla</b><div><p>Cuatro destinos abajo, cuatro interruptores de avisos, una acción principal por pantalla.</p><span class="src">Ley de Hick · Ley de Miller</span></div></div>
+    <div class="law"><b>Objetivos táctiles</b><div><p>Al menos 48 × 48 dp, separados 8 dp o más; acción principal abajo, al alcance del pulgar.</p><span class="src">Ley de Fitts · guía de accesibilidad de Google</span></div></div>
+    <div class="law"><b>Momento clave y cierre</b><div><p>El aviso es el pico de la experiencia: debe servir de un vistazo. Al terminar una tarea, una línea dice qué pasó y qué sigue.</p><span class="src">Regla pico-final</span></div></div>
+    <div class="law"><b>El aviso como disparador</b><div><p>Funciona cuando ya hay motivación y capacidad. Por eso se reduce el esfuerzo: tocar abre la semana, y contactar es un toque. Sin trucos para presionar.</p><span class="src">Modelo de conducta de Fogg (Stanford)</span></div></div>
+    <div class="law"><b>La app absorbe la complejidad</b><div><p>Escribes "día 31"; la app resuelve febrero. Números de teléfono con espacios o guiones se aceptan y se guardan limpios.</p><span class="src">Ley de Tesler · Ley de Postel</span></div></div>
+    <div class="law"><b>Respuesta inmediata</b><div><p>Todo es local, así que las pantallas deben responder muy por debajo de 400 ms.</p><span class="src">Umbral de Doherty</span></div></div>
+  </div>
+  <div class="not"><b>Lo que no se usa a propósito.</b> Rachas, barras de progreso y empujones por tareas sin terminar (efecto Zeigarnik, gradiente de meta): tus requisitos prohíben estados de pagado o vencido, así que no hay tarea que completar, y esos recursos empujarían a una interacción manipuladora.</div>
+  <div class="not"><b>Qué tan firme es esto.</b> Leí las páginas originales de <a href="https://www.nngroup.com/articles/ten-usability-heuristics/">Nielsen (NN/g)</a>, <a href="https://lawsofux.com/">Laws of UX</a>, el <a href="https://behaviordesign.stanford.edu/resources/fogg-behavior-model">modelo de Fogg (Stanford)</a> y la <a href="https://support.google.com/accessibility/android/answer/7101858">guía de Google sobre tamaño táctil</a>. Laws of UX es un resumen de práctica, no investigación original. <b>No verifiqué</b> Material Design 3 en su sitio ni el libro de Don Norman; la cantidad de destinos de la barra inferior hay que confirmarla.</div>
+</section>
+
+<section id="casos">
+  <h2>Casos de uso</h2>
+  <p class="lead">Quince casos, todos con un solo actor: el arrendador, salvo UC-015 que lo inicia el sistema Android. Solo reordenan lo que ya dicen los requisitos. Detalle y flujos alternativos: <code>docs/02-requirements/use-cases/use-cases.md</code>.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>Caso</th><th>Nombre</th><th>Objetivo</th><th>Requisitos</th></tr></thead>
+    <tbody>
+      <tr><td><span class="id">UC-001</span></td><td>Registrar una propiedad</td><td>OBJ-001</td><td>FR-001 · 002 · 003</td></tr>
+      <tr><td><span class="id">UC-002</span></td><td>Registrar un inquilino</td><td>OBJ-001</td><td>FR-004 · 005</td></tr>
+      <tr><td><span class="id">UC-003</span></td><td>Crear un alquiler</td><td>OBJ-001 · 003</td><td>FR-007 · 008 · 013 · 023 · 024</td></tr>
+      <tr><td><span class="id">UC-004</span></td><td>Ver los cobros de la semana</td><td>OBJ-002</td><td>FR-015 · 016 · 017</td></tr>
+      <tr><td><span class="id">UC-005</span></td><td>Consultar el calendario</td><td>OBJ-002</td><td>FR-014</td></tr>
+      <tr><td><span class="id">UC-006</span></td><td>Recibir un aviso</td><td>OBJ-003</td><td>FR-018 · 020 · 021 · 022, NFR-004</td></tr>
+      <tr><td><span class="id">UC-007</span></td><td>Contactar al inquilino</td><td>OBJ-004</td><td>FR-025 · 026</td></tr>
+      <tr><td><span class="id">UC-008</span></td><td>Editar un alquiler</td><td>OBJ-001</td><td>FR-009 · 010</td></tr>
+      <tr><td><span class="id">UC-009</span></td><td>Terminar un alquiler</td><td>OBJ-001</td><td>FR-011</td></tr>
+      <tr><td><span class="id">UC-010</span></td><td>Eliminar un alquiler</td><td>OBJ-001</td><td>FR-012</td></tr>
+      <tr><td><span class="id">UC-011</span></td><td>Eliminar un inquilino</td><td>OBJ-001</td><td>FR-006</td></tr>
+      <tr><td><span class="id">UC-012</span></td><td>Elegir días y hora de avisos</td><td>OBJ-003</td><td>FR-018 · 019</td></tr>
+      <tr><td><span class="id">UC-013</span></td><td>Exportar copia de seguridad</td><td>OBJ-005</td><td>FR-027</td></tr>
+      <tr><td><span class="id">UC-014</span></td><td>Importar copia de seguridad</td><td>OBJ-005</td><td>FR-028 · 029, NFR-005</td></tr>
+      <tr><td><span class="id">UC-015</span></td><td>Reconstruir avisos tras un evento</td><td>OBJ-003</td><td>FR-021 · 022, ADR-0003</td></tr>
+    </tbody></table></div>
+</section>
+
+<section id="secuencias">
+  <h2>Diagramas de secuencia</h2>
+  <p class="lead">Los cuatro casos con más lógica. Los quince están en el documento, con los componentes CMP-001 a CMP-009.</p>
+
+  <div class="uc"><h3><span class="id">UC-003</span> Crear un alquiler</h3>
+<pre class="mermaid">
+sequenceDiagram
+    actor L as Arrendador
+    participant S as Pantallas
+    participant D as Almacén de datos
+    participant P as Permisos
+    participant R as Planificador
+    L->>S: Crear alquiler (inquilino, propiedad, monto, día, fin?)
+    S->>D: Verificar alquileres activos y guardar
+    alt inquilino o propiedad ya activos
+        D-->>S: Rechazado
+        S-->>L: Mensaje
+    else guardado
+        D-->>S: Guardado
+        opt primer alquiler
+            S->>P: Explicar y pedir permisos
+            P-->>S: Concedidos o negados
+        end
+        S->>R: Reconstruir avisos
+        R-->>S: Listo
+        S-->>L: Alquiler con próxima fecha de cobro
+        opt permiso negado
+            S-->>L: Advertencia, la app sigue funcionando
+        end
+    end
+</pre></div>
+
+  <div class="uc"><h3><span class="id">UC-006</span> Recibir un aviso</h3>
+<pre class="mermaid">
+sequenceDiagram
+    actor L as Arrendador
+    participant A as Alarmas de Android
+    participant N as Notificador
+    participant D as Almacén de datos
+    participant S as Pantallas
+    A->>N: La alarma suena a la hora elegida
+    N->>D: Leer alquiler, inquilino y propiedad
+    D-->>N: Datos
+    N-->>L: Aviso (propiedad, inquilino, monto, fecha)
+    L->>S: Tocar el aviso
+    S-->>L: Resumen semanal, semana actual
+</pre></div>
+
+  <div class="uc"><h3><span class="id">UC-014</span> Importar una copia de seguridad</h3>
+<pre class="mermaid">
+sequenceDiagram
+    actor L as Arrendador
+    participant S as Pantallas
+    participant B as Copia de seguridad
+    participant D as Almacén de datos
+    participant R as Planificador
+    L->>S: Importar, elegir archivo
+    S->>B: Leer y validar todo
+    alt inválido o versión nueva
+        B-->>S: Rechazado
+        S-->>L: Mensaje, datos sin cambios
+    else válido
+        S-->>L: ¿Confirmar? Se perderán los datos actuales
+        alt cancelar
+            S-->>L: Datos sin cambios
+        else confirmar
+            S->>D: Reemplazar todo (una transacción)
+            S->>R: Reconstruir avisos
+            S-->>L: Datos restaurados
+        end
+    end
+</pre></div>
+
+  <div class="uc"><h3><span class="id">UC-015</span> Reconstruir avisos tras un evento</h3>
+<pre class="mermaid">
+sequenceDiagram
+    participant E as Evento de Android
+    participant V as Eventos del sistema
+    participant R as Planificador
+    participant D as Almacén de datos
+    participant C as Calculadora
+    participant A as Alarmas de Android
+    E->>V: App abierta, arranque completo o cambio de permiso
+    V->>R: Reconstruir
+    R->>D: Leer alquileres y ajustes
+    D-->>R: Datos
+    R->>C: Cobros más cercanos hasta el límite de la ventana
+    C-->>R: Cobros
+    R->>A: Cancelar alarmas viejas y crear las nuevas
+    A-->>R: Listo
+</pre></div>
+</section>
+
+<section id="qa">
+  <h2>Revisión de calidad (QA) del 2 de noviembre</h2>
+  <p class="lead">Revisé la documentación y el código a la vez. Esto es lo que encontré y qué hice.</p>
+  <div class="grid">
+    <article class="card"><h3>Pruebas</h3><ul>
+      <li><b>54</b> pruebas unitarias y <b>35</b> en el emulador, todas verdes (1 omitida a propósito: la de entrega real de avisos, que dura 2 minutos).</li>
+      <li>Lint: <b>0 errores</b>. Los avisos restantes son versiones más nuevas de librerías (deuda RSK-015).</li>
+      <li>Plan de pruebas: <b>34</b> casos, <b>22</b> con resultado; el resto espera a H5, H6 o a tu teléfono.</li>
+    </ul></article>
+    <article class="card"><h3>Documentación</h3><ul>
+      <li>Todas las referencias entre documentos (FR, NFR, UC, TC, CMP, ADR…) existen.</li>
+      <li>Faltaban casos de prueba para 3 criterios de aceptación y para NFR-010: añadí TC-032 a TC-034. Ahora todo criterio tiene prueba.</li>
+      <li>Textos ya viejos ("por verificar") actualizados en FR-021, NFR-004, ADR-0004 y la arquitectura. Quedan como <b>CHG-002</b>, pendiente de tu aprobación.</li>
+      <li>Riesgos: RSK-012 cerrado, RSK-005 y RSK-010 mitigados, 3 nuevos (RSK-015 a 017).</li>
+    </ul></article>
+    <article class="card"><h3>Código</h3><ul>
+      <li>Corregí un error visible: decía "1 activos" y "sus 1 alquileres". Ahora usa singular y plural correctos, con prueba.</li>
+      <li>La app no tenía icono propio: añadí uno (una casa blanca sobre verde).</li>
+      <li>Quité textos sin usar y una comprobación de versión que ya no hacía falta.</li>
+    </ul></article>
+  </div>
+</section>
+
+<section id="pendiente">
+  <h2>Pendiente y qué sigue</h2>
+  <div class="grid">
+    <article class="card"><h3>Necesito de ti</h3><ul class="next">
+      <li><b>Conectar tu moto g72</b> por USB para probar los avisos con la pantalla apagada, el reinicio y los permisos (RSK-016).</li>
+      <li><b>Aprobar</b> con un commit <code>approve: CHG-001, CHG-002</code> (fecha de inicio del alquiler y sincronización de documentos).</li>
+      <li><b>Revisar</b> OI-045 y OI-046 (valores técnicos y detalles de los avisos que elegí yo) y ADR-0005 (Compose).</li>
+      <li><b>RSK-007:</b> ¿un recordatorio para exportar la copia de seguridad?</li>
+      <li><b>OI-001 a OI-007:</b> temas de gobierno aún abiertos (no bloquean).</li>
+    </ul></article>
+    <article class="card"><h3>Por verificar</h3><ul class="next">
+      <li>Avisos en tu teléfono con Android 13 (TC-016, TC-019, TC-020).</li>
+      <li>Formato del enlace de WhatsApp (se verifica en H5).</li>
+      <li>Material Design 3 en su sitio oficial.</li>
+      <li>Si la copia automática de Android aplica a un APK instalado a mano.</li>
+    </ul></article>
+    <article class="card"><h3>Siguiente hito</h3><ul class="next">
+      <li><b>H5:</b> contacto por WhatsApp y llamada, exportar e importar la copia de seguridad en JSON.</li>
+      <li><b>H6:</b> cierre: sin conexión, letra grande, APK en tu teléfono, resto del plan de pruebas y guía de instalación.</li>
+    </ul></article>
+  </div>
+</section>
+
+<footer>Documentos aprobados por ti en el commit <code>a1bc3ba</code>; lo posterior (CHG-001, CHG-002, ADR-0005, OI-045, OI-046) es propuesta del agente. Fuentes en <code>docs/</code>; esta página en <code>docs/09-management/roadmap.html</code>.</footer>
+</div>

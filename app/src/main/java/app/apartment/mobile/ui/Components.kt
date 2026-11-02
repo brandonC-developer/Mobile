@@ -87,11 +87,11 @@ fun FormDialog(title: String, onSave: () -> Unit, onDismiss: () -> Unit, fields:
 @Composable
 fun TextField(
     value: String, onChange: (String) -> Unit, label: String, error: String? = null, singleLine: Boolean = true,
-    modifier: Modifier = Modifier.fillMaxWidth(),
+    modifier: Modifier = Modifier,
 ) {
     OutlinedTextField(
         value = value, onValueChange = onChange, label = { Text(label) }, singleLine = singleLine,
-        isError = error != null, supportingText = error?.let { { Text(it) } }, modifier = modifier,
+        isError = error != null, supportingText = error?.let { { Text(it) } }, modifier = modifier.fillMaxWidth(),
     )
 }
 
@@ -121,6 +121,11 @@ fun DatePickDialog(initial: LocalDate, onPick: (LocalDate) -> Unit, onDismiss: (
 }
 
 @Composable
-fun PrimaryButton(label: String, onClick: () -> Unit, modifier: Modifier = Modifier.fillMaxWidth()) {
-    Button(onClick = onClick, modifier = modifier.heightIn(min = 48.dp)) { Text(label) }
+fun PrimaryButton(label: String, onClick: () -> Unit, modifier: Modifier = Modifier) {
+    Button(onClick = onClick, modifier = modifier.fillMaxWidth().heightIn(min = 48.dp)) { Text(label) }
 }
+
+/** Spanish plural form of a count, from a plurals resource (1 alquiler, 2 alquileres). */
+@Composable
+fun plural(@androidx.annotation.PluralsRes id: Int, count: Int): String =
+    androidx.compose.ui.platform.LocalContext.current.resources.getQuantityString(id, count, count)

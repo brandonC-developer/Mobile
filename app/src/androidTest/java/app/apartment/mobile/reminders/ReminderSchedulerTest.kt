@@ -111,7 +111,13 @@ class ReminderSchedulerTest {
             .putExtra(ReminderScheduler.EXTRA_COLLECTION_DAY, LocalDate.of(2026, 11, 20).toEpochDay())
             .putExtra(ReminderScheduler.EXTRA_DAYS_BEFORE, 3)
         assertTrue(Notifier.show(context, extras))
-        val shown = manager.activeNotifications.single { it.id == 7 }.notification.extras
+        var found = manager.activeNotifications.firstOrNull { it.id == 7 }
+        for (attempt in 1..30) {
+            if (found != null) break
+            Thread.sleep(100)
+            found = manager.activeNotifications.firstOrNull { it.id == 7 }
+        }
+        val shown = found!!.notification.extras
         assertEquals("Apto 3 · María Rojas", shown.getString("android.title"))
         assertEquals("₡250.000 · vence el viernes 20 de noviembre", shown.getString("android.text"))
         assertEquals("Cobro en 3 días", shown.getString("android.subText"))

@@ -63,7 +63,7 @@ fun RentalsScreen(
         ) {
             item {
                 Text(
-                    stringResource(R.string.rentals_summary, active.size, ended.size),
+                    plural(R.plurals.rentals_active, active.size) + " · " + plural(R.plurals.rentals_ended_count, ended.size),
                     style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }

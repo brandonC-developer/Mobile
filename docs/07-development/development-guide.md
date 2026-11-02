@@ -46,3 +46,15 @@ The debug APK is `app/build/outputs/apk/debug/app-debug.apk`. Install with `adb 
 - Screen tests use Compose test rules (`WeekCalendarUiTest`). The Espresso version pulled in by the Compose test library failed on Android API 37 (`InputManager.getInstance` missing); `espresso-core` 3.7.0 is declared explicitly in `gradle/libs.versions.toml` to fix it.
 - Delivery test (real alarm, about two minutes): `ANDROID_SERIAL=<serial> ./gradlew :app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.delivery=true -Pandroid.testInstrumentationRunnerArguments.class=app.apartment.mobile.reminders.ReminderDeliveryTest`. It prints `REMINDER-DELIVERY ... delaySeconds=` in the device log. Run it on the phone with the screen off to test with the phone idle.
 - If Gradle reports `Failed to create MD5 hash` for the connected-test results folder, stop the Gradle daemons and delete `app/build/outputs/androidTest-results`. If the emulator shows `offline` in adb, restart it with `-gpu swiftshader_indirect`.
+
+## Roadmap page
+- The Owner follows progress in a roadmap page (an Artifact). Its source is `docs/09-management/roadmap.html`.
+- **After every commit, update the roadmap page** (Owner instruction, 2026-11-02): status of the phases and milestones, test counts, pending decisions, last commit. Then publish it again at the same address.
+
+## QA checklist (run before closing a milestone and at each sync)
+1. Every ID cited in the documents exists (`grep` the IDs against their definitions).
+2. Every AC has a test case; every CMP traces to a requirement; statuses in the test plan match what was run.
+3. All tests pass: unit, device, screen. Lint has no errors.
+4. No user text is hardcoded outside `res/values/strings.xml` (NFR-007).
+5. Documents that say "to be verified" are checked against the open items.
+6. Approved documents are changed only through a CHG.

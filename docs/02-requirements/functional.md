@@ -230,7 +230,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
 ### FR-021 — Rolling schedule of reminders
 - **Status:** Approved
 - **Origin:** OBJ-003 · OI-014
-- **Description:** The system shall schedule only the nearest reminders, up to a limit to be verified on the device (OI-039), and shall reschedule them each time the app is opened and each time a rental is created, edited, ended or deleted.
+- **Description:** The system shall schedule only the nearest reminders, up to a limit below the 500 concurrent alarms the system accepts per app (verified on the Owner device, OI-039; the window is 100 reminders plus the renewal reminder, OI-046), and shall reschedule them each time the app is opened and each time a rental is created, edited, ended or deleted.
 - **Acceptance criteria:**
   - AC-FR-021-1: After opening the app, the nearest reminders up to the limit are scheduled.
   - AC-FR-021-2: After editing, ending or deleting a rental, no reminder remains for dates that no longer apply.
@@ -323,5 +323,5 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
 
 ## Not yet covered
 - **Home screen content (OI-041):** CTX-001 §5.5 mentioned the next payment, its amount and the days left. The Owner has not decided whether the home screen shows more than the weekly summary.
-- **Use cases (UC):** not written yet.
+- **Use cases (UC):** written in [use-cases](use-cases/use-cases.md) (UC-001 to UC-015); they add no requirement.
 - **Withdrawn from the source:** obligation statuses, paid marking, overdue (OI-011, OI-012, OI-024); obligations other than rent (OI-022).
