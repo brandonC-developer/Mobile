@@ -4,6 +4,7 @@ Format: one entry per approved change, citing IDs.
 
 ## [Unreleased]
 ### Added
+- ADR-0005 (Jetpack Compose and Material 3) drafted as Proposed; Owner chose it 2026-11-02. Milestone H0 built: Gradle project in `app/`, Compose placeholder activity, Room dependencies, no permissions, Android backup blocked, unit tests for TC-026 pass. OI-045 logs the technical values chosen by the agent. DOC-DEV 0.1 drafted.
 - OI-044 resolved by the Owner (accepted a, c, e; b and d not adopted).
 - Approval: Owner commit `a1bc3ba` approved DOC-VIS, DOC-GLO, DOC-FR, DOC-NFR, ADR-0001 to ADR-0004, DOC-DAT, DOC-CMP, DOC-INT, DOC-UXF, DOC-SEC, DOC-TST, DOC-ARC, DOC-RSK, DOC-UC (2026-11-02). Editorial follow-up: status notes at the top of those documents updated; no requirement or decision text changed.
 - DOC-UC 0.1 (UC-001 to UC-015 with sequence diagrams) and DOC-UXF 0.1 (UX framework from Nielsen, Laws of UX, Fogg, Google touch-target guidance) drafted by the agent, Proposed; OI-044 logged for five UX proposals. A roadmap page with mockups was published as an Artifact.

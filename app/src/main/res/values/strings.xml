@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Apartment</string>
+    <string name="nav_week">Semana</string>
+    <string name="nav_calendar">Calendario</string>
+    <string name="nav_rentals">Alquileres</string>
+    <string name="nav_settings">Ajustes</string>
+</resources>

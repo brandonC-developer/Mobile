@@ -3,5 +3,18 @@
 Thumbs.db
 .idea/
 .vscode/
+*.iml
 # Local agent settings
 .claude/settings.local.json
+
+# Android / Gradle
+.gradle/
+build/
+local.properties
+captures/
+.externalNativeBuild/
+.cxx/
+*.apk
+*.aab
+*.jks
+*.keystore

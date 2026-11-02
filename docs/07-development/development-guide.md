@@ -2,15 +2,34 @@
 id: DOC-DEV
 title: Development Guide
 status: Draft
-version: 0.0
-date: 2026-10-30
+version: 0.1
+date: 2026-11-02
 approved_by:
-refs: []
+refs: [ADR-0001, ADR-0002, ADR-0003, ADR-0004, ADR-0005, DOC-CMP]
 ---
 
 # Development Guide
 
-> **Purpose:** Conventions, environment and workflow. Created once the stack is approved.
->
-> **Status:** empty template. No project content has been provided yet. Do not fill in until the context-incorporation phase reaches this document (see `docs/README.md`).
+> **Status:** Draft written by the agent during milestone H0. Not approved.
 
+## Environment
+- Windows, Android Studio, Android SDK with platform 34 and build-tools (installed on the Owner machine).
+- **JDK 17** for Gradle (`C:\Program Files\Java\jdk-17`). The JDK bundled with the newest Android Studio (25) failed with this Gradle and Kotlin version. In Android Studio: Settings > Build Tools > Gradle > Gradle JDK = 17.
+- `local.properties` (git-ignored) holds `sdk.dir`, with forward slashes: `sdk.dir=C:/Users/<user>/AppData/Local/Android/Sdk`.
+
+## Project layout
+- Gradle root at the repository root; one module `app/` (ADR-0001, Owner instruction 2026-11-02).
+- Package `app.apartment.mobile`; screens in Jetpack Compose with Material 3 (ADR-0005).
+- Library versions live in `gradle/libs.versions.toml`.
+
+## Commands
+```
+JAVA_HOME="C:\Program Files\Java\jdk-17" ./gradlew :app:testDebugUnitTest :app:assembleDebug
+```
+The debug APK is `app/build/outputs/apk/debug/app-debug.apk`. Install with `adb install -r`.
+
+## Rules
+- Code traces to approved requirements; cite the FR, NFR, TC or ADR in comments only where it explains a rule that is not obvious.
+- Write the test of a behavior before its code where the behavior is pure logic (collections, validation, backup).
+- No permission is added to the manifest without an approved requirement; the Internet permission is never declared (TC-026).
+- Milestones H0 to H6 follow the roadmap; a milestone ends when its test cases pass on the Owner phone.
