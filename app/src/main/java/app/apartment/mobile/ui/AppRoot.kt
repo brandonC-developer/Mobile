@@ -2,15 +2,21 @@
 
 package app.apartment.mobile.ui
 
+import android.Manifest
+import android.os.Build
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.layout.Box
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.Box
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -19,16 +25,16 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
@@ -36,22 +42,51 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import app.apartment.mobile.R
 import app.apartment.mobile.domain.Format
-import kotlinx.coroutines.launch
+import app.apartment.mobile.reminders.ReminderPermissions
 
-/** CMP-001. Four bottom destinations (OI-044 e); Week, Calendar and Settings arrive in later milestones. */
+/** CMP-001. Four bottom destinations (OI-044 e). */
 @Composable
 fun AppRoot(vm: AppViewModel = viewModel()) {
+    val context = LocalContext.current
     val tenants by vm.tenants.collectAsStateWithLifecycle()
     val properties by vm.properties.collectAsStateWithLifecycle()
     val rentals by vm.rentals.collectAsStateWithLifecycle()
+    val settings by vm.settings.collectAsStateWithLifecycle()
     val snackbar = remember { SnackbarHostState() }
-    val scope = rememberCoroutineScope()
     val today = vm.today()
     var pendingMessage by remember { mutableStateOf<String?>(null) }
     val savedText = stringResource(R.string.rental_saved, "%s")
 
+    // FR-023 and FR-024: ask for what is missing; when the system dialog cannot be shown, go to the settings screen.
+    var fromBanner by remember { mutableStateOf(false) }
+    fun openExactAlarmSettings() {
+        if (!vm.permissions.exactAlarmsAllowed) context.startActivity(ReminderPermissions.exactAlarmSettings(context))
+    }
+    val notificationLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+        vm.refreshPermissions()
+        if (!granted && fromBanner) {
+            context.startActivity(ReminderPermissions.notificationSettings(context))
+        } else {
+            openExactAlarmSettings()
+        }
+    }
+    fun fixPermissions(banner: Boolean) {
+        fromBanner = banner
+        vm.refreshPermissions()
+        if (!vm.permissions.notificationsEnabled && Build.VERSION.SDK_INT >= 33) {
+            notificationLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+        } else if (!vm.permissions.notificationsEnabled) {
+            context.startActivity(ReminderPermissions.notificationSettings(context))
+        } else {
+            openExactAlarmSettings()
+        }
+    }
+
     BackHandler(enabled = vm.screen != Screen.Tabs) { vm.back() }
     LifecycleEventEffect(Lifecycle.Event.ON_STOP) { vm.resetHome() }
+    // FR-021: opening the app rebuilds the reminders; coming back from a settings screen refreshes the warning.
+    LifecycleEventEffect(Lifecycle.Event.ON_START) { vm.refreshOnOpen() }
+    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) { vm.refreshPermissions() }
     LaunchedEffect(pendingMessage) {
         pendingMessage?.let { snackbar.showSnackbar(it); pendingMessage = null }
     }
@@ -60,27 +95,32 @@ fun AppRoot(vm: AppViewModel = viewModel()) {
         Screen.Tabs -> Scaffold(
             snackbarHost = { SnackbarHost(snackbar) },
             bottomBar = {
-                NavigationBar {
-                    tabs.forEach { (tab, icon, label) ->
-                        NavigationBarItem(
-                            selected = vm.tab == tab, onClick = { vm.selectTab(tab) },
-                            icon = { Icon(icon, contentDescription = null) }, label = { Text(stringResource(label)) },
-                        )
+                Column {
+                    // The warning stays visible on every tab and never blocks the app (FR-024). It matters once
+                    // there is a rental to remind about.
+                    if (rentals.isNotEmpty()) PermissionBanner(vm.permissions) { fixPermissions(banner = true) }
+                    NavigationBar {
+                        tabs.forEach { (tab, icon, label) ->
+                            NavigationBarItem(
+                                selected = vm.tab == tab, onClick = { vm.selectTab(tab) },
+                                icon = { Icon(icon, contentDescription = null) }, label = { Text(stringResource(label)) },
+                            )
+                        }
                     }
                 }
             },
         ) { padding ->
             Box(Modifier.padding(padding).fillMaxSize()) {
                 when (vm.tab) {
+                    Tab.WEEK -> WeekScreen(rentals, tenants, properties, today, vm.weekOffset, vm::showWeek)
+                    Tab.CALENDAR -> CalendarScreen(rentals, tenants, properties, today)
                     Tab.RENTALS -> RentalsScreen(
                         rentals, tenants, properties, today,
                         onNew = { vm.open(Screen.RentalForm(null)) },
                         onOpen = { vm.open(Screen.RentalDetail(it)) },
                         onPeople = { vm.open(Screen.People) },
                     )
-                    Tab.WEEK -> WeekScreen(rentals, tenants, properties, today, vm.weekOffset, vm::showWeek)
-                    Tab.CALENDAR -> CalendarScreen(rentals, tenants, properties, today)
-                    Tab.SETTINGS -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) { Text(stringResource(R.string.soon)) }
+                    Tab.SETTINGS -> SettingsScreen(settings, onChange = { vm.saveSettings(it) })
                 }
             }
         }
@@ -101,6 +141,7 @@ fun AppRoot(vm: AppViewModel = viewModel()) {
             onUpdate = { id, a, d, e, done -> vm.updateRental(id, a, d, e, done) },
             onSaved = { next ->
                 if (next != null) pendingMessage = savedText.replace("%s", Format.longDate(next))
+                if (screen.rentalId == null) vm.askPermissionsIfFirstRental()
                 vm.open(if (screen.rentalId != null) Screen.RentalDetail(screen.rentalId) else Screen.Tabs)
             },
         )
@@ -117,6 +158,22 @@ fun AppRoot(vm: AppViewModel = viewModel()) {
                 onDelete = { vm.deleteRental(screen.rentalId); vm.back() },
             )
         }
+    }
+
+    if (vm.showPermissionExplanation) {
+        AlertDialog(
+            onDismissRequest = vm::dismissPermissionExplanation,
+            title = { Text(stringResource(R.string.perm_explain_title)) },
+            text = { Text(stringResource(R.string.perm_explain_body)) },
+            confirmButton = {
+                TextButton(onClick = { vm.dismissPermissionExplanation(); fixPermissions(banner = false) }) {
+                    Text(stringResource(R.string.perm_explain_continue))
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = vm::dismissPermissionExplanation) { Text(stringResource(R.string.perm_explain_later)) }
+            },
+        )
     }
 }
 

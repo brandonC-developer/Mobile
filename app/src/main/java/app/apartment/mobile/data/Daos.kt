@@ -13,6 +13,7 @@ interface PropertyDao {
     @Insert suspend fun insert(property: PropertyEntity): Long
     @Update suspend fun update(property: PropertyEntity)
     @Query("SELECT * FROM property ORDER BY name") fun observeAll(): Flow<List<PropertyEntity>>
+    @Query("SELECT * FROM property WHERE id = :id") suspend fun getById(id: Long): PropertyEntity?
     // No delete on purpose: properties are never deleted (FR-003).
 }
 
@@ -24,6 +25,7 @@ interface TenantDao {
     @Query("SELECT * FROM tenant ORDER BY fullName") fun observeAll(): Flow<List<TenantEntity>>
     @Query("SELECT COUNT(*) FROM rental WHERE tenantId = :tenantId") suspend fun rentalCount(tenantId: Long): Int
     @Query("SELECT * FROM tenant") suspend fun getAll(): List<TenantEntity>
+    @Query("SELECT * FROM tenant WHERE id = :id") suspend fun getById(id: Long): TenantEntity?
 }
 
 @Dao
@@ -33,10 +35,12 @@ interface RentalDao {
     @Delete suspend fun delete(rental: RentalEntity)
     @Query("SELECT * FROM rental") fun observeAll(): Flow<List<RentalEntity>>
     @Query("SELECT * FROM rental") suspend fun getAll(): List<RentalEntity>
+    @Query("SELECT * FROM rental WHERE id = :id") suspend fun getById(id: Long): RentalEntity?
 }
 
 @Dao
 interface SettingsDao {
     @Query("SELECT * FROM settings WHERE id = 1") suspend fun get(): SettingsEntity?
+    @Query("SELECT * FROM settings WHERE id = 1") fun observe(): Flow<SettingsEntity?>
     @Insert(onConflict = OnConflictStrategy.REPLACE) suspend fun save(settings: SettingsEntity)
 }

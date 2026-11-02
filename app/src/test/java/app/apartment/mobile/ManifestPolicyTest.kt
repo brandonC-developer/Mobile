@@ -7,8 +7,9 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.w3c.dom.Document
+import org.w3c.dom.Element
 
-/** TC-026 (NFR-002, SEC-007, OI-042): no Internet permission and all Android backup blocked. */
+/** TC-026 (NFR-002, SEC-005, SEC-007, OI-042): no Internet, only the permissions reminders need, backup blocked. */
 class ManifestPolicyTest {
     private val android = "http://schemas.android.com/apk/res/android"
 
@@ -18,11 +19,44 @@ class ManifestPolicyTest {
 
     private val manifest get() = parse("src/main/AndroidManifest.xml")
 
+    private fun permissions(): List<String> {
+        val perms = manifest.getElementsByTagName("uses-permission")
+        return (0 until perms.length).map { perms.item(it).attributes.getNamedItemNS(android, "name").nodeValue }
+    }
+
     @Test
     fun internetPermissionIsNeverDeclared() {
-        val perms = manifest.getElementsByTagName("uses-permission")
-        val names = (0 until perms.length).map { perms.item(it).attributes.getNamedItemNS(android, "name").nodeValue }
-        assertFalse("INTERNET must not be declared", names.contains("android.permission.INTERNET"))
+        assertFalse("INTERNET must not be declared", permissions().contains("android.permission.INTERNET"))
+    }
+
+    @Test
+    fun onlyTheReminderPermissionsAreDeclared() {
+        assertEquals(
+            setOf(
+                "android.permission.POST_NOTIFICATIONS",
+                "android.permission.SCHEDULE_EXACT_ALARM",
+                "android.permission.RECEIVE_BOOT_COMPLETED",
+            ),
+            permissions().toSet(),
+        )
+    }
+
+    @Test
+    fun alarmReceiverIsPrivateAndSystemReceiverHandlesOnlyTwoBroadcasts() {
+        val receivers = manifest.getElementsByTagName("receiver")
+        val byName = (0 until receivers.length).map { receivers.item(it) as Element }
+            .associateBy { it.getAttributeNS(android, "name") }
+        assertEquals("false", byName.getValue(".reminders.AlarmReceiver").getAttributeNS(android, "exported"))
+        val system = byName.getValue(".reminders.SystemEventReceiver")
+        assertEquals("true", system.getAttributeNS(android, "exported"))
+        val actions = system.getElementsByTagName("action")
+        assertEquals(
+            setOf(
+                "android.intent.action.BOOT_COMPLETED",
+                "android.app.action.SCHEDULE_EXACT_ALARM_PERMISSION_STATE_CHANGED",
+            ),
+            (0 until actions.length).map { (actions.item(it) as Element).getAttributeNS(android, "name") }.toSet(),
+        )
     }
 
     @Test

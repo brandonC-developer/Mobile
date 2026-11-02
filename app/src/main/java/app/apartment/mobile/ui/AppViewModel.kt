@@ -10,10 +10,13 @@ import app.apartment.mobile.data.AppDatabase
 import app.apartment.mobile.data.CreateRentalResult
 import app.apartment.mobile.data.PropertyEntity
 import app.apartment.mobile.data.Repository
+import app.apartment.mobile.data.SettingsEntity
 import app.apartment.mobile.data.TenantEntity
 import app.apartment.mobile.domain.Rental
 import app.apartment.mobile.domain.RentalError
 import app.apartment.mobile.domain.WeekNavigation
+import app.apartment.mobile.reminders.ReminderPermissions
+import app.apartment.mobile.reminders.ReminderScheduler
 import java.time.LocalDate
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
@@ -29,24 +32,29 @@ sealed interface Screen {
     data class RentalDetail(val rentalId: Long) : Screen
 }
 
-/** One screen-state holder for the milestone H2 screens (CMP-001). Business rules live in the repository. */
-class AppViewModel(app: Application) : AndroidViewModel(app) {
-    private val repo = Repository(AppDatabase.get(app)) { LocalDate.now() }
+/** One screen-state holder (CMP-001). Business rules live in the repository; reminders are rebuilt on every change. */
+class AppViewModel(private val app: Application) : AndroidViewModel(app) {
+    private val repo = Repository(AppDatabase.get(app), onChanged = { ReminderScheduler.rebuild(app) }) { LocalDate.now() }
 
     val properties = repo.properties.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
     val tenants = repo.tenants.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
     val rentals = repo.rentals.map { list -> list.map { it.toDomain() } }
         .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList<Rental>())
+    val settings = repo.settings.map { it ?: SettingsEntity() }
+        .stateIn(viewModelScope, SharingStarted.Eagerly, SettingsEntity())
 
     var screen: Screen by mutableStateOf(Screen.Tabs)
         private set
     var tab by mutableStateOf(Tab.WEEK)
         private set
-
-    fun today(): LocalDate = LocalDate.now()
-
     var weekOffset by mutableStateOf(0)
         private set
+    var permissions by mutableStateOf(ReminderPermissions.state(app))
+        private set
+    var showPermissionExplanation by mutableStateOf(false)
+        private set
+
+    fun today(): LocalDate = LocalDate.now()
 
     fun showWeek(offset: Int) { weekOffset = WeekNavigation.clamp(offset) }
 
@@ -54,6 +62,13 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     fun resetHome() {
         weekOffset = 0
         if (screen == Screen.Tabs) tab = Tab.WEEK
+    }
+
+    /** FR-020: a tapped reminder opens the app on the current week. */
+    fun showCurrentWeek() {
+        weekOffset = 0
+        tab = Tab.WEEK
+        screen = Screen.Tabs
     }
 
     fun open(next: Screen) { screen = next }
@@ -64,6 +79,27 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             else -> Screen.Tabs
         }
     }
+
+    /** FR-021: the reminders are rebuilt each time the app is opened. */
+    fun refreshOnOpen() {
+        permissions = ReminderPermissions.state(app)
+        viewModelScope.launch { ReminderScheduler.rebuild(app) }
+    }
+
+    fun refreshPermissions() { permissions = ReminderPermissions.state(app) }
+
+    /** FR-023: once, the first time a rental is created and something is missing. */
+    fun askPermissionsIfFirstRental() {
+        refreshPermissions()
+        if (!permissions.allGranted && !ReminderPermissions.alreadyPrompted(app)) showPermissionExplanation = true
+    }
+
+    fun dismissPermissionExplanation() {
+        ReminderPermissions.markPrompted(app)
+        showPermissionExplanation = false
+    }
+
+    fun saveSettings(next: SettingsEntity) = viewModelScope.launch { repo.saveSettings(next) }
 
     fun saveProperty(id: Long?, name: String, description: String, done: (Boolean) -> Unit) = viewModelScope.launch {
         val ok = if (id == null) {

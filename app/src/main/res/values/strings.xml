@@ -104,4 +104,31 @@
     <string name="calendar_next_month">Mes siguiente</string>
     <string name="calendar_hint">Toca una fecha marcada para ver el monto.</string>
     <string name="calendar_day_none">Sin cobros este día</string>
+    <!-- Reminders (FR-018 to FR-024) -->
+    <string name="channel_name">Avisos de cobro</string>
+    <string name="notif_today">Cobro hoy</string>
+    <string name="notif_tomorrow">Cobro mañana</string>
+    <string name="notif_in_days">Cobro en %1$d días</string>
+    <string name="notif_text">%1$s · vence el %2$s</string>
+    <string name="notif_renew_title">Abre Apartment para renovar tus avisos</string>
+    <string name="notif_renew_text">Los avisos programados terminan pronto.</string>
+
+    <!-- Settings (UC-012) -->
+    <string name="settings_title">Ajustes</string>
+    <string name="settings_reminders">Avisos</string>
+    <string name="settings_3_days">3 días antes</string>
+    <string name="settings_2_days">2 días antes</string>
+    <string name="settings_1_day">1 día antes</string>
+    <string name="settings_same_day">El mismo día</string>
+    <string name="settings_time">Hora del aviso</string>
+    <string name="settings_time_dialog">Hora de los avisos</string>
+    <string name="settings_time_hint">La misma hora para todos los avisos.</string>
+
+    <!-- Permissions (FR-023, FR-024) -->
+    <string name="perm_banner">Los avisos pueden llegar tarde o no llegar: falta un permiso.</string>
+    <string name="perm_fix">Arreglar</string>
+    <string name="perm_explain_title">Para avisarte a tiempo</string>
+    <string name="perm_explain_body">La app necesita dos permisos: mostrar notificaciones y programar alarmas exactas. Sin ellos, los avisos pueden llegar tarde o no llegar. Puedes seguir usando la app aunque los niegues.</string>
+    <string name="perm_explain_continue">Continuar</string>
+    <string name="perm_explain_later">Ahora no</string>
 </resources>

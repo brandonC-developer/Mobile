@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- No permissions yet. NFR-002 and SEC-007: the Internet permission is never declared.
-         Notification and alarm permissions arrive with milestone H4 (ADR-0003). -->
+    <!-- Only what reminders need (ADR-0003, FR-023). NFR-002 and SEC-007: the Internet permission is never declared. -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <!-- OI-042: all Android backup and device transfer are blocked. -->
     <application
@@ -15,11 +17,27 @@
 
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Only the app's own alarms reach this receiver (SEC-005). -->
+        <receiver
+            android:name=".reminders.AlarmReceiver"
+            android:exported="false" />
+
+        <!-- Exported only for the two system broadcasts it handles (UC-015). -->
+        <receiver
+            android:name=".reminders.SystemEventReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.app.action.SCHEDULE_EXACT_ALARM_PERMISSION_STATE_CHANGED" />
+            </intent-filter>
+        </receiver>
     </application>
 </manifest>
