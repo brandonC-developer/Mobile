@@ -26,6 +26,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -34,6 +35,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
@@ -99,13 +102,17 @@ fun AppRoot(vm: AppViewModel = viewModel()) {
                     // The warning stays visible on every tab and never blocks the app (FR-024). It matters once
                     // there is a rental to remind about.
                     if (rentals.isNotEmpty()) PermissionBanner(vm.permissions) { fixPermissions(banner = true) }
+                    // NFR-009: the labels follow the phone font size up to 1.3 times so words never split in the narrow items.
+                    val density = LocalDensity.current
+                    CompositionLocalProvider(LocalDensity provides Density(density.density, minOf(density.fontScale, 1.3f))) {
                     NavigationBar {
                         tabs.forEach { (tab, icon, label) ->
                             NavigationBarItem(
                                 selected = vm.tab == tab, onClick = { vm.selectTab(tab) },
-                                icon = { Icon(icon, contentDescription = null) }, label = { Text(stringResource(label)) },
+                                icon = { Icon(icon, contentDescription = null) }, label = { Text(stringResource(label), maxLines = 1) },
                             )
                         }
+                    }
                     }
                 }
             },

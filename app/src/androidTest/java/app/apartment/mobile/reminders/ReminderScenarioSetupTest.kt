@@ -30,6 +30,7 @@ class ReminderScenarioSetupTest {
         val scenario = args.getString("scenario")
         assumeTrue(scenario != null)
         val minutes = args.getString("minutes")?.toLong() ?: 7L
+        val noRental = args.getString("noRental") == "true"
         val instrumentation = InstrumentationRegistry.getInstrumentation()
         val context = instrumentation.targetContext
         instrumentation.uiAutomation.executeShellCommand("appops set ${context.packageName} SCHEDULE_EXACT_ALARM allow").close()
@@ -40,7 +41,7 @@ class ReminderScenarioSetupTest {
             db.clearAllTables()
             val tenant = db.tenants().insert(TenantEntity(fullName = "Prueba $scenario"))
             val property = db.properties().insert(PropertyEntity(name = "Apto de prueba"))
-            db.rentals().insert(
+            if (!noRental) db.rentals().insert(
                 RentalEntity(
                     tenantId = tenant, propertyId = property, amount = 123_000, paymentDay = planned.dayOfMonth,
                     startEpochDay = LocalDate.now().minusMonths(2).toEpochDay(),
@@ -55,6 +56,6 @@ class ReminderScenarioSetupTest {
             ReminderScheduler.rebuild(context)
         }
         println("SCENARIO-SEEDED scenario=$scenario planned=$planned alarms=$scheduled")
-        assertTrue(scheduled > 0)
+        assertTrue(noRental || scheduled > 0)
     }
 }
