@@ -10,8 +10,6 @@ import java.text.Normalizer
 data class Parsed(val intent: String, val slots: Set<String>)
 
 object AssistantBaseline {
-    private val roster = mapOf("maria" to "María", "luis" to "Luis", "carlos" to "Carlos", "ana" to "Ana", "rosa" to "Rosa",
-        "jorge" to "Jorge", "pablo" to "Pablo", "marco" to "Marco")
     private val weekdays = mapOf(
         "lunes" to "monday", "martes" to "tuesday", "miercoles" to "wednesday", "jueves" to "thursday",
         "viernes" to "friday", "sabado" to "saturday", "domingo" to "sunday",
@@ -80,62 +78,75 @@ object AssistantBaseline {
         return found?.toString()
     }
 
-    private fun tenantOf(t: String): String? = t.split(" ").firstNotNullOfOrNull { roster[it] }
+    /** Data that in the app comes from the local database: tenant names and property names. Never hard-coded in rules. */
+    class Roster(val tenantNames: List<String>, val propertyNames: List<String>) {
+        val byToken: Map<String, String> = tenantNames.flatMap { n -> normalize(n).split(" ").map { it to n.split(" ").first() } }.toMap()
+    }
 
-    fun parse(text: String): Parsed {
-        val t = normalize(text)
-        val tenant = tenantOf(t)
+    private fun tenantOf(t: String, roster: Roster): String? = t.split(" ").firstNotNullOfOrNull { roster.byToken[it] }
+
+    /** A property mentioned by its name, e.g. "apartamento 3": returns the last word of the stored name ("3"). */
+    private fun propertyOf(t: String, roster: Roster): String? =
+        roster.propertyNames.firstOrNull { Regex("\\b" + Regex.escape(normalize(it)) + "\\b").containsMatchIn(t) }?.split(" ")?.last()
+
+    fun parse(text: String, roster: Roster): Parsed {
+        val t0 = normalize(text)
+        val prop = propertyOf(t0, roster)
+        val pn = prop?.let { "property=$it" }
+        val t = roster.propertyNames.fold(t0) { acc, p -> acc.replace(normalize(p), " ") }.replace(Regex("\\s+"), " ").trim()
+        val tenant = tenantOf(t, roster)
+        val hasRef = tenant != null || prop != null
         fun slots(vararg s: String?) = s.filterNotNull().toSet()
         val tn = tenant?.let { "tenant=$it" }
 
         if (t.startsWith("cancel") || t.startsWith("no dejalo")) return Parsed("cancel", emptySet())
         if (t.startsWith("si confirm") || t == "confirmalo") return Parsed("confirm", emptySet())
 
-        if (t.contains("desmarc") || Regex("\\bno (ha )?pago\\b").containsMatchIn(t)) return Parsed("unmark_paid", slots(tn))
-        if (tenant != null && (t.contains("pagado") || t.contains("pagada") ||
+        if (t.contains("desmarc") || Regex("\\bno (ha )?pago\\b").containsMatchIn(t)) return Parsed("unmark_paid", slots(tn, pn))
+        if (hasRef && (t.contains("pagado") || t.contains("pagada") ||
                 Regex("\\b(ya pago|me pago|anote que \\w+ pago)\\b").containsMatchIn(t))
-        ) return Parsed("mark_paid", slots(tn))
+        ) return Parsed("mark_paid", slots(tn, pn))
 
         val deleteVerb = Regex("\\b(borra|borrar|elimina|elimine|eliminar)\\b").containsMatchIn(t)
         val endVerb = Regex("\\b(termina|terminar|quita|quitalo|saca|se va|se fue)\\b|de baja").containsMatchIn(t)
         if (deleteVerb || endVerb) {
             val intent = if (deleteVerb) "delete_rental" else "end_rental"
-            if (tenant == null) {
+            if (!hasRef) {
                 val m = Regex("\\b(quita|elimina|borra|termina|saca|baja) a (\\w+)").find(t)
                 if (m != null) return Parsed("unknown_tenant", slots("tenant=" + m.groupValues[2].replaceFirstChar { it.uppercase() }))
             } else {
                 val end = if (intent == "end_rental" && t.contains("fin de mes")) "end=month_end" else null
-                return Parsed(intent, slots(tn, end))
+                return Parsed(intent, slots(tn, pn, end))
             }
         }
 
         val changeVerb = Regex("\\b(sube|suba|subale|baja|aumenta|cambia|cambiale|cambiele|mueve|pasa)\\b").containsMatchIn(t)
         val questionWord = Regex("\\b(cuanto|cuando|que dia|desde cuando|cual es)\\b|monto de").containsMatchIn(t)
-        if (tenant != null && questionWord && !changeVerb) {
+        if (hasRef && questionWord && !changeVerb) {
             val field = when {
                 t.contains("desde cuando") -> "start_date"
                 (t.contains("cuanto") || t.contains("monto") || t.contains("alquiler")) && (t.contains("que dia") || t.contains("cuando")) -> "amount+day"
                 t.contains("cuanto") || t.contains("monto") || t.contains("alquiler") -> "amount"
                 else -> "day"
             }
-            return Parsed("tenant_info", slots(tn, "field=$field"))
+            return Parsed("tenant_info", slots(tn, pn, "field=$field"))
         }
 
         val money = amount(t)
-        if (tenant != null && money != null) {
+        if (hasRef && money != null) {
             val relative = Regex("\\b(aumenta|sube)\\b").containsMatchIn(t) && !Regex("\\ba $money|\\ba \\d+ mil").containsMatchIn(t) &&
-                !Regex("\\ba [a-z ]*(mil)\\b").containsMatchIn(t.substringAfter(tenant.lowercase().let { if (it == "maría") "maria" else it }))
-            return Parsed("change_amount", slots(tn, if (relative) "delta=$money" else "amount=$money"))
+                !Regex("\\ba [a-z ]*(mil)\\b").containsMatchIn(t.substringAfter(normalize(tenant ?: "")))
+            return Parsed("change_amount", slots(tn, pn, if (relative) "delta=$money" else "amount=$money"))
         }
         val payDay = Regex("\\bpagu?e el\\b|\\bpaga el\\b|\\bpagar el\\b").containsMatchIn(t)
-        if (tenant != null && (changeVerb || payDay)) {
+        if (hasRef && (changeVerb || payDay)) {
             val day = dayOfMonth(t)
-            return if (day != null) Parsed("change_day", slots(tn, "day=$day")) else Parsed("clarify", slots(tn, "missing=day"))
+            return if (day != null) Parsed("change_day", slots(tn, pn, "day=$day")) else Parsed("clarify", slots(tn, pn, "missing=day"))
         }
-        if (tenant == null && changeVerb && t.contains("alquiler")) return Parsed("clarify", slots("missing=tenant", "missing=amount"))
+        if (!hasRef && changeVerb && t.contains("alquiler")) return Parsed("clarify", slots("missing=tenant", "missing=amount"))
 
-        if (tenant != null && t.contains("llam")) return Parsed("call", slots(tn))
-        if (tenant != null && Regex("whatsapp|wasap|mensaje").containsMatchIn(t)) return Parsed("whatsapp", slots(tn))
+        if (hasRef && t.contains("llam")) return Parsed("call", slots(tn, pn))
+        if (hasRef && Regex("whatsapp|wasap|mensaje").containsMatchIn(t)) return Parsed("whatsapp", slots(tn, pn))
 
         val collection = Regex("cobr|paga|vence|toca|recib|entra|falta|hay algo|total").containsMatchIn(t)
         if (!collection) return Parsed("out_of_scope", emptySet())

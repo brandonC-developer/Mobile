@@ -28,7 +28,7 @@ class AssistantBaselineTest {
             val failures = mutableListOf<String>()
             val perIntent = sortedMapOf<String, IntArray>()
             for (r in set) {
-                val got = AssistantBaseline.parse(r.text)
+                val got = AssistantBaseline.parse(r.text, roster())
                 val iOk = got.intent == r.intent
                 val sOk = got.slots == r.slots
                 if (iOk) intentOk++
@@ -70,7 +70,7 @@ class AssistantOwnerPhrasesTest {
         for (line in rows) {
             val p = line.split("|")
             val exp = p[3].split(",").filter(String::isNotBlank).sorted()
-            val got = AssistantBaseline.parse(p[1])
+            val got = AssistantBaseline.parse(p[1], roster())
             val same = got.intent == p[2] && got.slots.sorted() == exp
             if (same) ok++
             out.appendLine("${p[0]} ${if (same) "OK  " else "FAIL"} \"${p[1]}\"  expected ${p[2]} $exp  got ${got.intent} ${got.slots.sorted()}  [certain: ${p[4]}]")
@@ -79,4 +79,11 @@ class AssistantOwnerPhrasesTest {
         File("build/assistant-owner.txt").writeText(out.toString())
         println(out)
     }
+}
+
+/** Stands in for the local database: names come from a data file, never from the rules. */
+fun roster(): AssistantBaseline.Roster {
+    val f = listOf(File("../docs/06-quality/assistant-test-roster.psv"), File("docs/06-quality/assistant-test-roster.psv")).first { it.exists() }
+    val rows = f.readLines().drop(1).filter { it.isNotBlank() }.map { it.split("|") }
+    return AssistantBaseline.Roster(rows.filter { it[0] == "tenant" }.map { it[1] }, rows.filter { it[0] == "property" }.map { it[1] })
 }

@@ -54,3 +54,13 @@ What failed and why:
 - **Not tested but visible:** no accents, no capitals, no punctuation, typos ("del María"), several statements in one line, a dictated-sounding "n fecha". The authored set did not have this mix.
 
 Conclusion (agent): the 97.4% was an artifact of the author writing both sides. On real wording the keyword rules cover about a third. That is the first honest evidence that either many more rules or a model is needed; it does **not** yet show a model would do better, and it shows that a good part of the problem (apartment lookup, new questions, ambiguity handling) belongs to the app, not to the model. Next: the Owner answers four label questions, the 9 phrases join the dev set, and the models are measured on the same phrases.
+
+## Correction (Owner, 2026-11-02): names and apartments are data from the local database
+The first run of the Owner phrases had tenant names written inside the rule code, which is wrong for the product: tenants and properties change, and the app reads them from the local database. The spike now takes a `Roster` (tenant names and property names) as an input, loaded in the tests from `docs/06-quality/assistant-test-roster.psv`, which stands in for the database. The rules contain no name. A property mentioned by its stored name ("apartamento 3") is resolved against that list.
+
+Rerun: agent-written set unchanged (97.4% on test). Owner phrases **4/9** (was 3/9): O02 "apartamento 1 ya pagó" now passes because the property lookup works; the other failures are unchanged (O03 delete instead of end, O05 and O06 duration questions, O08 delete scope, O09 past-tense change). No other rule was added or tuned, so those five stay as findings. These 9 phrases are now part of the dev data and can no longer count as an untouched test.
+
+Design consequences (proposal for the assistant requirements and the ADR):
+1. **Entity resolution belongs to the app.** The model or rules extract the words that name a person or a place ("marco", "apartamento 16"); the app matches them to database rows, ignoring accents and case, and tolerating typos ("del María"). Ambiguous or missing matches produce a question with buttons.
+2. **The model never needs the data to understand a request, and should not get it.** If a model is used, the prompt carries only the phrase (and at most the list of names to help spelling, to be decided); results come back as text spans and slots, not as rows.
+3. **Test rosters come from a file**, so the same measurements can be repeated with other names, two tenants with one name, or an empty database.
