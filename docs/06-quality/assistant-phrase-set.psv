@@ -71,9 +71,9 @@ P069|Sacá a Ana del alquiler|end_rental|tenant=Ana|voseo|test
 P070|María se va a fin de mes|end_rental|tenant=María,end=month_end|statement|test
 P071|Ya Luis se fue, quítalo|end_rental|tenant=Luis|statement,colloquial|test
 P072|Borra el alquiler de María|delete_rental|tenant=María|imperative_tu|dev
-P073|Elimine el alquiler de Carlos|delete_rental|tenant=Carlos|usted|test
+P073|Elimine el alquiler de Carlos|end_rental|tenant=Carlos|usted|test
 P074|Borrá a Ana, fue un error|delete_rental|tenant=Ana|voseo,reason|test
-P075|Elimina el registro de Luis|delete_rental|tenant=Luis|imperative_tu|test
+P075|Elimina el registro de Luis|end_rental|tenant=Luis|imperative_tu|test
 P076|Cambia el día de pago de María|clarify|tenant=María,missing=day|missing_slot|test
 P077|Escríbele a María Gómez|whatsapp|tenant=María|surname|test
 P078|Sube el alquiler|clarify|missing=tenant,missing=amount|missing_slot|test

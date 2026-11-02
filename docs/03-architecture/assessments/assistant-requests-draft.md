@@ -53,3 +53,5 @@ refs: [DOC-TFA-001, OI-049, UC-004, UC-005, UC-007, UC-008, UC-009, UC-010, NFR-
 - R6 (a paid mark) is wanted; it is a new requirement, logged as OI-050.
 - "Quita" means **end the rental** (R9, history kept). R10 (delete) stays a separate, explicit phrase.
 - Chat first; voice is a later, separate assessment.
+- Verb policy (answers of 2026-11-02): quitar, eliminar, terminar, sacar, dar de baja and "ya se fue" end the rental (R9). Only an explicit "borrar" is R10, and the Owner calls it "another step". The assistant also needs a one-request memory so a correction ("me equivoqué, María paga los 28 ahora") can replace the pending request.
+- Real phrases show addressing by apartment ("apartamento 1 ya pagó") and a duration question ("cuántos meses tiene aquí Marco"); both are added to the scope as proposals.

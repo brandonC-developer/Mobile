@@ -1,10 +1,11 @@
 id|text|intent|slots|certain
 O01|A quien le toca pagar esta semana|week_collections|range=this_week|yes
 O02|apartamento 1 ya pago|mark_paid|property=1|yes
-O03|elimina a jorge apartamento 3 ya se fue|end_rental|tenant=Jorge,property=3|no (verb says delete, reason says left)
-O04|quita notificaciones de maria ya se fue|end_rental|tenant=María|no (could be only turning reminders off)
+O03|elimina a jorge apartamento 3 ya se fue|end_rental|tenant=Jorge,property=3|yes (Owner: end the rental)
+O04|quita notificaciones de maria ya se fue|end_rental|tenant=María|yes (Owner: end the rental)
 O05|cuantos meses tiene aqui marco|tenant_info|tenant=Marco,field=duration|yes
 O06|apartamento 16  ya tiene un año??|tenant_info|property=16,field=duration|yes
-O07|mueve fecha de pago de pablo a n fecha me equivoque|clarify|tenant=Pablo,missing=day|no (unclear what "n fecha" is)
-O08|eliminar informacion de carlos|delete_tenant|tenant=Carlos|no (delete the person or the rental?)
+O07|mueve fecha de pago de pablo a n fecha me equivoque|clarify|tenant=Pablo,missing=day|yes as written (the Owner meant a correction: see O10)
+O08|eliminar informacion de carlos|end_rental|tenant=Carlos|no (agent applies the Owner rule: eliminate means end, delete is a separate step; to confirm)
 O09|el monto del maria cambio a 150 000|change_amount|tenant=María,amount=150000|yes
+O10|maria paga los 28 ahora|change_day|tenant=María,day=28|yes (this is what the Owner meant by "n fecha", a correction of the previous message)

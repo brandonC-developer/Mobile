@@ -107,8 +107,8 @@ object AssistantBaseline {
                 Regex("\\b(ya pago|me pago|anote que \\w+ pago)\\b").containsMatchIn(t))
         ) return Parsed("mark_paid", slots(tn, pn))
 
-        val deleteVerb = Regex("\\b(borra|borrar|elimina|elimine|eliminar)\\b").containsMatchIn(t)
-        val endVerb = Regex("\\b(termina|terminar|quita|quitalo|saca|se va|se fue)\\b|de baja").containsMatchIn(t)
+        val deleteVerb = Regex("\\b(borra|borrar|borre)\\b").containsMatchIn(t)
+        val endVerb = Regex("\\b(termina|terminar|quita|quitalo|saca|se va|se fue|elimina|elimine|eliminar)\\b|de baja").containsMatchIn(t)
         if (deleteVerb || endVerb) {
             val intent = if (deleteVerb) "delete_rental" else "end_rental"
             if (!hasRef) {

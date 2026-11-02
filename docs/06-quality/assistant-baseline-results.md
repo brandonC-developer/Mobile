@@ -64,3 +64,22 @@ Design consequences (proposal for the assistant requirements and the ADR):
 1. **Entity resolution belongs to the app.** The model or rules extract the words that name a person or a place ("marco", "apartamento 16"); the app matches them to database rows, ignoring accents and case, and tolerating typos ("del María"). Ambiguous or missing matches produce a question with buttons.
 2. **The model never needs the data to understand a request, and should not get it.** If a model is used, the prompt carries only the phrase (and at most the list of names to help spelling, to be decided); results come back as text spans and slots, not as rows.
 3. **Test rosters come from a file**, so the same measurements can be repeated with other names, two tenants with one name, or an empty database.
+
+## Owner answers to the four label questions (2026-11-02) and their effect
+Decisions: (1) "quita notificaciones de María, ya se fue" means **end the rental**; (2) "elimina a Jorge, apartamento 3 ya se fue" means **end the rental**, and **deleting is another step** (an explicit "borrar"); (3) "eliminar información de Carlos" was not answered directly; the agent applied the same rule (eliminate means end) and kept that label as uncertain, to confirm; (4) "n fecha" was a correction: the intended message is **"María paga los 28 ahora"** (change the payment day of María to 28), added as O10.
+
+Applied as a specification change, not as tuning to a score:
+- **Verb policy:** quitar, eliminar, terminar, sacar, dar de baja, "se fue" → end the rental (history kept). Only borrar/borre → delete the rental. Labels P073 and P075 of the authored set were changed from delete to end for this reason.
+- O03, O04, O08 relabelled to end; O07 kept as written (a clarification) and O10 added.
+
+Rerun, same untouched rules otherwise (the only rule edit is the verb policy above):
+| Set | Result |
+|-----|--------|
+| Authored set, test split (77) | 97.4% intent and exact, slot F1 98.4%, 1 harmful error (P048, unchanged) |
+| Owner phrases (10) | **6/10** (was 4/9 before the answers) |
+
+Still failing, all real wording: O05 and O06 (how many months or years a tenant has been there), O09 ("cambió a 150 000", a statement in the past tense) and O10 ("María paga los 28 ahora", a statement of a new fact). The harmful delete-for-end error on O03 is gone, which was a consequence of the verb policy, not of better language handling.
+
+New design finding: the original message was a **two-turn exchange**. The first turn named Pablo and an unclear date; "me equivoqué" then introduced a correction that only makes sense with the previous turn. A chat assistant therefore needs a short memory of the last request (to correct or cancel it), which the catalog did not include. Proposal: keep only the last pending request in memory, for the confirmation step; "me equivoqué" or "cancela" drops it.
+
+Open point for the Owner: should "borrar" be allowed on an active rental, or only after the rental was ended ("borrar es otro paso")? The approved FR-012 does not say.
