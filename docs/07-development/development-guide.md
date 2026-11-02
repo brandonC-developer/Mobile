@@ -33,3 +33,8 @@ The debug APK is `app/build/outputs/apk/debug/app-debug.apk`. Install with `adb 
 - Write the test of a behavior before its code where the behavior is pure logic (collections, validation, backup).
 - No permission is added to the manifest without an approved requirement; the Internet permission is never declared (TC-026).
 - Milestones H0 to H6 follow the roadmap; a milestone ends when its test cases pass on the Owner phone.
+
+## Emulator
+- The Android Studio virtual device `Medium_Phone_API_37.0` (Android API 37, x86_64) boots and runs the debug APK (checked 2026-11-02).
+- With the default graphics backend it went offline in `adb` after boot on the Owner machine; starting it with software rendering was stable: `emulator -avd Medium_Phone_API_37.0 -no-snapshot -no-audio -gpu swiftshader_indirect`.
+- Use it for screens and logic. Reminder timing, reboot and permission behavior (ADR-0003) were verified on the Owner phone (Android 13) and must be re-checked there: the emulator is API 37, not the target Android 13.
