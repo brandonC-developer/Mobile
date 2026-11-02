@@ -10,7 +10,7 @@ refs: [DOC-TFA-001, DOC-TST-AST, OI-049]
 
 # Rule baseline results
 
-**Spike, throwaway.** Code: `app/src/test/java/app/apartment/mobile/spike/` (`AssistantBaseline.kt`, `AssistantBaselineTest.kt`). Run: `./gradlew :app:testDebugUnitTest --tests "*AssistantBaselineTest*"`; the report is written to `app/build/assistant-baseline.txt`. Stage: JVM only (stage 1 of the test policy). No model, no Android code. The Owner decides whether the spike code stays.
+**Spike, throwaway.** Code: `app/src/test/java/app/apartment/mobile/spike/` (`AssistantBaseline.kt`, `AssistantBaselineTest.kt`). Run: `./gradlew :app:testDebugUnitTest --tests "*AssistantBaselineTest*"`; the report is written to `app/build/assistant-baseline.txt`. Stage: JVM only (stage 1 of the test policy). No model, no Android code. Owner decision 2026-11-02: the spike code is kept to repeat the measurement (with the Owner phrases and later with the models). It stays test-only, outside the product code, and may be deleted when the study ends.
 
 ## Results (phrase set of 90, split test = 77, dev = 13)
 | Measure | Test split | Dev split | Target (DOC-TFA-001) |
