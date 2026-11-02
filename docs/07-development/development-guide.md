@@ -60,3 +60,7 @@ The debug APK is `app/build/outputs/apk/debug/app-debug.apk`. Install with `adb 
 6. Approved documents are changed only through a CHG.
 - Scenarios that need the test to end first (reboot, forced stop; TC-019): install the app and test APKs with `adb install -r`, then `adb shell am instrument -w -e scenario <name> -e minutes <n> -e class app.apartment.mobile.reminders.ReminderScenarioSetupTest app.apartment.mobile.test/androidx.test.runner.AndroidJUnitRunner`. It seeds a rental with one same-day reminder and leaves the data in place.
 - Release file: `./gradlew :app:assembleRelease` (signing key and passwords: DOC-OPS section 2).
+
+## Technology assessments
+- Before adopting a library, SDK, model or service, use the project skill `tech-fit-assessment` (`.claude/skills/tech-fit-assessment/`). It produces a report in `docs/03-architecture/assessments/` covering compatibility with the approved documents, price and licence, software load, optimization, processing power of the Owner phone and a test plan against the project. The first one is DOC-TFA-001 (local assistant, OI-049).
+- `scripts/device_probe.sh [-s <serial>] [<package>]` in the skill folder reads chipset, cores, memory, storage, battery and app size from a connected device. It only reads. It was checked for the no-device case; run it on the phone for the first real probe.

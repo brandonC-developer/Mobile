@@ -138,7 +138,7 @@ footer { margin-top: 64px; padding-top: 20px; border-top: 1px solid var(--line);
 </style>
 
 <nav aria-label="Secciones"><div class="wrap">
-  <a href="#ruta">Roadmap</a><a href="#hitos">Desarrollo</a><a href="#mockups">Mockups</a><a href="#ux">Framework UX</a><a href="#qa">QA</a><a href="#casos">Casos de uso</a><a href="#secuencias">Secuencias</a><a href="#pendiente">Pendiente</a>
+  <a href="#ruta">Roadmap</a><a href="#hitos">Desarrollo</a><a href="#mockups">Mockups</a><a href="#ux">Framework UX</a><a href="#ia">IA local</a><a href="#qa">QA</a><a href="#casos">Casos de uso</a><a href="#secuencias">Secuencias</a><a href="#pendiente">Pendiente</a>
 </div></nav>
 
 <div class="wrap">
@@ -447,6 +447,72 @@ sequenceDiagram
     R->>A: Cancelar alarmas viejas y crear las nuevas
     A-->>R: Listo
 </pre></div>
+</section>
+
+<section id="ia">
+  <h2>Evaluación: asistente local con IA</h2>
+  <p class="lead">Para saber si un modelo muy pequeño puede entender frases como "¿qué cobro esta semana?" o "mueve el pago de María al 20" sin salir del teléfono. Es una evaluación hecha con el skill <code>tech-fit-assessment</code> (abajo). Nada se construyó. Informe completo: <code>docs/03-architecture/assessments/local-assistant-fit.md</code> (OI-049).</p>
+  <div class="gate"><b>Veredicto: desconocido, medir primero.</b> Se puede y las licencias no cuestan, pero tres datos decisivos faltan: qué tan bien entienden español los modelos de 270 a 600 millones de parámetros, qué tan rápido corren en tu Helio G99, y cuánto pesaría en la app.</div>
+
+  <h3 style="margin-top:28px">Compatibilidad con el proyecto</h3>
+  <div class="scroll"><table>
+    <thead><tr><th>Regla del proyecto</th><th>Resultado</th><th>Por qué</th></tr></thead>
+    <tbody>
+      <tr><td>Sin conexión (NFR-001)</td><td>Compatible</td><td>La inferencia local no necesita red.</td></tr>
+      <tr><td>Datos solo en el teléfono, sin permiso de Internet (NFR-002, SEC-007)</td><td>Cambia cómo llega el modelo</td><td>La app no puede descargarlo. Se cargaría desde un archivo, como una copia de seguridad. La nube choca de frente.</td></tr>
+      <tr><td>Todo en español (NFR-007)</td><td><b>Riesgo principal</b></td><td>Ninguna ficha oficial demuestra español para estos tamaños.</td></tr>
+      <tr><td>Datos íntegros (NFR-005)</td><td>Compatible si se diseña así</td><td>El modelo no escribe nada: solo traduce la frase; la app valida y pide las confirmaciones de siempre.</td></tr>
+      <tr><td>Avisos a tiempo (NFR-004)</td><td>Compatible</td><td>El asistente solo corre con la app abierta.</td></tr>
+      <tr><td>Kotlin nativo (ADR-0001)</td><td>Requiere decidir</td><td>LiteRT-LM tiene API de Kotlin estable; llama.cpp añade C++ y el NDK.</td></tr>
+      <tr><td>Requisitos aprobados</td><td>Faltan</td><td>Ninguno cubre un asistente: hacen falta requisitos, un ADR y pruebas antes de construir.</td></tr>
+    </tbody></table></div>
+
+  <h3 style="margin-top:28px">Precios</h3>
+  <div class="scroll"><table>
+    <thead><tr><th>Concepto</th><th>Costo</th></tr></thead>
+    <tbody>
+      <tr><td>LiteRT-LM, llama.cpp, Qwen3-0.6B</td><td>Gratis (Apache-2.0, MIT, Apache-2.0)</td></tr>
+      <tr><td>Gemma 3 270M y FunctionGemma</td><td>Sin tarifa; al incluirlos en una app hay que entregar los términos y un aviso (Términos de Gemma)</td></tr>
+      <tr><td>Ajuste fino para español</td><td>Gratis en un Colab con T4 según el ejemplo de Google; horas de trabajo (estimación mía)</td></tr>
+      <tr><td>Teléfono nuevo</td><td>Ninguno si el tuyo alcanza (sin medir). Gemini Nano exigiría otro teléfono.</td></tr>
+      <tr><td>Nube, solo para comparar (no permitida)</td><td>Gemini 2.5 Flash-Lite: $0,10 / $0,40 por millón de tokens de entrada / salida. Con 600 consultas al mes, unos <b>$0,05 al mes</b> (mis supuestos en el informe).</td></tr>
+    </tbody></table></div>
+  <p class="eg">El precio no es el obstáculo en ninguna opción; lo es la regla de que nada sale del teléfono. Fuente de precios: página de Google AI Studio, leída el 2 de noviembre de 2026.</p>
+
+  <div class="grid">
+    <article class="card"><h3>Ventajas</h3><ul>
+      <li>Licencias gratuitas y sin costo por uso.</li>
+      <li>Funciona sin conexión y los datos de los inquilinos no salen del teléfono.</li>
+      <li>Frases naturales y, después, voz, sin listas de palabras clave.</li>
+      <li>Hay herramientas maduras: LiteRT-LM (Kotlin estable), llama.cpp y SmolChat como referencia abierta.</li>
+      <li>Si la app calcula las respuestas y el modelo solo interpreta, montos y fechas salen exactos.</li>
+    </ul></article>
+    <article class="card"><h3>Desventajas</h3><ul>
+      <li>El español de estos modelos no está probado.</li>
+      <li>FunctionGemma saca 61,1 y 73,7 en sus pruebas de relevancia: puede llamar a la función equivocada. Las confirmaciones son obligatorias.</li>
+      <li>Suma cientos de MB, código nativo o un runtime nuevo, y presión de memoria en un teléfono de 6 GB.</li>
+      <li>Hay que escribir requisitos, un ADR y pruebas; el ajuste a español es trabajo real.</li>
+      <li>Las librerías cambian rápido (LiteRT-LM anotó un cambio incompatible).</li>
+      <li>El modelo no se puede descargar desde la app: lo cargas tú una vez.</li>
+    </ul></article>
+    <article class="card"><h3>Opciones</h3><ul>
+      <li><b>A. Traductor de reglas en español, sin IA:</b> compatible, casi sin peso, rígido.</li>
+      <li><b>B. Modelo pequeño (Qwen3-0.6B o FunctionGemma 270M):</b> compatible con cambios; sin medir.</li>
+      <li><b>C. Gemini Nano:</b> no sirve; solo corre en teléfonos recientes (Pixel 10, algunos Xiaomi 15 y Samsung S26) y el moto g72 no está.</li>
+      <li><b>D. Nube:</b> descartada por NFR-002.</li>
+    </ul></article>
+  </div>
+
+  <h3 style="margin-top:28px">Qué falta medir (plan de pruebas)</h3>
+  <ul class="next">
+    <li><b>Sondeo del teléfono</b> con el script del skill: chipset, núcleos, RAM libre. Pendiente: el teléfono está desconectado.</li>
+    <li><b>60 a 100 frases en español</b> para medir acierto. Necesito 6 a 10 frases reales tuyas.</li>
+    <li><b>Línea base sin IA</b> y los dos modelos en tu teléfono: velocidad, memoria y batería.</li>
+    <li><b>Peso agregado</b> a la app y regresión de las 134 pruebas existentes.</li>
+  </ul>
+
+  <h3 style="margin-top:28px">Skill nuevo: <code>tech-fit-assessment</code></h3>
+  <p>Queda en <code>.claude/skills/tech-fit-assessment/</code>. Se activa cuando preguntas si algo se puede usar, cuánto cuesta, qué tan pesado es o si el teléfono lo aguanta. Evalúa ocho dimensiones: compatibilidad, precio, carga de software, optimización, fuerza de procesamiento, privacidad, mantenimiento y encaje con los documentos aprobados. Incluye una plantilla de informe, el perfil del proyecto, un script que sondea el teléfono con <code>adb</code> y un plan de pruebas contra el proyecto. Cada dato lleva fuente, fecha y un grado: medido, documentado, reportado o desconocido.</p>
 </section>
 
 <section id="qa">
