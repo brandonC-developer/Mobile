@@ -17,7 +17,7 @@ Documentation is the source of truth of the project. Rules for AI agents: [`../A
 |---|---|---|
 | Governance | [governance](00-governance/governance.md) · [traceability](00-governance/traceability.md) · [standards note](00-governance/standards-note.md) · [templates](00-governance/templates/) | Draft |
 | Context | [vision-scope](01-context/vision-scope.md) · [glossary](01-context/glossary.md) | Approved (v0.1) |
-| Requirements | [functional](02-requirements/functional.md) · [non-functional](02-requirements/non-functional.md) · [use-cases](02-requirements/use-cases/) | Approved (v0.1); use cases empty |
+| Requirements | [functional](02-requirements/functional.md) · [non-functional](02-requirements/non-functional.md) · [use-cases](02-requirements/use-cases/) | Approved (v0.1); use cases UC-001 to UC-015 |
 | Architecture | [architecture](03-architecture/architecture.md) · [adr](03-architecture/adr/) · [diagrams](03-architecture/diagrams/) | Approved 0.1; ADR-0001 to ADR-0004 Approved |
 | Design | [components](04-design/components.md) · [data-model](04-design/data-model.md) · [interfaces-integrations](04-design/interfaces-integrations.md) · [ux-framework](04-design/ux-framework.md) | Approved 0.1 |
 | Security and privacy | [security-privacy](05-security-privacy/security-privacy.md) | Approved 0.1 |
