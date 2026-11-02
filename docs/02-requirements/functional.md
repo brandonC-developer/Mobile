@@ -181,10 +181,11 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
 ### FR-016 — Weekly summary navigation
 - **Status:** Approved
 - **Origin:** OBJ-002 · OI-015 · OI-036
-- **Description:** The system shall let the landlord view the previous, the current and the next week, and shall always open on the current week. The previous week is shown only in the summary, not in the calendar.
+- **Description:** The system shall let the landlord view the previous, the current and the next week, and shall open on the current week when the app is opened and when it comes back after more than 5 minutes away or after being closed (CHG-003). Short trips the app starts itself, such as the file picker, the permission screens or the share menu, do not reset the view. The previous week is shown only in the summary, not in the calendar.
 - **Acceptance criteria:**
-  - AC-FR-016-1: Opening the app, including after leaving it open on another week, shows the current week.
+  - AC-FR-016-1: Opening the app, including after leaving it on another week for more than 5 minutes, shows the current week.
   - AC-FR-016-2: The landlord can move one week back and one week forward from the current week, and no further.
+  - AC-FR-016-3 (CHG-003): Coming back to the app within 5 minutes, for example after the file picker or a permission screen, keeps the tab and the week that were open.
 - **Priority:** Must
 - **Refs:** none yet
 

@@ -160,7 +160,7 @@ sequenceDiagram
 3. The landlord moves to the previous or the next week to look, and no further.
 
 **Alternative flows and exceptions**
-- Opening the app again always returns to the current week (AC-FR-016-1).
+- Opening the app, or coming back after more than 5 minutes away, returns to the current week (AC-FR-016-1, AC-FR-016-3, CHG-003).
 - The summary shows no statuses such as paid or overdue (FR-015).
 
 ```mermaid

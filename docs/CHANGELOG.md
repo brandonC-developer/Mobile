@@ -5,6 +5,7 @@ Format: one entry per approved change, citing IDs.
 ## [Unreleased]
 ### Added
 - ADR-0005 (Jetpack Compose and Material 3) drafted as Proposed; Owner chose it 2026-11-02. Milestone H0 built: Gradle project in `app/`, Compose placeholder activity, Room dependencies, no permissions, Android backup blocked, unit tests for TC-026 pass. OI-045 logs the technical values chosen by the agent. DOC-DEV 0.1 drafted.
+- OI-045 to OI-048 resolved by the Owner. OI-048 applied as CHG-003 (proposed): the current week returns only after more than 5 minutes away; `HomeReset` rule, `appLeft` and `appReturned` in the view model, 3 unit tests and 4 view-model tests (TC-035). New release file built; installing it on the Owner phone is pending (phone disconnected).
 - OI-045, OI-046 and OI-047 resolved by the Owner (accepted as is/as built).
 - OI-045 resolved by the Owner (accepted as is).
 - Milestone H6 (done, pending Owner decisions): reboot verified on the Owner phone (alarms rebuilt after one unlock without opening the app; reminder at 13:47:00; data persisted); signed release file 0.1.0 installed on the phone; TC-019, TC-027 and TC-028 passed; RSK-016 mitigated; DOC-OPS section 7 and an ADR-0003 verification note added. Earlier H6 work: release signing and DOC-OPS 0.1 written; on the Owner phone (moto g72, Android 13): device suite passes (56 tests) also in airplane mode; reminders arrive with the screen off (1 s) and in forced deep idle (0 s); a forced stop removes the alarms and reopening rebuilds them; real permission flow (explanation, system dialog, Alarms and reminders screen, warning on and off); WhatsApp chat and dialer opened from the app; backup imported through the real file picker. Defect found and fixed: with the largest font the bottom bar words split (NFR-009); the bar is now capped at 1.3 times. RSK-009 closed, RSK-017 mitigated, RSK-018 added; OI-048 logged (tab reset after short trips). Pending: reboot test (needs the Owner to unlock the phone), installing the signed release file.
@@ -58,3 +59,9 @@ Changes to approved elements, as `governance.md` requires: reason, impact, appro
 - **Reason:** verified facts and built behavior replaced statements that said "to be verified" or "unwritten".
 - **Changes:** ADR-0003 (verification of the built app on the phone appended); FR-021 (limit now stated: below 500 alarms, window of 100 plus renewal, OI-039, OI-046); FR "Not yet covered" (use cases exist); NFR-004 verification note (reboot and force stop verified); NFR "Not yet covered" (alarm limit verified); ADR-0004 context (data model exists); architecture solution table (ADR-0005 row, component-to-code map); test plan (TC statuses, TC-032 to TC-034 added so every AC has a test case); risk register (RSK-005, RSK-010 mitigated, RSK-012 closed, RSK-015 to RSK-017 added).
 - **Impact:** none on code.
+
+### CHG-003 — Return to the current week only after a real absence (OI-048)
+- **Status:** Proposed (Owner decision of 2026-11-02, applied in the documents and code, pending approval with `approve: CHG-003`).
+- **Reason:** on the Owner phone the app returned to the Semana tab after every short trip it started itself (file picker, permission screens), taking the landlord out of what they were doing.
+- **Changes:** FR-016 description and AC-FR-016-1 reworded, AC-FR-016-3 added; UC-004 note; TC-035 added.
+- **Impact:** CMP-001 (view model keeps the time the app left the screen); no data or alarm change.

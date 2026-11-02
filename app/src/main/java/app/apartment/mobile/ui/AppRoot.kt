@@ -86,9 +86,9 @@ fun AppRoot(vm: AppViewModel = viewModel()) {
     }
 
     BackHandler(enabled = vm.screen != Screen.Tabs) { vm.back() }
-    LifecycleEventEffect(Lifecycle.Event.ON_STOP) { vm.resetHome() }
+    LifecycleEventEffect(Lifecycle.Event.ON_STOP) { vm.appLeft() }
     // FR-021: opening the app rebuilds the reminders; coming back from a settings screen refreshes the warning.
-    LifecycleEventEffect(Lifecycle.Event.ON_START) { vm.refreshOnOpen() }
+    LifecycleEventEffect(Lifecycle.Event.ON_START) { vm.appReturned(); vm.refreshOnOpen() }
     LifecycleEventEffect(Lifecycle.Event.ON_RESUME) { vm.refreshPermissions() }
     LaunchedEffect(pendingMessage) {
         pendingMessage?.let { snackbar.showSnackbar(it); pendingMessage = null }

@@ -1,6 +1,7 @@
 package app.apartment.mobile.ui
 
 import android.app.Application
+import android.os.SystemClock
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -18,6 +19,7 @@ import app.apartment.mobile.domain.BackupCodec
 import app.apartment.mobile.domain.BackupData
 import app.apartment.mobile.domain.BackupError
 import app.apartment.mobile.domain.BackupResult
+import app.apartment.mobile.domain.HomeReset
 import app.apartment.mobile.domain.Rental
 import app.apartment.mobile.domain.RentalError
 import app.apartment.mobile.domain.WeekNavigation
@@ -66,8 +68,18 @@ class AppViewModel(private val app: Application) : AndroidViewModel(app) {
 
     fun showWeek(offset: Int) { weekOffset = WeekNavigation.clamp(offset) }
 
-    /** FR-016: leaving the app and coming back shows the current week again. */
-    fun resetHome() {
+    private var leftAt: Long? = null
+
+    /** The app left the screen (any reason). The time comes from a clock that keeps running while the phone sleeps. */
+    fun appLeft(now: Long = SystemClock.elapsedRealtime()) { leftAt = now }
+
+    /** FR-016, CHG-003: back on screen; the current week returns only after more than 5 minutes away. */
+    fun appReturned(now: Long = SystemClock.elapsedRealtime()) {
+        if (HomeReset.shouldReset(leftAt, now)) resetHome()
+        leftAt = null
+    }
+
+    private fun resetHome() {
         weekOffset = 0
         if (screen == Screen.Tabs) tab = Tab.WEEK
     }
