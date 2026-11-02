@@ -53,8 +53,8 @@ Nine components, CMP-001 to CMP-009, defined in [components](../04-design/compon
 | CMP-004 Reminder scheduler | `domain/ReminderPlanner.kt`, `reminders/ReminderScheduler.kt` | Built |
 | CMP-005 Reminder receiver and notifier | `reminders/Notifier.kt`, `reminders/Receivers.kt` (`AlarmReceiver`) | Built |
 | CMP-006 System event receiver | `reminders/Receivers.kt` (`SystemEventReceiver`) | Built |
-| CMP-007 Backup service | none yet | Milestone H5 |
-| CMP-008 External actions | none yet | Milestone H5 |
+| CMP-007 Backup service | `domain/BackupCodec.kt`, `data/BackupMapping.kt`, `Repository.exportData` and `replaceAll`, `backup/BackupFiles.kt`, `ui/BackupDialogs.kt` | Built |
+| CMP-008 External actions | `domain/PhoneNumber.kt`, `contact/ExternalActions.kt` | Built |
 | CMP-009 Permissions helper | `reminders/ReminderPermissions.kt`, permission flow in `ui/AppRoot.kt` | Built |
 
 ## 6. Runtime view (VW-003)

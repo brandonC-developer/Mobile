@@ -141,4 +141,31 @@
     <string name="perm_explain_body">La app necesita dos permisos: mostrar notificaciones y programar alarmas exactas. Sin ellos, los avisos pueden llegar tarde o no llegar. Puedes seguir usando la app aunque los niegues.</string>
     <string name="perm_explain_continue">Continuar</string>
     <string name="perm_explain_later">Ahora no</string>
+    <!-- Contact (FR-025, FR-026) -->
+    <string name="contact_whatsapp">Escribir por WhatsApp</string>
+    <string name="contact_call">Llamar</string>
+    <string name="contact_whatsapp_missing">WhatsApp no está instalado en este teléfono.</string>
+    <string name="contact_no_app">No se encontró una aplicación para abrir el contacto.</string>
+    <!-- Backup (FR-027, FR-028, FR-029) -->
+    <string name="settings_backup">Copia de seguridad</string>
+    <string name="backup_export">Exportar copia</string>
+    <string name="backup_import">Importar copia</string>
+    <string name="backup_export_title">Antes de exportar</string>
+    <string name="backup_export_body">El archivo guarda los nombres y teléfonos de tus inquilinos sin cifrar. Quien lo reciba podrá leerlo. Compártelo solo con quien confíes.</string>
+    <string name="backup_export_confirm">Exportar</string>
+    <string name="backup_share_title">Compartir copia de seguridad</string>
+    <string name="backup_export_failed">No se pudo preparar el archivo de la copia.</string>
+    <string name="backup_import_title">¿Reemplazar todos tus datos?</string>
+    <string name="backup_import_body">Contenido de la copia: inquilinos %1$d, propiedades %2$d, alquileres %3$d. Tus datos actuales se perderán y no se puede deshacer.</string>
+    <string name="backup_import_confirm">Reemplazar todo</string>
+    <string name="backup_import_done">Copia restaurada.</string>
+    <string name="backup_invalid_title">No se pudo importar</string>
+    <string name="backup_err_read">No se pudo leer el archivo. Tus datos no cambiaron.</string>
+    <string name="backup_err_not_backup">El archivo no es una copia de seguridad válida. Tus datos no cambiaron.</string>
+    <string name="backup_err_format">El archivo no es una copia de esta app. Tus datos no cambiaron.</string>
+    <string name="backup_err_newer">La copia viene de una versión más nueva de la app. Actualiza la app e inténtalo de nuevo. Tus datos no cambiaron.</string>
+    <string name="backup_err_unsupported">La versión de la copia no es compatible. Tus datos no cambiaron.</string>
+    <string name="backup_err_data">La copia tiene datos incompletos o incorrectos. Tus datos no cambiaron.</string>
+    <string name="backup_err_refs">La copia tiene alquileres que apuntan a inquilinos o propiedades que no existen. Tus datos no cambiaron.</string>
+    <string name="backup_err_conflict">La copia tiene dos alquileres activos para la misma propiedad o el mismo inquilino. Tus datos no cambiaron.</string>
 </resources>

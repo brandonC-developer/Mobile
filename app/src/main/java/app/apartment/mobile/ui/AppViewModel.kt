@@ -6,22 +6,30 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import app.apartment.mobile.R
+import app.apartment.mobile.backup.BackupFiles
 import app.apartment.mobile.data.AppDatabase
 import app.apartment.mobile.data.CreateRentalResult
 import app.apartment.mobile.data.PropertyEntity
 import app.apartment.mobile.data.Repository
 import app.apartment.mobile.data.SettingsEntity
 import app.apartment.mobile.data.TenantEntity
+import app.apartment.mobile.domain.BackupCodec
+import app.apartment.mobile.domain.BackupData
+import app.apartment.mobile.domain.BackupError
+import app.apartment.mobile.domain.BackupResult
 import app.apartment.mobile.domain.Rental
 import app.apartment.mobile.domain.RentalError
 import app.apartment.mobile.domain.WeekNavigation
 import app.apartment.mobile.reminders.ReminderPermissions
 import app.apartment.mobile.reminders.ReminderScheduler
 import java.time.LocalDate
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 enum class Tab { WEEK, CALENDAR, RENTALS, SETTINGS }
 
@@ -131,4 +139,61 @@ class AppViewModel(private val app: Application) : AndroidViewModel(app) {
         viewModelScope.launch { done(repo.endRental(id, endDate)) }
 
     fun deleteRental(id: Long) = viewModelScope.launch { repo.deleteRental(id) }
+
+    // --- backup (FR-027, FR-028, FR-029)
+    var backupDialog: BackupDialog? by mutableStateOf(null)
+        private set
+
+    fun askExport() { backupDialog = BackupDialog.ExportWarning }
+    fun dismissBackupDialog() { backupDialog = null }
+
+    /** Builds the file and hands the share intent to [done], or null if it could not be prepared. */
+    fun export(done: (android.content.Intent?) -> Unit) {
+        backupDialog = null
+        viewModelScope.launch {
+            val intent = try {
+                val text = BackupCodec.encode(repo.exportData(), java.time.Instant.now())
+                val uri = withContext(Dispatchers.IO) { BackupFiles.write(app, text, LocalDate.now()) }
+                BackupFiles.shareIntent(uri, app.getString(R.string.backup_share_title))
+            } catch (_: Exception) {
+                null
+            }
+            done(intent)
+        }
+    }
+
+    /** Reads and validates the picked file completely; nothing is written until the landlord confirms (ADR-0004). */
+    fun importFrom(uri: android.net.Uri) {
+        viewModelScope.launch {
+            val text = withContext(Dispatchers.IO) { BackupFiles.readText(app, uri) }
+            backupDialog = when (val result = text?.let { BackupCodec.decode(it, LocalDate.now()) }) {
+                null -> BackupDialog.ImportInvalid(null)
+                is BackupResult.Valid -> BackupDialog.ImportConfirm(result.data)
+                is BackupResult.Invalid -> BackupDialog.ImportInvalid(result.error)
+            }
+        }
+    }
+
+    fun confirmImport(data: BackupData) {
+        viewModelScope.launch {
+            backupDialog = try {
+                repo.replaceAll(data)
+                BackupDialog.ImportDone
+            } catch (_: Exception) {
+                BackupDialog.ImportInvalid(null) // rolled back: the previous data is intact (NFR-005)
+            }
+        }
+    }
+
+    init {
+        BackupFiles.cleanOld(app) // SEC-002: no old backup file stays in the cache
+    }
+}
+
+/** What the backup flow asks the landlord, one at a time. */
+sealed interface BackupDialog {
+    data object ExportWarning : BackupDialog
+    data class ImportConfirm(val data: BackupData) : BackupDialog
+    data class ImportInvalid(val error: BackupError?) : BackupDialog
+    data object ImportDone : BackupDialog
 }

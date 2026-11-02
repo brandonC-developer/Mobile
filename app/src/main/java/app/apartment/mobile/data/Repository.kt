@@ -2,6 +2,7 @@ package app.apartment.mobile.data
 
 import androidx.room.withTransaction
 import app.apartment.mobile.domain.Availability
+import app.apartment.mobile.domain.BackupData
 import app.apartment.mobile.domain.Names
 import app.apartment.mobile.domain.RentalError
 import app.apartment.mobile.domain.RentalRules
@@ -130,6 +131,33 @@ class Repository(
     /** FR-012. Tenant and property stay. */
     suspend fun deleteRental(id: Long) {
         db.rentals().getAll().firstOrNull { it.id == id }?.let { db.rentals().delete(it) }
+        onChanged()
+    }
+
+    /** FR-027: one consistent read of everything the backup holds. */
+    suspend fun exportData(): BackupData = db.withTransaction {
+        BackupData(
+            tenants = db.tenants().getAll().map { it.toBackup() },
+            properties = db.properties().getAll().map { it.toBackup() },
+            rentals = db.rentals().getAll().map { it.toBackup() },
+            settings = (db.settings().get() ?: SettingsEntity()).toBackup(),
+        )
+    }
+
+    /**
+     * FR-028, NFR-005: replaces every record with the content of an already validated backup, in one transaction.
+     * If anything fails the transaction rolls back and the previous data stays. Reminders are rebuilt afterwards.
+     */
+    suspend fun replaceAll(data: BackupData) {
+        db.withTransaction {
+            db.rentals().deleteAll()
+            db.tenants().deleteAll()
+            db.properties().deleteAll()
+            db.properties().insertAll(data.properties.map { PropertyEntity(it.id, it.name, it.description) })
+            db.tenants().insertAll(data.tenants.map { TenantEntity(it.id, it.fullName, it.phone) })
+            db.rentals().insertAll(data.rentals.map { it.toEntity() })
+            db.settings().save(data.settings.toEntity())
+        }
         onChanged()
     }
 }

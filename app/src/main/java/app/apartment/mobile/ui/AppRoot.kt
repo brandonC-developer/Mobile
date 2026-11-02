@@ -40,6 +40,7 @@ import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import app.apartment.mobile.R
+import app.apartment.mobile.contact.ExternalActions
 import app.apartment.mobile.domain.Format
 import app.apartment.mobile.reminders.ReminderPermissions
 
@@ -55,6 +56,8 @@ fun AppRoot(vm: AppViewModel = viewModel()) {
     val today = vm.today()
     var pendingMessage by remember { mutableStateOf<String?>(null) }
     val savedText = stringResource(R.string.rental_saved, "%s")
+    val exportFailed = stringResource(R.string.backup_export_failed)
+    val importLauncher = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri -> if (uri != null) vm.importFrom(uri) }
 
     // FR-023 and FR-024: ask for what is missing; when the system dialog cannot be shown, go to the settings screen.
     var fromBanner by remember { mutableStateOf(false) }
@@ -117,7 +120,11 @@ fun AppRoot(vm: AppViewModel = viewModel()) {
                         onOpen = { vm.open(Screen.RentalDetail(it)) },
                         onPeople = { vm.open(Screen.People) },
                     )
-                    Tab.SETTINGS -> SettingsScreen(settings, onChange = { vm.saveSettings(it) })
+                    Tab.SETTINGS -> SettingsScreen(
+                        settings, onExport = vm::askExport,
+                        onImport = { importLauncher.launch(arrayOf("application/json", "text/*", "application/octet-stream")) },
+                        onChange = { vm.saveSettings(it) },
+                    )
                 }
             }
         }
@@ -150,12 +157,20 @@ fun AppRoot(vm: AppViewModel = viewModel()) {
                 tenantName = tenants.firstOrNull { it.id == rental?.tenantId }?.fullName.orEmpty(),
                 propertyName = properties.firstOrNull { it.id == rental?.propertyId }?.name.orEmpty(),
                 today = today, onBack = vm::back,
+                phone = tenants.firstOrNull { it.id == rental?.tenantId }?.phone,
+                onContact = { action -> ExternalActions.open(context, tenants.firstOrNull { it.id == rental?.tenantId }?.phone, action) },
                 onEdit = { vm.open(Screen.RentalForm(screen.rentalId)) },
                 onEnd = { date, done -> vm.endRental(screen.rentalId, date, done) },
                 onDelete = { vm.deleteRental(screen.rentalId); vm.back() },
             )
         }
     }
+
+    BackupDialogs(
+        vm.backupDialog,
+        onExport = { vm.export { intent -> if (intent != null) context.startActivity(intent) else pendingMessage = exportFailed } },
+        onConfirmImport = vm::confirmImport, onDismiss = vm::dismissBackupDialog,
+    )
 
     if (vm.showPermissionExplanation) {
         AlertDialog(

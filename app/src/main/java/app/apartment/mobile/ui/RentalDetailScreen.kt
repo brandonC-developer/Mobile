@@ -21,11 +21,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import app.apartment.mobile.R
+import app.apartment.mobile.contact.ContactAction
+import app.apartment.mobile.contact.ContactResult
+import app.apartment.mobile.domain.PhoneNumber
 import app.apartment.mobile.domain.CollectionCalculator
 import app.apartment.mobile.domain.Format
 import app.apartment.mobile.domain.Rental
@@ -38,6 +42,7 @@ import java.time.LocalDate
 fun RentalDetailScreen(
     rental: Rental?, tenantName: String, propertyName: String, today: LocalDate,
     onBack: () -> Unit, onEdit: () -> Unit, onEnd: (LocalDate, (List<RentalError>) -> Unit) -> Unit, onDelete: () -> Unit,
+    phone: String? = null, onContact: (ContactAction) -> ContactResult = { ContactResult.NO_NUMBER },
 ) {
     if (rental == null) { // deleted while open
         LaunchedEffect(Unit) { onBack() }
@@ -46,6 +51,7 @@ fun RentalDetailScreen(
     var showEnd by remember { mutableStateOf(false) }
     var showDelete by remember { mutableStateOf(false) }
     var endError by remember { mutableStateOf<String?>(null) }
+    var contactResult by remember { mutableStateOf<ContactResult?>(null) }
     val errorTexts = RentalError.entries.associateWith { errorText(it) }
     val active = RentalRules.isActive(rental, today)
     val next = CollectionCalculator.collections(listOf(rental), today, today.plusMonths(2)).firstOrNull()
@@ -73,6 +79,19 @@ fun RentalDetailScreen(
                     stringResource(R.string.detail_ended) + " · " + stringResource(R.string.rental_until, Format.longDate(rental.endDate!!)),
                     style = MaterialTheme.typography.titleMedium,
                 )
+            }
+            // FR-025, FR-026: contact actions exist only when the tenant has a phone number.
+            if (PhoneNumber.hasNumber(phone)) {
+                PrimaryButton(stringResource(R.string.contact_whatsapp), { contactResult = onContact(ContactAction.WHATSAPP) }, Modifier.testTag("contact-whatsapp"))
+                OutlinedButton(
+                    onClick = { contactResult = onContact(ContactAction.CALL) },
+                    modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp).testTag("contact-call"),
+                ) { Text(stringResource(R.string.contact_call)) }
+                when (contactResult) {
+                    ContactResult.WHATSAPP_MISSING -> Text(stringResource(R.string.contact_whatsapp_missing), color = MaterialTheme.colorScheme.error)
+                    ContactResult.NO_APP -> Text(stringResource(R.string.contact_no_app), color = MaterialTheme.colorScheme.error)
+                    else -> Unit
+                }
             }
             PrimaryButton(stringResource(R.string.action_edit), onEdit)
             if (active) {

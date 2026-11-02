@@ -40,7 +40,9 @@ import app.apartment.mobile.reminders.PermissionState
 
 /** UC-012, FR-018, FR-019: which reminders to receive and at what time. Changes apply at once. */
 @Composable
-fun SettingsScreen(settings: SettingsEntity, onChange: (SettingsEntity) -> Unit) {
+fun SettingsScreen(
+    settings: SettingsEntity, onExport: () -> Unit = {}, onImport: () -> Unit = {}, onChange: (SettingsEntity) -> Unit,
+) {
     var showTime by rememberSaveable { mutableStateOf(false) }
     Scaffold(topBar = { AppTopBar(stringResource(R.string.settings_title)) }) { padding ->
         Column(
@@ -74,6 +76,9 @@ fun SettingsScreen(settings: SettingsEntity, onChange: (SettingsEntity) -> Unit)
                 stringResource(R.string.settings_time_hint), style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
+            SectionLabel(stringResource(R.string.settings_backup))
+            ActionRow(stringResource(R.string.backup_export), "backup-export", onExport)
+            ActionRow(stringResource(R.string.backup_import), "backup-import", onImport)
         }
     }
 
@@ -129,6 +134,19 @@ fun PermissionBanner(state: PermissionState, onFix: () -> Unit) {
             TextButton(onClick = onFix, modifier = Modifier.heightIn(min = 48.dp).testTag("permission-fix")) {
                 Text(stringResource(R.string.perm_fix))
             }
+        }
+    }
+}
+
+@Composable
+private fun ActionRow(label: String, tag: String, onClick: () -> Unit) {
+    Card(
+        onClick = onClick, modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp).testTag(tag),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+    ) {
+        Row(Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
+            Text(label, fontWeight = FontWeight.SemiBold, modifier = Modifier.weight(1f))
+            Text("›")
         }
     }
 }

@@ -3,6 +3,13 @@ package app.apartment.mobile.data
 import androidx.room.Room
 import androidx.test.platform.app.InstrumentationRegistry
 import app.apartment.mobile.domain.Availability
+import app.apartment.mobile.domain.BackupCodec
+import app.apartment.mobile.domain.BackupData
+import app.apartment.mobile.domain.BackupProperty
+import app.apartment.mobile.domain.BackupRental
+import app.apartment.mobile.domain.BackupResult
+import app.apartment.mobile.domain.BackupSettings
+import app.apartment.mobile.domain.BackupTenant
 import app.apartment.mobile.domain.RentalError
 import java.time.LocalDate
 import kotlinx.coroutines.flow.first
@@ -123,5 +130,58 @@ class RepositoryTest {
         assertTrue(db.rentals().getAll().isEmpty())
         assertEquals(2, db.properties().observeAll().first().size)
         assertTrue(repo.createRental(tenant("Luis"), p2, 1000, 5, null) is CreateRentalResult.Created)
+    }
+
+    // --- backup (FR-027, FR-028, NFR-005)
+    private suspend fun seedBackupData() {
+        val t = repo.createTenant("María Rojas", "8888 1111")!!
+        val p = repo.createProperty("Apto 3", "Segundo piso")!!
+        repo.createProperty("Casa Esquina", null)
+        repo.createRental(t, p, 250_000, 31, null)
+        repo.saveSettings(SettingsEntity(remindTwoDaysBefore = true, reminderMinuteOfDay = 9 * 60 + 30))
+    }
+
+    @Test
+    fun exportThenImportOnACleanDatabaseGivesTheSameData() = runBlocking {
+        seedBackupData()
+        val before = repo.exportData()
+        val text = BackupCodec.encode(before, java.time.Instant.parse("2026-11-04T15:30:00Z"))
+
+        db.clearAllTables()
+        assertTrue(repo.exportData().rentals.isEmpty())
+        val valid = BackupCodec.decode(text, today) as BackupResult.Valid
+        repo.replaceAll(valid.data)
+
+        assertEquals(before, repo.exportData())
+        assertEquals(listOf(3, 2, 1, 0), repo.exportData().settings.reminderOffsets)
+        assertEquals("09:30", repo.exportData().settings.reminderTime)
+    }
+
+    @Test
+    fun importingReplacesEverythingThatWasThere() = runBlocking {
+        seedBackupData()
+        val other = BackupData(
+            tenants = listOf(BackupTenant(7, "Luis Mora", null)),
+            properties = listOf(BackupProperty(8, "Local 1", null)),
+            rentals = listOf(BackupRental(9, 7, 8, 420_000, 7, "2026-01-01", null)),
+            settings = BackupSettings(listOf(0), "07:00"),
+        )
+        repo.replaceAll(other)
+        assertEquals(other, repo.exportData())
+    }
+
+    @Test
+    fun aFailedImportLeavesThePreviousDataIntact() = runBlocking {
+        seedBackupData()
+        val before = repo.exportData()
+        val broken = BackupData(
+            tenants = emptyList(),
+            properties = emptyList(),
+            rentals = listOf(BackupRental(1, 99, 99, 1000, 5, "2026-01-01", null)), // points at nothing: the database refuses it
+            settings = BackupSettings(listOf(0), "07:00"),
+        )
+        val failed = runCatching { repo.replaceAll(broken) }.isFailure
+        assertTrue("the broken import must fail", failed)
+        assertEquals(before, repo.exportData())
     }
 }
