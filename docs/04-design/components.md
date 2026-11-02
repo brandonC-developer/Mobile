@@ -10,7 +10,7 @@ refs: [DOC-FR, DOC-NFR, DOC-DAT, ADR-0001, ADR-0002, ADR-0003, ADR-0004]
 
 # Component Design
 
-> **Status:** Draft proposed by the agent. Every component is `Proposed`. Component names and splits are a proposal; the UI toolkit and the dependency injection approach are left to implementation and are not decided here.
+> **Status:** Approved by the Owner in commit `a1bc3ba` (2026-11-02); drafted by the agent. Component names and splits are a proposal; the UI toolkit and the dependency injection approach are left to implementation and are not decided here.
 
 One Android app (ADR-0001), no backend. Data flows from the local store up to the screens; nothing reads from anywhere else (NFR-002).
 

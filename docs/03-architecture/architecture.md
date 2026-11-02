@@ -10,7 +10,7 @@ refs: [DOC-VIS, DOC-FR, DOC-NFR, DOC-DAT, DOC-CMP, DOC-INT, DOC-SEC, DOC-RSK, AD
 
 # Architecture
 
-> **Status:** Draft proposed by the agent. It summarizes and points to other documents; the reasons for each decision live in the ADRs, which are Proposed and not approved. Use cases (UC) are not written, so the runtime view cites requirements.
+> **Status:** Approved by the Owner in commit `a1bc3ba` (2026-11-02); drafted by the agent. It summarizes and points to other documents; the reasons for each decision live in the ADRs, which are approved. Use cases are in [use-cases](../02-requirements/use-cases/use-cases.md).
 
 ## 1. Introduction and goals
 A personal Android app for one landlord to track monthly rent collections and be reminded locally. Objectives OBJ-001 to OBJ-005 are in [vision-scope](../01-context/vision-scope.md). Terms: [glossary](../01-context/glossary.md).

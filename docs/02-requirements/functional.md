@@ -10,7 +10,7 @@ refs: [DOC-VIS, DOC-PEN]
 
 # Functional Requirements
 
-> **Status:** Draft proposed by the agent. Every requirement is `Proposed`, none is approved. Each one comes from an Owner decision recorded in the [pending register](../09-management/pending-register.md); the OI is cited in **Origin**. Priorities use MoSCoW (OI-008) and are proposals. Use cases (UC) are not written yet.
+> **Status:** Approved by the Owner in commit `a1bc3ba` (2026-11-02); drafted by the agent. Each one comes from an Owner decision recorded in the [pending register](../09-management/pending-register.md); the OI is cited in **Origin**. Priorities use MoSCoW (OI-008) and are proposals.
 
 Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vision-scope](../01-context/vision-scope.md).
 

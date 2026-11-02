@@ -10,7 +10,7 @@ refs: [DOC-FR, DOC-NFR, DOC-DAT, DOC-CMP, ADR-0002, ADR-0003, ADR-0004]
 
 # Test Plan
 
-> **Status:** Draft proposed by the agent. The test tools are a recommendation to confirm at implementation. Every case is `Planned`; none has been run.
+> **Status:** Approved by the Owner in commit `a1bc3ba` (2026-11-02); drafted by the agent. The test tools are a recommendation to confirm at implementation. Every case is `Planned`; none has been run.
 
 ## Strategy
 | Level | Scope | Environment |

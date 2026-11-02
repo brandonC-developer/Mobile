@@ -4,6 +4,7 @@ Format: one entry per approved change, citing IDs.
 
 ## [Unreleased]
 ### Added
+- Approval: Owner commit `a1bc3ba` approved DOC-VIS, DOC-GLO, DOC-FR, DOC-NFR, ADR-0001 to ADR-0004, DOC-DAT, DOC-CMP, DOC-INT, DOC-UXF, DOC-SEC, DOC-TST, DOC-ARC, DOC-RSK, DOC-UC (2026-11-02). Editorial follow-up: status notes at the top of those documents updated; no requirement or decision text changed.
 - DOC-UC 0.1 (UC-001 to UC-015 with sequence diagrams) and DOC-UXF 0.1 (UX framework from Nielsen, Laws of UX, Fogg, Google touch-target guidance) drafted by the agent, Proposed; OI-044 logged for five UX proposals. A roadmap page with mockups was published as an Artifact.
 - DOC-ARC 0.1 (architecture, VW-001 to VW-003) and DOC-RSK 0.1 (RSK-001 to RSK-014) drafted by the agent, Proposed, not approved.
 - OI-043 resolved by the Owner (all four proposals accepted); DOC-DAT, DOC-INT, DOC-SEC updated.

@@ -10,7 +10,7 @@ refs: [DOC-NFR, DOC-DAT, DOC-INT, ADR-0002, ADR-0004]
 
 # Security and Privacy
 
-> **Status:** Draft proposed by the agent. Controls are proposals unless they cite an Owner decision. Scope: one landlord, one phone, personal use (OI-019).
+> **Status:** Approved by the Owner in commit `a1bc3ba` (2026-11-02); drafted by the agent. Controls are proposals unless they cite an Owner decision. Scope: one landlord, one phone, personal use (OI-019).
 
 ## Data inventory
 | Data | Entity | Personal | Where it lives | Leaves the device by |

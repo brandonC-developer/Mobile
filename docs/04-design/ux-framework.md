@@ -10,7 +10,7 @@ refs: [DOC-FR, DOC-NFR, DOC-UC, DOC-CMP]
 
 # UX and Interface Framework
 
-> **Status:** Draft proposed by the agent. Nothing here is a requirement. It is a design guide that turns recognized usability and behavior principles into concrete rules for this app. Anything that would change behavior stated in the FR is marked **Proposal** and needs an Owner decision. The visual mockups are in the roadmap page (an Artifact), not in this repository.
+> **Status:** Approved by the Owner in commit `a1bc3ba` (2026-11-02); drafted by the agent. Nothing here is a requirement. It is a design guide that turns recognized usability and behavior principles into concrete rules for this app. Anything that would change behavior stated in the FR is marked **Proposal** and needs an Owner decision. The visual mockups are in the roadmap page (an Artifact), not in this repository.
 
 ## Sources and their reliability
 | Source | Used for | Checked |

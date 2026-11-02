@@ -10,7 +10,7 @@ refs: [DOC-FR, DOC-NFR, DOC-GLO, ADR-0002, ADR-0004]
 
 # Data Model
 
-> **Status:** Draft proposed by the agent. Every entity is `Proposed`, none is approved. Logical model only; physical types are chosen at implementation with Room (ADR-0002). The backup file (ADR-0004) mirrors these entities.
+> **Status:** Approved by the Owner in commit `a1bc3ba` (2026-11-02); drafted by the agent. Logical model only; physical types are chosen at implementation with Room (ADR-0002). The backup file (ADR-0004) mirrors these entities.
 
 ## Overview
 Three stored entities and one settings record. Collections and reminders are **not stored**: they are computed from rentals and settings (FR-013, FR-021).

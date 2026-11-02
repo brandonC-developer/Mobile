@@ -10,7 +10,7 @@ refs: [DOC-FR, DOC-NFR, DOC-CMP, ADR-0003, ADR-0004]
 
 # Interfaces and Integrations
 
-> **Status:** Draft proposed by the agent. The app has no backend and no Internet integration; its interfaces are the user and the Android system.
+> **Status:** Approved by the Owner in commit `a1bc3ba` (2026-11-02); drafted by the agent. The app has no backend and no Internet integration; its interfaces are the user and the Android system.
 
 | ID | Interface | Direction | Used by | Contract | Traces |
 |----|-----------|-----------|---------|----------|--------|

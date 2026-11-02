@@ -10,7 +10,7 @@ refs: [DOC-VIS, DOC-PEN]
 
 # Non-Functional Requirements
 
-> **Status:** Draft proposed by the agent. Every requirement is `Proposed`. Quality categories are free text until the vocabulary is verified (OI-005). Thresholds come from Owner decisions; where a number or method is the agent's proposal it is marked.
+> **Status:** Approved by the Owner in commit `a1bc3ba` (2026-11-02); drafted by the agent. Quality categories are free text until the vocabulary is verified (OI-005). Thresholds come from Owner decisions; where a number or method is the agent's proposal it is marked.
 
 ### NFR-001 — Works without a connection
 - **Status:** Approved

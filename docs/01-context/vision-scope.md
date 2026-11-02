@@ -10,7 +10,7 @@ refs: [DOC-PEN, DOC-GLO]
 
 # Vision and Scope
 
-> **Status:** Draft proposed by the agent from the Owner decisions recorded in [`pending-register`](../09-management/pending-register.md). Nothing here is approved. Statements cite the open item (OI) or context input (CTX) they come from.
+> **Status:** Draft proposed by the agent from the Owner decisions recorded in [`pending-register`](../09-management/pending-register.md). Statements cite the open item (OI) or context input (CTX) they come from.
 
 ## Purpose
 A mobile app for a landlord to keep track of the rent collections due from their tenants and to be reminded of them, working without Internet. The user is the landlord (OI-026), and for now the only user is the Owner (OI-018).

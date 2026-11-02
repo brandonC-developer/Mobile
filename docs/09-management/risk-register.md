@@ -10,7 +10,7 @@ refs: [DOC-ARC, DOC-SEC, ADR-0001, ADR-0002, ADR-0003, ADR-0004]
 
 # Risk and Technical Debt Register
 
-> **Status:** Draft proposed by the agent. Probability and impact are the agent's estimate (low, medium, high), not measured. Owner of every item is the Owner until assigned otherwise.
+> **Status:** Approved by the Owner in commit `a1bc3ba` (2026-11-02); drafted by the agent. Probability and impact are the agent's estimate (low, medium, high), not measured. Owner of every item is the Owner until assigned otherwise.
 
 | ID | Type | Description | Probability | Impact | Mitigation | Owner | Status | Refs |
 |----|------|-------------|-------------|--------|------------|-------|--------|------|

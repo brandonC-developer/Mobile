@@ -10,7 +10,7 @@ refs: [DOC-FR, DOC-NFR, DOC-CMP, DOC-DAT, ADR-0003, ADR-0004]
 
 # Use Cases
 
-> **Status:** Draft proposed by the agent. Every use case is `Draft`. They only restate behavior already in the functional requirements (FR) and add the order of interactions; they add no new requirement. Where a flow suggests something the FR do not say, it is marked **Proposal** and needs an Owner decision.
+> **Status:** Approved by the Owner in commit `a1bc3ba` (2026-11-02); drafted by the agent. They only restate behavior already in the functional requirements (FR) and add the order of interactions; they add no new requirement. Where a flow suggests something the FR do not say, it is marked **Proposal** and needs an Owner decision.
 >
 > Sequence diagrams use the components of [components](../../04-design/components.md): Screens (CMP-001), Data store (CMP-002), Calculator (CMP-003), Scheduler (CMP-004), Notifier (CMP-005), System events (CMP-006), Backup (CMP-007), External actions (CMP-008), Permissions (CMP-009). The primary actor of every case is the **Landlord**, except UC-015, which the Android system starts.
 

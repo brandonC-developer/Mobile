@@ -10,7 +10,7 @@ refs: [DOC-PEN]
 
 # Glossary
 
-> **Status:** Draft proposed by the agent. Each term cites where its meaning comes from. Spanish terms are those used in the source context (CTX-001).
+> **Status:** Approved by the Owner in commit `a1bc3ba` (2026-11-02); drafted by the agent. Each term cites where its meaning comes from. Spanish terms are those used in the source context (CTX-001).
 
 | Term | Spanish | Definition | Source |
 |---|---|---|---|
