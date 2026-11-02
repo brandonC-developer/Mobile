@@ -1,10 +1,10 @@
 ---
 id: DOC-GLO
 title: Glossary
-status: Draft
+status: Approved
 version: 0.1
 date: 2026-11-01
-approved_by:
+approved_by: Brandon
 refs: [DOC-PEN]
 ---
 

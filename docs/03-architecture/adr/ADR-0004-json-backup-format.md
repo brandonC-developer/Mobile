@@ -1,8 +1,8 @@
 # ADR-0004 — Back up to a versioned JSON file that is validated fully before it replaces any data
-- **Status:** Proposed
+- **Status:** Approved
 - **Date:** 2026-11-01
 - **Decided by:** Owner
-- **Approval evidence:** none yet. Only the Owner approves, with an `approve:` commit.
+- **Approval evidence:** Owner commit starting `approve: ADR-0001, ADR-0002, ADR-0003, ADR-0004` (see git log).
 
 ## Context
 - The backup is one JSON file with a schema version, shared through the device share menu and restored by importing it; no cloud integration (FR-027, FR-028, OI-016, OI-037).

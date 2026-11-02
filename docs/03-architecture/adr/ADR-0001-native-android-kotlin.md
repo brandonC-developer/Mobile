@@ -1,8 +1,8 @@
 # ADR-0001 — Build the app as a native Android app in Kotlin
-- **Status:** Proposed
+- **Status:** Approved
 - **Date:** 2026-11-01
 - **Decided by:** Owner
-- **Approval evidence:** none yet. Only the Owner approves, with an `approve:` commit.
+- **Approval evidence:** Owner commit starting `approve: ADR-0001, ADR-0002, ADR-0003, ADR-0004` (see git log).
 
 ## Context
 Verified facts and constraints:

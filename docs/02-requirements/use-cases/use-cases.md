@@ -1,10 +1,10 @@
 ---
 id: DOC-UC
 title: Use Cases
-status: Draft
+status: Approved
 version: 0.1
 date: 2026-11-02
-approved_by:
+approved_by: Brandon
 refs: [DOC-FR, DOC-NFR, DOC-CMP, DOC-DAT, ADR-0003, ADR-0004]
 ---
 
@@ -35,7 +35,7 @@ refs: [DOC-FR, DOC-NFR, DOC-CMP, DOC-DAT, ADR-0003, ADR-0004]
 ---
 
 ### UC-001 — Register a property
-- **Status:** Draft
+- **Status:** Approved
 - **Primary actor:** Landlord
 - **Origin:** FR-001 · FR-002 · FR-003
 - **Preconditions:** none.
@@ -69,7 +69,7 @@ sequenceDiagram
 ---
 
 ### UC-002 — Register a tenant
-- **Status:** Draft
+- **Status:** Approved
 - **Primary actor:** Landlord
 - **Origin:** FR-004 · FR-005
 - **Preconditions:** none.
@@ -99,7 +99,7 @@ sequenceDiagram
 ---
 
 ### UC-003 — Create a rental
-- **Status:** Draft
+- **Status:** Approved
 - **Primary actor:** Landlord
 - **Origin:** FR-007 · FR-008 · FR-013 · FR-023 · FR-024
 - **Preconditions:** at least one tenant and one property exist.
@@ -148,7 +148,7 @@ sequenceDiagram
 ---
 
 ### UC-004 — See this week's collections
-- **Status:** Draft
+- **Status:** Approved
 - **Primary actor:** Landlord
 - **Origin:** FR-015 · FR-016 · FR-017
 - **Preconditions:** none; an empty week shows an empty state.
@@ -184,7 +184,7 @@ sequenceDiagram
 ---
 
 ### UC-005 — Browse the calendar
-- **Status:** Draft
+- **Status:** Approved
 - **Primary actor:** Landlord
 - **Origin:** FR-014
 - **Preconditions:** none.
@@ -213,7 +213,7 @@ sequenceDiagram
 ---
 
 ### UC-006 — Receive a reminder
-- **Status:** Draft
+- **Status:** Approved
 - **Primary actor:** Landlord
 - **Origin:** FR-018 · FR-020 · FR-021 · FR-022 · NFR-004
 - **Preconditions:** a rental exists; reminders were scheduled; permissions granted for on-time delivery.
@@ -247,7 +247,7 @@ sequenceDiagram
 ---
 
 ### UC-007 — Contact the tenant
-- **Status:** Draft
+- **Status:** Approved
 - **Primary actor:** Landlord
 - **Origin:** FR-025 · FR-026
 - **Preconditions:** the tenant of a rental has a phone number.
@@ -276,7 +276,7 @@ sequenceDiagram
 ---
 
 ### UC-008 — Edit a rental
-- **Status:** Draft
+- **Status:** Approved
 - **Primary actor:** Landlord
 - **Origin:** FR-009 · FR-010
 - **Preconditions:** the rental exists.
@@ -308,7 +308,7 @@ sequenceDiagram
 ---
 
 ### UC-009 — End a rental
-- **Status:** Draft
+- **Status:** Approved
 - **Primary actor:** Landlord
 - **Origin:** FR-011
 - **Preconditions:** the rental is active.
@@ -335,7 +335,7 @@ sequenceDiagram
 ---
 
 ### UC-010 — Delete a rental
-- **Status:** Draft
+- **Status:** Approved
 - **Primary actor:** Landlord
 - **Origin:** FR-012
 - **Preconditions:** the rental exists.
@@ -371,7 +371,7 @@ sequenceDiagram
 ---
 
 ### UC-011 — Delete a tenant
-- **Status:** Draft
+- **Status:** Approved
 - **Primary actor:** Landlord
 - **Origin:** FR-006
 - **Preconditions:** the tenant exists.
@@ -407,7 +407,7 @@ sequenceDiagram
 ---
 
 ### UC-012 — Choose reminder offsets and time
-- **Status:** Draft
+- **Status:** Approved
 - **Primary actor:** Landlord
 - **Origin:** FR-018 · FR-019
 - **Preconditions:** none.
@@ -434,7 +434,7 @@ sequenceDiagram
 ---
 
 ### UC-013 — Export a backup
-- **Status:** Draft
+- **Status:** Approved
 - **Primary actor:** Landlord
 - **Origin:** FR-027
 - **Preconditions:** none.
@@ -470,7 +470,7 @@ sequenceDiagram
 ---
 
 ### UC-014 — Import a backup
-- **Status:** Draft
+- **Status:** Approved
 - **Primary actor:** Landlord
 - **Origin:** FR-028 · FR-029 · NFR-005 · ADR-0004
 - **Preconditions:** the landlord has a backup file.
@@ -514,7 +514,7 @@ sequenceDiagram
 ---
 
 ### UC-015 — Rebuild reminders after an event
-- **Status:** Draft
+- **Status:** Approved
 - **Primary actor:** Android system (on behalf of the landlord)
 - **Origin:** FR-021 · FR-022 · ADR-0003
 - **Preconditions:** rentals exist.

@@ -1,10 +1,10 @@
 ---
 id: DOC-SEC
 title: Security and Privacy
-status: Draft
+status: Approved
 version: 0.1
 date: 2026-11-01
-approved_by:
+approved_by: Brandon
 refs: [DOC-NFR, DOC-DAT, DOC-INT, ADR-0002, ADR-0004]
 ---
 

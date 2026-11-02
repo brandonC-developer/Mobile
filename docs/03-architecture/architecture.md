@@ -1,10 +1,10 @@
 ---
 id: DOC-ARC
 title: Architecture
-status: Draft
+status: Approved
 version: 0.1
 date: 2026-11-01
-approved_by:
+approved_by: Brandon
 refs: [DOC-VIS, DOC-FR, DOC-NFR, DOC-DAT, DOC-CMP, DOC-INT, DOC-SEC, DOC-RSK, ADR-0001, ADR-0002, ADR-0003, ADR-0004]
 ---
 

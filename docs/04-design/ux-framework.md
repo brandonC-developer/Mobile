@@ -1,10 +1,10 @@
 ---
 id: DOC-UXF
 title: UX and Interface Framework
-status: Draft
+status: Approved
 version: 0.1
 date: 2026-11-02
-approved_by:
+approved_by: Brandon
 refs: [DOC-FR, DOC-NFR, DOC-UC, DOC-CMP]
 ---
 

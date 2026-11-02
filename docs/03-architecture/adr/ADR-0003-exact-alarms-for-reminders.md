@@ -1,8 +1,8 @@
 # ADR-0003 — Schedule reminders with exact alarms and rebuild them on every relevant event
-- **Status:** Proposed
+- **Status:** Approved
 - **Date:** 2026-11-01
 - **Decided by:** Owner
-- **Approval evidence:** none yet. Only the Owner approves, with an `approve:` commit.
+- **Approval evidence:** Owner commit starting `approve: ADR-0001, ADR-0002, ADR-0003, ADR-0004` (see git log).
 - **Verification:** the seven device tests of "Verification plan" were run on 2026-11-01 on the Owner phone (see "Verification results"). The decision is unchanged; the Owner reviews the results before approving.
 
 ## Context

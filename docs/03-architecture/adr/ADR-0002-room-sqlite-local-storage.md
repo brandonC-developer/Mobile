@@ -1,8 +1,8 @@
 # ADR-0002 — Store all data in a local Room (SQLite) database as the only source of truth
-- **Status:** Proposed
+- **Status:** Approved
 - **Date:** 2026-11-01
 - **Decided by:** Owner
-- **Approval evidence:** none yet. Only the Owner approves, with an `approve:` commit.
+- **Approval evidence:** Owner commit starting `approve: ADR-0001, ADR-0002, ADR-0003, ADR-0004` (see git log).
 
 ## Context
 - All user data is stored on the device and is the only source of truth; no backend (NFR-002, OI-021, CTX-001 §7).

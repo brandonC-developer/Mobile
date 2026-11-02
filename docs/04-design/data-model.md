@@ -1,10 +1,10 @@
 ---
 id: DOC-DAT
 title: Data Model
-status: Draft
+status: Approved
 version: 0.1
 date: 2026-11-01
-approved_by:
+approved_by: Brandon
 refs: [DOC-FR, DOC-NFR, DOC-GLO, ADR-0002, ADR-0004]
 ---
 
@@ -24,7 +24,7 @@ A tenant and a property each have at most one active rental at a time (FR-008). 
 ## Entities
 
 ### ENT-001 — Property
-- **Status:** Proposed
+- **Status:** Approved
 - **Origin:** FR-001 · FR-002 · FR-003
 - **Description:** A unit the landlord rents out. Never deleted.
 
@@ -39,7 +39,7 @@ A tenant and a property each have at most one active rental at a time (FR-008). 
 - **Lifecycle:** created by the landlord, editable at any time, never deleted. A property with no active rental is free (FR-011).
 
 ### ENT-002 — Tenant
-- **Status:** Proposed
+- **Status:** Approved
 - **Origin:** FR-004 · FR-005 · FR-006
 - **Description:** A person who represents a household that rents a property.
 
@@ -54,7 +54,7 @@ A tenant and a property each have at most one active rental at a time (FR-008). 
 - **Lifecycle:** created, editable at any time, deleted with all its rentals after confirmation (FR-006).
 
 ### ENT-003 — Rental
-- **Status:** Proposed
+- **Status:** Approved
 - **Origin:** FR-007 to FR-013
 - **Description:** The agreement that links one tenant to one property with an amount and a payment day.
 
@@ -73,7 +73,7 @@ A tenant and a property each have at most one active rental at a time (FR-008). 
 - **Derived (not stored):** *active* means no endDate, or endDate not before today. Collection dates per month follow FR-013 and stop after endDate. The end-date day itself still generates a collection (OI-043).
 
 ### ENT-004 — Settings
-- **Status:** Proposed
+- **Status:** Approved
 - **Origin:** FR-018 · FR-019
 - **Description:** One record with the reminder choices.
 
