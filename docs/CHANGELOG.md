@@ -46,22 +46,22 @@ Format: one entry per approved change, citing IDs.
 - Initial documentation skeleton (phase 1): folders, empty templates, governance, traceability rules, agent instructions.
 
 ## Change records (CHG)
-Changes to approved elements, as `governance.md` requires: reason, impact, approval. Both are proposed by the agent and wait for an Owner commit `approve: CHG-001, CHG-002`.
+Changes to approved elements, as `governance.md` requires: reason, impact, approval. Approved by the Owner commit "approve: CHG-001, CHG-002, CHG-003, ADR-0005".
 
 ### CHG-001 — Rental start date
-- **Status:** Proposed (applied in the documents by Owner instruction of 2026-11-02, pending approval).
+- **Status:** Approved (Owner commit "approve: CHG-001, CHG-002, CHG-003, ADR-0005").
 - **Reason:** without a creation date, the previous-week view of FR-016 could show collections that never existed.
 - **Changes:** FR-013 (new sentence and AC-FR-013-3), ENT-003 (`startDate`).
 - **Impact:** CMP-003 and CMP-004 skip dates before the start date; TC-031 added; code in milestone H1.
 
 ### CHG-002 — Documentation sync after milestones H0 to H4 (QA of 2026-11-02)
-- **Status:** Proposed (applied in the documents by Owner instruction "sincronizar todo", pending approval). No requirement changes meaning.
+- **Status:** Approved (Owner commit "approve: CHG-001, CHG-002, CHG-003, ADR-0005"). No requirement changes meaning.
 - **Reason:** verified facts and built behavior replaced statements that said "to be verified" or "unwritten".
 - **Changes:** ADR-0003 (verification of the built app on the phone appended); FR-021 (limit now stated: below 500 alarms, window of 100 plus renewal, OI-039, OI-046); FR "Not yet covered" (use cases exist); NFR-004 verification note (reboot and force stop verified); NFR "Not yet covered" (alarm limit verified); ADR-0004 context (data model exists); architecture solution table (ADR-0005 row, component-to-code map); test plan (TC statuses, TC-032 to TC-034 added so every AC has a test case); risk register (RSK-005, RSK-010 mitigated, RSK-012 closed, RSK-015 to RSK-017 added).
 - **Impact:** none on code.
 
 ### CHG-003 — Return to the current week only after a real absence (OI-048)
-- **Status:** Proposed (Owner decision of 2026-11-02, applied in the documents and code, pending approval with `approve: CHG-003`).
+- **Status:** Approved (Owner commit "approve: CHG-001, CHG-002, CHG-003, ADR-0005").
 - **Reason:** on the Owner phone the app returned to the Semana tab after every short trip it started itself (file picker, permission screens), taking the landlord out of what they were doing.
 - **Changes:** FR-016 description and AC-FR-016-1 reworded, AC-FR-016-3 added; UC-004 note; TC-035 added.
 - **Impact:** CMP-001 (view model keeps the time the app left the screen); no data or alarm change.

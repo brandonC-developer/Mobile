@@ -1,8 +1,8 @@
 # ADR-0005 — Build the screens with Jetpack Compose and Material 3
-- **Status:** Proposed
+- **Status:** Approved
 - **Date:** 2026-11-02
 - **Decided by:** Owner
-- **Approval evidence:** none yet. Only the Owner approves, with an `approve:` commit. The Owner chose this option on 2026-11-02 when asked; development of milestone H0 started on that instruction.
+- **Approval evidence:** Owner commit starting `approve: CHG-001, CHG-002, CHG-003, ADR-0005` (see git log). The Owner chose this option on 2026-11-02; development of milestone H0 started on that instruction.
 
 ## Context
 - ADR-0001 fixes a native Android app in Kotlin and leaves the UI toolkit open ("the UI toolkit ... left to implementation", DOC-CMP).

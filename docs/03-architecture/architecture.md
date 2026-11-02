@@ -36,7 +36,7 @@ Landlord ⇄ [ App ] ⇄ Android system ⇢ WhatsApp / dialer / share menu
 | Room on SQLite as the only store | ADR-0002 |
 | Exact alarms for reminders, rebuilt on every relevant event | ADR-0003 |
 | Versioned JSON backup, validated before import | ADR-0004 |
-| Jetpack Compose and Material 3 for the screens (Proposed; chosen by the Owner 2026-11-02, approval pending) | ADR-0005 |
+| Jetpack Compose and Material 3 for the screens (chosen by the Owner 2026-11-02) | ADR-0005 |
 
 Collections and reminders are computed from rentals and settings, not stored (FR-013, FR-021).
 
