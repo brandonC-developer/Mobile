@@ -78,3 +78,6 @@ Consequences for this decision:
 ## Refs
 FR-013 · FR-018 · FR-019 · FR-021 · FR-022 · FR-023 · FR-024 · NFR-001 · NFR-004 · ADR-0001 · ADR-0002 · OI-014 · OI-017 · OI-039
 Sources: [Schedule alarms](https://developer.android.com/develop/background-work/services/alarms) · [Schedule exact alarms are denied by default (Android 14)](https://developer.android.com/about/versions/14/changes/schedule-exact-alarms) · [Notification runtime permission (Android 13)](https://developer.android.com/about/versions/13/changes/notification-permission) · [Expo Notifications](https://docs.expo.dev/versions/latest/sdk/notifications/)
+
+## Verification of the built app (2026-11-02, milestone H6)
+Same Owner phone (moto g72, Android 13), with the app built from this decision: reminders posted 1 s late with the screen off and 0 s late with deep idle forced, USB attached; after a reboot and one unlock the alarms were rebuilt without opening the app and the reminder was posted at the planned minute; after a forced stop none was posted and opening the app rebuilt the alarms; granting the exact-alarm permission in the system screen removed the warning. Results in the [test plan](../../06-quality/test-plan.md) (TC-016, TC-019, TC-020). Not tested: a long natural idle on battery without USB. Recorded in CHG-002.

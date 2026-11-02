@@ -56,3 +56,8 @@ adb install -r app/build/outputs/apk/release/app-release.apk
 2. `./gradlew :app:lintDebug` has no errors.
 3. The release file installs on the phone and opens.
 4. The documents are in sync (development-guide, QA checklist).
+
+## 7. Verified on the Owner phone (2026-11-02)
+- Release file 0.1.0 installed and opened on the moto g72, Android 13. Signing certificate SHA-256: `676d2d3f81f749c51e2fe8b4f5f8f295ffa650a8ccd801fbed46fe2f21c54503` (compare with `apksigner verify --print-certs` to check a file is signed with the right key).
+- Reminders: screen off 1 s late; deep idle forced 0 s late; after a reboot and one unlock, delivered at the planned minute without opening the app; a forced stop silences them until the app is opened (TC-016, TC-019).
+- Full test suite passes on the phone, also in airplane mode (TC-025). Largest font size checked (TC-030).
