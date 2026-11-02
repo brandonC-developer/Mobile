@@ -23,6 +23,7 @@ interface TenantDao {
     @Delete suspend fun delete(tenant: TenantEntity)
     @Query("SELECT * FROM tenant ORDER BY fullName") fun observeAll(): Flow<List<TenantEntity>>
     @Query("SELECT COUNT(*) FROM rental WHERE tenantId = :tenantId") suspend fun rentalCount(tenantId: Long): Int
+    @Query("SELECT * FROM tenant") suspend fun getAll(): List<TenantEntity>
 }
 
 @Dao

@@ -58,4 +58,4 @@ Entry: the requirements and ADRs of the item are approved. Exit: every Must case
 | TC-031 | AC-FR-013-3 (CHG-001) | Unit | Create a rental on the 5th with payment day 3; list collections for the previous week and the current month; create one on its payment day | No collection before the creation date; first collection on the 3rd of next month; collection of the creation day included | Planned |
 
 ## Results
-None yet. Evidence will be linked here when cases are run.
+Run on 2026-11-02 (emulator Medium_Phone_API_37.0, JVM): H1 and H2 data and logic cases pass as automated tests: TC-005, TC-006, TC-009, TC-011, TC-013, TC-031 (unit, `app/src/test`) and TC-004, TC-010, plus the edit and end rules of FR-005 to FR-012 (device, `app/src/androidTest`). The UI flow of UC-001, UC-002, UC-003 (create tenant, properties and a rental; occupied property shown unavailable; next collection date shown) was exercised by hand on the emulator. Not yet run on the Owner phone. Other cases are still planned.

@@ -1,8 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Apartment</string>
+
     <string name="nav_week">Semana</string>
     <string name="nav_calendar">Calendario</string>
     <string name="nav_rentals">Alquileres</string>
     <string name="nav_settings">Ajustes</string>
+    <string name="soon">Próximamente</string>
+
+    <string name="action_save">Guardar</string>
+    <string name="action_cancel">Cancelar</string>
+    <string name="action_back">Volver</string>
+    <string name="action_edit">Editar</string>
+    <string name="action_delete">Eliminar</string>
+    <string name="action_accept">Aceptar</string>
+
+    <!-- Rentals list -->
+    <string name="rentals_title">Alquileres</string>
+    <string name="rentals_summary">%1$d activos · %2$d terminados</string>
+    <string name="rentals_ended">Terminados</string>
+    <string name="rentals_empty_title">Aún no hay alquileres</string>
+    <string name="rentals_empty_body">Registra un inquilino y una propiedad, y crea el primer alquiler.</string>
+    <string name="rentals_new">Nuevo alquiler</string>
+    <string name="rentals_more">Más</string>
+    <string name="people_link">Inquilinos y propiedades</string>
+    <string name="rental_day">día %1$d</string>
+    <string name="rental_until">hasta %1$s</string>
+
+    <!-- People -->
+    <string name="people_title">Inquilinos y propiedades</string>
+    <string name="tab_tenants">Inquilinos</string>
+    <string name="tab_properties">Propiedades</string>
+    <string name="tenants_empty">Aún no hay inquilinos. Agrega el primero con el botón de abajo.</string>
+    <string name="properties_empty">Aún no hay propiedades. Agrega la primera con el botón de abajo.</string>
+    <string name="tenant_new">Nuevo inquilino</string>
+    <string name="tenant_edit">Editar inquilino</string>
+    <string name="property_new">Nueva propiedad</string>
+    <string name="property_edit">Editar propiedad</string>
+    <string name="field_full_name">Nombre completo</string>
+    <string name="field_phone">Teléfono (opcional)</string>
+    <string name="field_property_name">Nombre</string>
+    <string name="field_description">Descripción (opcional)</string>
+    <string name="error_name_required">El nombre es obligatorio.</string>
+    <string name="property_free">Libre</string>
+    <string name="property_occupied">Ocupada</string>
+    <string name="tenant_with_rental">Con alquiler activo</string>
+    <string name="tenant_delete_title">¿Eliminar a %1$s?</string>
+    <string name="tenant_delete_body_none">No tiene alquileres. No se puede deshacer.</string>
+    <string name="tenant_delete_body">Se eliminarán también sus %1$d alquileres. Las propiedades se conservan. No se puede deshacer.</string>
+    <string name="tenant_delete_confirm_none">Eliminar inquilino</string>
+    <string name="tenant_delete_confirm">Eliminar inquilino y %1$d alquileres</string>
+
+    <!-- Rental form -->
+    <string name="form_title_new">Nuevo alquiler</string>
+    <string name="form_title_edit">Editar alquiler</string>
+    <string name="field_tenant">Inquilino</string>
+    <string name="field_property">Propiedad</string>
+    <string name="field_amount">Monto mensual (₡)</string>
+    <string name="field_payment_day">Día de pago (1 a 31)</string>
+    <string name="field_end_date">Fecha de fin (opcional)</string>
+    <string name="no_end_date">Sin fecha</string>
+    <string name="clear_end_date">Quitar fecha</string>
+    <string name="hint_day31">En los meses más cortos se cobra el último día del mes.</string>
+    <string name="option_occupied">%1$s (ocupada)</string>
+    <string name="option_busy">%1$s (con alquiler)</string>
+    <string name="form_needs_people">Primero registra al menos un inquilino y una propiedad.</string>
+    <string name="form_go_people">Ir a inquilinos y propiedades</string>
+    <string name="save_rental">Guardar alquiler</string>
+    <string name="error_amount">El monto debe ser un número entero de colones mayor que cero.</string>
+    <string name="error_day">El día de pago debe estar entre 1 y 31.</string>
+    <string name="error_end_past">La fecha de fin no puede ser anterior a hoy.</string>
+    <string name="error_property_occupied">Esa propiedad ya tiene un alquiler activo.</string>
+    <string name="error_tenant_busy">Ese inquilino ya tiene un alquiler activo.</string>
+    <string name="error_pick_tenant">Elige un inquilino.</string>
+    <string name="error_pick_property">Elige una propiedad.</string>
+    <string name="rental_saved">Alquiler guardado. Próximo cobro: %1$s.</string>
+
+    <!-- Rental detail -->
+    <string name="detail_next">Próximo cobro</string>
+    <string name="detail_none">Sin cobros pendientes</string>
+    <string name="detail_ended">Alquiler terminado</string>
+    <string name="detail_end">Terminar alquiler</string>
+    <string name="detail_delete">Eliminar alquiler</string>
+    <string name="delete_rental_title">¿Eliminar este alquiler?</string>
+    <string name="delete_rental_body">Se eliminan también sus avisos pendientes. El inquilino y la propiedad se conservan. No se puede deshacer.</string>
+    <string name="end_dialog_title">Terminar alquiler</string>
+    <string name="end_dialog_body">Elige el último día del alquiler. Ese día todavía se cobra.</string>
+    <string name="end_dialog_confirm">Terminar</string>
 </resources>
