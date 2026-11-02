@@ -4,6 +4,7 @@ Format: one entry per approved change, citing IDs.
 
 ## [Unreleased]
 ### Added
+- DOC-UC 0.1 (UC-001 to UC-015 with sequence diagrams) and DOC-UXF 0.1 (UX framework from Nielsen, Laws of UX, Fogg, Google touch-target guidance) drafted by the agent, Proposed; OI-044 logged for five UX proposals. A roadmap page with mockups was published as an Artifact.
 - DOC-ARC 0.1 (architecture, VW-001 to VW-003) and DOC-RSK 0.1 (RSK-001 to RSK-014) drafted by the agent, Proposed, not approved.
 - OI-043 resolved by the Owner (all four proposals accepted); DOC-DAT, DOC-INT, DOC-SEC updated.
 - Phase 6: DOC-DAT 0.1 (ENT-001 to ENT-004), DOC-CMP 0.1 (CMP-001 to CMP-009), DOC-INT 0.1 (INT-001 to INT-008), DOC-SEC 0.1 (SEC-001 to SEC-008) and DOC-TST 0.1 (TC-001 to TC-030) drafted by the agent, Proposed, not approved. OI-043 logged for four small decisions found while drafting.
