@@ -143,12 +143,12 @@ footer { margin-top: 64px; padding-top: 20px; border-top: 1px solid var(--line);
 
 <div class="wrap">
 <header class="hero">
-  <span class="label">Apartment Mobile · app Android para arrendador · actualizado tras el commit 7348e22 · 2 nov 2026</span>
+  <span class="label">Apartment Mobile · app Android para arrendador · actualizado tras el commit c4ec5dc · 2 nov 2026</span>
   <h1>Del borrador aprobado a la app en tu teléfono</h1>
   <p>Roadmap por fases, hitos de desarrollo, mockups, framework de UX, casos de uso y secuencias. Los documentos están aprobados; el código avanza por hitos. Esta página se actualiza después de cada commit.</p>
   <div class="facts">
     <div><b>Fase 7</b><span>H0 a H6 construidos</span></div>
-    <div><b>126</b><span>pruebas automáticas, verdes también en tu teléfono</span></div>
+    <div><b>134</b><span>pruebas automáticas, todas verdes</span></div>
     <div><b>17</b><span>documentos aprobados</span></div>
     <div><b>31 de 34</b><span>casos de prueba con resultado</span></div>
     <div><b>2</b><span>cambios esperan tu aprobación</span></div>
@@ -167,7 +167,7 @@ footer { margin-top: 64px; padding-top: 20px; border-top: 1px solid var(--line);
     <li class="done"><span class="dot"></span><h3>6 · Diseño, datos, seguridad y pruebas <span class="chip done">Aprobada</span></h3><p>Modelo de datos, componentes, interfaces, seguridad, plan de pruebas, riesgos, casos de uso y framework de UX.</p></li>
     <li class="review"><span class="dot"></span><h3>7 · Desarrollo <span class="chip done">H0 a H6 construidos</span></h3><p>Los siete hitos están construidos. El APK final firmado (0.1.0) ya está instalado en tu teléfono, probado con reinicio, sin conexión, con letra grande, permisos, WhatsApp e importación.</p></li>
   </ol>
-  <div class="gate"><b>Desarrollo terminado.</b> Todos los hitos pasan sus pruebas en tu teléfono. <b>Falta de ti:</b> aprobar CHG-001, CHG-002 y ADR-0005, y decidir OI-048 (OI-045, OI-046 y OI-047 ya resueltos). La app ya está instalada: puedes empezar a usarla.</div>
+  <div class="gate"><b>Desarrollo terminado.</b> Todos los hitos pasan sus pruebas en tu teléfono. <b>Falta de ti:</b> aprobar CHG-001, CHG-002 y ADR-0005, y decidir nada más: OI-045 a OI-048 ya están resueltos. La app ya está instalada: puedes empezar a usarla.</div>
 </section>
 
 <section id="hitos">
@@ -454,7 +454,7 @@ sequenceDiagram
   <p class="lead">Revisé la documentación y el código a la vez. Esto es lo que encontré y qué hice.</p>
   <div class="grid">
     <article class="card"><h3>Pruebas</h3><ul>
-      <li><b>71</b> pruebas unitarias y <b>55</b> en el emulador, todas verdes (1 omitida a propósito: la de entrega real de avisos, que dura 2 minutos).</li>
+      <li><b>74</b> pruebas unitarias y <b>60</b> en el emulador, todas verdes (1 omitida a propósito: la de entrega real de avisos, que dura 2 minutos).</li>
       <li>Lint: <b>0 errores</b>. Los avisos restantes son versiones más nuevas de librerías (deuda RSK-015).</li>
       <li>Plan de pruebas: <b>34</b> casos, <b>31</b> con resultado; 3 sin ejecutar y 8 parciales (textos y red por revisar, edición de propiedad, entre otros).</li>
     </ul></article>
@@ -476,8 +476,8 @@ sequenceDiagram
   <h2>Pendiente y qué sigue</h2>
   <div class="grid">
     <article class="card"><h3>Necesito de ti</h3><ul class="next">
-      <li><b>Empezar a usar la app:</b> está instalada en tu teléfono, limpia. Exporta una copia de seguridad de vez en cuando (RSK-007).</li><li><b>OI-048:</b> la app vuelve a Semana cada vez que sales un instante (selector de archivos, permisos). Propongo hacerlo solo tras unos minutos fuera. ¿Lo aceptas?</li>
-      <li><b>Aprobar</b> con un commit <code>approve: CHG-001, CHG-002, ADR-0005</code> (fecha de inicio del alquiler, sincronización de documentos y Compose).</li>
+      <li><b>Empezar a usar la app:</b> está instalada en tu teléfono, limpia. Exporta una copia de seguridad de vez en cuando (RSK-007).</li><li><b>Instalar la versión nueva</b> en tu teléfono (el cambio de OI-048: vuelve a Semana solo tras 5 minutos fuera). Reconecta el cable y la instalo conservando tus datos.</li>
+      <li><b>Aprobar</b> con un commit <code>approve: CHG-001, CHG-002, CHG-003, ADR-0005</code> (fecha de inicio del alquiler, sincronización de documentos y Compose).</li>
       <li><b>Revisar</b> OI-047 (detalles de la copia y el contacto que elegí yo) y ADR-0005 (Compose).</li><li><b>Guardar la llave de firma</b> (RSK-018): la guía DOC-OPS dice dónde está y cómo respaldarla. Sin ella no se puede actualizar la app sin borrar sus datos.</li>
       <li><b>RSK-007:</b> ¿un recordatorio para exportar la copia de seguridad?</li>
       <li><b>OI-001 a OI-007:</b> temas de gobierno aún abiertos (no bloquean).</li>
