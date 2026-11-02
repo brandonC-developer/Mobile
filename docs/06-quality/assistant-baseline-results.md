@@ -83,3 +83,8 @@ Still failing, all real wording: O05 and O06 (how many months or years a tenant 
 New design finding: the original message was a **two-turn exchange**. The first turn named Pablo and an unclear date; "me equivoqué" then introduced a correction that only makes sense with the previous turn. A chat assistant therefore needs a short memory of the last request (to correct or cancel it), which the catalog did not include. Proposal: keep only the last pending request in memory, for the confirmation step; "me equivoqué" or "cancela" drops it.
 
 Open point for the Owner: should "borrar" be allowed on an active rental, or only after the rental was ended ("borrar es otro paso")? The approved FR-012 does not say.
+
+## Owner confirmations (2026-11-02, second round)
+- **Eliminar = terminar** the rental. O08 "eliminar información de Carlos" is now a certain label (end rental); it already passed.
+- **Borrar = remove the information from the local database.** It is permanent erasure, not a state. Consequences (agent proposals): the confirmation must name what disappears (tenant, rental, history) and say it cannot be undone; the assistant suggests exporting a backup first when none was exported recently (RSK-007); "borrar" is never inferred from other words. Whether an active rental may be borrado directly was not answered; the proposal is to allow it with that stronger confirmation, since the Owner defined it as erasure, unless the Owner prefers to require ending it first (FR-012 is silent).
+Rerun not needed: no rule or label outcome changed (6/10 on the Owner phrases, 4 failures all on wording not yet covered).

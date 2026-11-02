@@ -5,6 +5,7 @@ Format: one entry per approved change, citing IDs.
 ## [Unreleased]
 ### Added
 - ADR-0005 (Jetpack Compose and Material 3) drafted as Proposed; Owner chose it 2026-11-02. Milestone H0 built: Gradle project in `app/`, Compose placeholder activity, Room dependencies, no permissions, Android backup blocked, unit tests for TC-026 pass. OI-045 logs the technical values chosen by the agent. DOC-DEV 0.1 drafted.
+- Owner confirmed eliminar = terminar and borrar = permanent removal from the local database (stronger confirmation proposed).
 - Owner answers applied: quitar/eliminar/terminar = end the rental, borrar = separate delete step; "n fecha" was the correction "María paga los 28 ahora" (O10). Owner phrases 6/10; authored set 97.4% unchanged.
 - Spike corrected: tenant and property names are a Roster input loaded from data (assistant-test-roster.psv), no names in the rules; Owner phrases now 4/9.
 - Owner own phrases (9) run untuned on the rule baseline: 3/9 exact (1/5 on the certain labels), against 97.4% on the agent-written set; findings in DOC-TST-AST-R1 addendum.
