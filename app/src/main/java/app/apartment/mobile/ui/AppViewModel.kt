@@ -13,6 +13,7 @@ import app.apartment.mobile.data.Repository
 import app.apartment.mobile.data.TenantEntity
 import app.apartment.mobile.domain.Rental
 import app.apartment.mobile.domain.RentalError
+import app.apartment.mobile.domain.WeekNavigation
 import java.time.LocalDate
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
@@ -39,10 +40,21 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 
     var screen: Screen by mutableStateOf(Screen.Tabs)
         private set
-    var tab by mutableStateOf(Tab.RENTALS)
+    var tab by mutableStateOf(Tab.WEEK)
         private set
 
     fun today(): LocalDate = LocalDate.now()
+
+    var weekOffset by mutableStateOf(0)
+        private set
+
+    fun showWeek(offset: Int) { weekOffset = WeekNavigation.clamp(offset) }
+
+    /** FR-016: leaving the app and coming back shows the current week again. */
+    fun resetHome() {
+        weekOffset = 0
+        if (screen == Screen.Tabs) tab = Tab.WEEK
+    }
 
     fun open(next: Screen) { screen = next }
     fun selectTab(next: Tab) { tab = next }

@@ -87,4 +87,21 @@
     <string name="end_dialog_title">Terminar alquiler</string>
     <string name="end_dialog_body">Elige el último día del alquiler. Ese día todavía se cobra.</string>
     <string name="end_dialog_confirm">Terminar</string>
+    <!-- Week (UC-004) -->
+    <string name="week_title">Semana</string>
+    <string name="week_subtitle_current">Semana actual</string>
+    <string name="week_subtitle_previous">Semana anterior</string>
+    <string name="week_subtitle_next">Semana siguiente</string>
+    <string name="week_go_previous">Ir a la semana anterior</string>
+    <string name="week_go_next">Ir a la semana siguiente</string>
+    <string name="week_total">Total de la semana</string>
+    <string name="week_empty_title">Sin cobros esta semana</string>
+    <string name="week_empty_body">No hay cobros con fecha entre el lunes y el domingo.</string>
+
+    <!-- Calendar (UC-005) -->
+    <string name="calendar_title">Calendario</string>
+    <string name="calendar_prev_month">Mes anterior</string>
+    <string name="calendar_next_month">Mes siguiente</string>
+    <string name="calendar_hint">Toca una fecha marcada para ver el monto.</string>
+    <string name="calendar_day_none">Sin cobros este día</string>
 </resources>

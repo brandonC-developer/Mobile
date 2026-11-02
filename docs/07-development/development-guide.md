@@ -43,3 +43,4 @@ The debug APK is `app/build/outputs/apk/debug/app-debug.apk`. Install with `adb 
 - Unit tests (JVM, no device): `./gradlew :app:testDebugUnitTest`. Domain logic lives in `app/src/main/java/app/apartment/mobile/domain` with no Android dependency.
 - Device tests (Room schema, cascade): start the emulator or connect the phone, then `ANDROID_SERIAL=<serial> ./gradlew :app:connectedDebugAndroidTest`.
 - Room writes each schema version to `app/schemas/`; commit it with every schema change.
+- Screen tests use Compose test rules (`WeekCalendarUiTest`). The Espresso version pulled in by the Compose test library failed on Android API 37 (`InputManager.getInstance` missing); `espresso-core` 3.7.0 is declared explicitly in `gradle/libs.versions.toml` to fix it.

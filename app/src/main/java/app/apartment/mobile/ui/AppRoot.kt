@@ -30,6 +30,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import app.apartment.mobile.R
@@ -49,6 +51,7 @@ fun AppRoot(vm: AppViewModel = viewModel()) {
     val savedText = stringResource(R.string.rental_saved, "%s")
 
     BackHandler(enabled = vm.screen != Screen.Tabs) { vm.back() }
+    LifecycleEventEffect(Lifecycle.Event.ON_STOP) { vm.resetHome() }
     LaunchedEffect(pendingMessage) {
         pendingMessage?.let { snackbar.showSnackbar(it); pendingMessage = null }
     }
@@ -75,7 +78,9 @@ fun AppRoot(vm: AppViewModel = viewModel()) {
                         onOpen = { vm.open(Screen.RentalDetail(it)) },
                         onPeople = { vm.open(Screen.People) },
                     )
-                    else -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) { Text(stringResource(R.string.soon)) }
+                    Tab.WEEK -> WeekScreen(rentals, tenants, properties, today, vm.weekOffset, vm::showWeek)
+                    Tab.CALENDAR -> CalendarScreen(rentals, tenants, properties, today)
+                    Tab.SETTINGS -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) { Text(stringResource(R.string.soon)) }
                 }
             }
         }
