@@ -1,0 +1,91 @@
+id|text|intent|slots|style|split
+P001|¿Qué cobro esta semana?|week_collections|range=this_week|question|dev
+P002|¿Quién me paga esta semana?|week_collections|range=this_week|question,colloquial|test
+P003|cobros de la semana|week_collections|range=this_week|telegraphic|test
+P004|Dígame qué cobros tengo esta semana|week_collections|range=this_week|usted|test
+P005|Decime qué tengo que cobrar esta semana|week_collections|range=this_week|voseo|dev
+P006|¿Qué cobros hay para la próxima semana?|week_collections|range=next_week|question|test
+P007|Y la otra semana, ¿quién paga?|week_collections|range=next_week|ellipsis,colloquial|test
+P008|Ehh, ¿qué... qué cobro esta semana?|week_collections|range=this_week|disfluency|test
+P009|¿Quién paga hoy?|week_collections|range=today|question|dev
+P010|¿Quién paga mañana?|week_collections|range=tomorrow|question|test
+P011|¿Cuánto cobro este mes?|month_total|range=this_month|question|dev
+P012|total del mes|month_total|range=this_month|telegraphic|test
+P013|¿Cuánto voy a recibir en total este mes?|month_total|range=this_month|question,long|test
+P014|¿Cuánto falta por cobrar?|month_total|range=this_month,only=pending|question|test
+P015|¿Cuánto cobro la próxima semana en total?|month_total|range=next_week|question|test
+P016|Decime cuánto me entra este mes|month_total|range=this_month|voseo,colloquial|test
+P017|¿Qué cobro el 15?|date_collections|day=15|question|dev
+P018|¿Quién paga el viernes?|date_collections|weekday=friday|question|test
+P019|cobros del día 5|date_collections|day=5|telegraphic|test
+P020|¿Qué me toca cobrar el veinte?|date_collections|day=20|question,number_words|test
+P021|¿Quién paga el pasado mañana?|date_collections|range=day_after_tomorrow|question|test
+P022|Dígame los cobros del lunes|date_collections|weekday=monday|usted|test
+P023|¿Qué vence a fin de mes?|date_collections|range=month_end|question|test
+P024|¿Hay algo para cobrar el 30?|date_collections|day=30|question,colloquial|test
+P025|¿Cuánto paga María?|tenant_info|tenant=María,field=amount|question|dev
+P026|¿Cuándo paga Luis?|tenant_info|tenant=Luis,field=day|question|test
+P027|¿Cuánto me paga doña Rosa y qué día?|tenant_info|tenant=Rosa,field=amount+day|question,two_slots|test
+P028|monto de Carlos|tenant_info|tenant=Carlos,field=amount|telegraphic|test
+P029|¿Qué día le toca pagar a Ana?|tenant_info|tenant=Ana,field=day|question|test
+P030|Decime cuánto paga Luis|tenant_info|tenant=Luis,field=amount|voseo|test
+P031|¿Cuál es el alquiler de María?|tenant_info|tenant=María,field=amount|question|test
+P032|¿Desde cuándo vive Carlos?|tenant_info|tenant=Carlos,field=start_date|question|test
+P033|Llama a María|call|tenant=María|imperative_tu|dev
+P034|Llámeme a Luis|call|tenant=Luis|usted|test
+P035|Llamá a Carlos|call|tenant=Carlos|voseo|test
+P036|¿Me llamás a Ana?|call|tenant=Ana|voseo,question|test
+P037|Escríbele a Luis por WhatsApp|whatsapp|tenant=Luis|imperative_tu|dev
+P038|mandale un WhatsApp a María|whatsapp|tenant=María|voseo,colloquial|test
+P039|Abra el WhatsApp de Carlos|whatsapp|tenant=Carlos|usted|test
+P040|whatsapp a Ana|whatsapp|tenant=Ana|telegraphic|test
+P041|Marca como pagado a María|mark_paid|tenant=María|imperative_tu|dev
+P042|María ya pagó|mark_paid|tenant=María|statement|test
+P043|Luis me pagó hoy|mark_paid|tenant=Luis|statement|test
+P044|Anote que Carlos pagó|mark_paid|tenant=Carlos|usted|test
+P045|ya me pagó doña Rosa|mark_paid|tenant=Rosa|statement,colloquial|test
+P046|Poné a Ana como pagada|mark_paid|tenant=Ana|voseo|test
+P047|Desmarcá el pago de Luis|unmark_paid|tenant=Luis|voseo|test
+P048|Me equivoqué, María no ha pagado|unmark_paid|tenant=María|self_correction|test
+P049|Cambia el día de pago de María al 20|change_day|tenant=María,day=20|imperative_tu|dev
+P050|Mueve el cobro de Luis al 5|change_day|tenant=Luis,day=5|imperative_tu|test
+P051|Pasá el pago de Carlos para el 10|change_day|tenant=Carlos,day=10|voseo|test
+P052|María ahora paga el veinticinco|change_day|tenant=María,day=25|statement,number_words|test
+P053|Cámbiele la fecha a Luis, que pague el 15|change_day|tenant=Luis,day=15|usted|test
+P054|quiero que Ana pague el 1|change_day|tenant=Ana,day=1|statement|test
+P055|Ehh, mueve... mueve el pago de Carlos al 12|change_day|tenant=Carlos,day=12|disfluency|test
+P056|Cambia a María al 20, no, al 22|change_day|tenant=María,day=22|self_correction|test
+P057|Pasa el cobro de doña Rosa para el último día del mes|change_day|tenant=Rosa,day=month_end|imperative_tu,relative|test
+P058|cambiá el día de Luis|change_day|tenant=Luis|voseo,missing_slot|test
+P059|Sube el alquiler de Luis a 250 000|change_amount|tenant=Luis,amount=250000|imperative_tu|dev
+P060|Súbale a María a 300 mil|change_amount|tenant=María,amount=300000|usted,number_mil|test
+P061|Ahora Carlos paga doscientos cincuenta mil|change_amount|tenant=Carlos,amount=250000|statement,number_words|test
+P062|Bajá el monto de Ana a 180 000|change_amount|tenant=Ana,amount=180000|voseo|test
+P063|el alquiler de Luis es 275000|change_amount|tenant=Luis,amount=275000|statement,no_separator|test
+P064|Cambia lo de María a ₡320 000|change_amount|tenant=María,amount=320000|imperative_tu,currency_symbol|test
+P065|Aumentá a doña Rosa diez mil|change_amount|tenant=Rosa,delta=10000|voseo,relative|test
+P066|Termina el alquiler de María|end_rental|tenant=María|imperative_tu|dev
+P067|Quita a Luis|end_rental|tenant=Luis|imperative_tu,colloquial|test
+P068|Dé de baja a Carlos|end_rental|tenant=Carlos|usted|test
+P069|Sacá a Ana del alquiler|end_rental|tenant=Ana|voseo|test
+P070|María se va a fin de mes|end_rental|tenant=María,end=month_end|statement|test
+P071|Ya Luis se fue, quítalo|end_rental|tenant=Luis|statement,colloquial|test
+P072|Borra el alquiler de María|delete_rental|tenant=María|imperative_tu|dev
+P073|Elimine el alquiler de Carlos|delete_rental|tenant=Carlos|usted|test
+P074|Borrá a Ana, fue un error|delete_rental|tenant=Ana|voseo,reason|test
+P075|Elimina el registro de Luis|delete_rental|tenant=Luis|imperative_tu|test
+P076|Cambia el día de pago de María|clarify|tenant=María,missing=day|missing_slot|test
+P077|Escríbele a María Gómez|clarify_name|tenant=María,candidates=2 (needs test data with two Marías)|ambiguous_name|test
+P078|Sube el alquiler|clarify|missing=tenant,missing=amount|missing_slot|test
+P079|Mueve el cobro de Luis para después|clarify|tenant=Luis,missing=day|vague|test
+P080|Quita a Pedro|unknown_tenant|tenant=Pedro|unknown_name|test
+P081|¿Qué tiempo hará mañana?|out_of_scope||off_topic|test
+P082|Mándale un mensaje a mi mamá|out_of_scope||other_app|test
+P083|Agrega un inquilino nuevo|out_of_scope||not_supported_by_assistant|test
+P084|Hazme una copia de seguridad|out_of_scope||not_supported_by_assistant|test
+P085|¿Cuál es la capital de Francia?|out_of_scope||off_topic|test
+P086|Cancela|cancel||short|test
+P087|No, déjalo así|cancel||short|test
+P088|Sí, confírmalo|confirm||short|test
+P089|Gracias|out_of_scope||politeness|test
+P090|Por favor, ¿podría decirme qué cobros tengo esta semana?|week_collections|range=this_week|politeness,long|test
