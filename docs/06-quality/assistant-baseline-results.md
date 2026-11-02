@@ -35,3 +35,22 @@ Failures on the test split:
 2. The honest comparison needs **phrases nobody tuned for**: the Owner's own 10 to 15 phrases, or a second author. Until then no claim that a model is needed or not needed is supported.
 3. Writes must keep the confirmation screen; P048 shows why.
 4. Next measurement: the Owner's phrases through the same harness, then the models (LiteRT-LM with Qwen3-0.6B) on the same set, emulator first, then the phone.
+
+## Addendum: the Owner's own phrases (2026-11-02, untuned)
+File: `assistant-owner-phrases.psv` (9 phrases cut from one message; expected labels are the agent's reading, 4 marked uncertain). The rules were not changed; only the names Jorge, Pablo and Marco were added to the roster, because tenant names are data. Harness: `AssistantOwnerPhrasesTest`, report in `app/build/assistant-owner.txt`.
+
+| Result | Value |
+|--------|-------|
+| Exact match, all 9 | 3/9 (33%) |
+| Exact match, the 5 phrases with a certain label | 1/5 (20%) |
+| Same rules on the agent-written set | 97.4% |
+
+What failed and why:
+- **Addressing by apartment, not by name** (O02 "apartamento 1 ya pago", O06 "apartamento 16 ya tiene un año"): the catalog assumed tenant names. The Owner points to the property. A reference resolver in the app (property name or tenant name, from the database) is needed; this is data lookup, not language understanding.
+- **A question not in the catalog** (O05 "cuántos meses tiene aquí Marco", O06): how long a tenant has been in the rental. New intent `tenant_info` with field `duration` (the rental `startDate` exists, CHG-001).
+- **Verb forms not anticipated** (O09 "el monto del María cambió a 150 000"): "cambió" in the past tense as a statement; answered as a read instead of a change. Harmless here, wrong all the same.
+- **A destructive misreading** (O03 "elimina a Jorge, apartamento 3 ya se fue"): answered *delete rental*; under the Owner rule "quita means end" the reasonable action is *end*, which keeps history. This is the **harmful** kind of error and happened on real wording, not on the author's own.
+- **Unclear scope** (O08 "eliminar información de Carlos"): delete the person or the rental? A real ambiguity, the assistant should ask.
+- **Not tested but visible:** no accents, no capitals, no punctuation, typos ("del María"), several statements in one line, a dictated-sounding "n fecha". The authored set did not have this mix.
+
+Conclusion (agent): the 97.4% was an artifact of the author writing both sides. On real wording the keyword rules cover about a third. That is the first honest evidence that either many more rules or a model is needed; it does **not** yet show a model would do better, and it shows that a good part of the problem (apartment lookup, new questions, ambiguity handling) belongs to the app, not to the model. Next: the Owner answers four label questions, the 9 phrases join the dev set, and the models are measured on the same phrases.

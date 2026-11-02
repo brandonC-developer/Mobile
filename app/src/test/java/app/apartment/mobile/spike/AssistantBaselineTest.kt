@@ -58,3 +58,25 @@ class AssistantBaselineTest {
         assertTrue(rows.size == 90)
     }
 }
+
+/** The Owner's own phrases (2026-11-02), run with the same rules, untuned. Output: app/build/assistant-owner.txt. */
+class AssistantOwnerPhrasesTest {
+    @Test
+    fun runTheOwnerPhrases() {
+        val f = listOf(File("../docs/06-quality/assistant-owner-phrases.psv"), File("docs/06-quality/assistant-owner-phrases.psv")).first { it.exists() }
+        val out = StringBuilder()
+        var ok = 0
+        val rows = f.readLines().drop(1).filter { it.isNotBlank() }
+        for (line in rows) {
+            val p = line.split("|")
+            val exp = p[3].split(",").filter(String::isNotBlank).sorted()
+            val got = AssistantBaseline.parse(p[1])
+            val same = got.intent == p[2] && got.slots.sorted() == exp
+            if (same) ok++
+            out.appendLine("${p[0]} ${if (same) "OK  " else "FAIL"} \"${p[1]}\"  expected ${p[2]} $exp  got ${got.intent} ${got.slots.sorted()}  [certain: ${p[4]}]")
+        }
+        out.appendLine("exact: $ok/${rows.size}")
+        File("build/assistant-owner.txt").writeText(out.toString())
+        println(out)
+    }
+}

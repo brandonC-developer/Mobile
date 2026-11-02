@@ -10,7 +10,8 @@ import java.text.Normalizer
 data class Parsed(val intent: String, val slots: Set<String>)
 
 object AssistantBaseline {
-    private val roster = mapOf("maria" to "María", "luis" to "Luis", "carlos" to "Carlos", "ana" to "Ana", "rosa" to "Rosa")
+    private val roster = mapOf("maria" to "María", "luis" to "Luis", "carlos" to "Carlos", "ana" to "Ana", "rosa" to "Rosa",
+        "jorge" to "Jorge", "pablo" to "Pablo", "marco" to "Marco")
     private val weekdays = mapOf(
         "lunes" to "monday", "martes" to "tuesday", "miercoles" to "wednesday", "jueves" to "thursday",
         "viernes" to "friday", "sabado" to "saturday", "domingo" to "sunday",
