@@ -102,7 +102,7 @@ Owner phone: Motorola moto g72, MediaTek Helio G99 with 2 Cortex-A76 and 6 Corte
 ## 10. Test plan against the project
 | Test | Measures | Device | Pass criterion (proposal) | Status |
 |------|----------|--------|---------------------------|--------|
-| Device probe `device_probe.sh` | Chipset, cores, RAM, free storage | moto g72 | Free RAM above the model plus 1 GB | Pending: the phone was disconnected; the emulator could not answer |
+| Device probe `device_probe.sh` | Chipset, cores, RAM, free storage | moto g72 | Free RAM above the model plus 1 GB | Done 2026-11-02: 5.86 GB RAM total, about 2.2 GB available at rest, 5.7 GB storage free (95% used), 8 cores, Android 13 (measured). A 639 MB model fits but with little margin |
 | Spanish phrase set | Intent and slot accuracy | none (offline set) | At least 90% intents and 85% slots for the chosen option | Pending: needs the Owner's 6 to 10 real phrases to build 60 to 100 |
 | Option A baseline | Accuracy and cost of rules | JVM | Reaches the same targets without a model, or shows its limits | Pending: needs the Owner phrases |
 | Models B1 and B2 on phone | Tokens per second, peak RAM, time to answer, battery per 20 requests | moto g72 | Answer in under 3 s on the phone; no out-of-memory; battery under 1% per 20 requests (all proposals) | Pending |
