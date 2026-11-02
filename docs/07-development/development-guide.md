@@ -58,9 +58,16 @@ The debug APK is `app/build/outputs/apk/debug/app-debug.apk`. Install with `adb 
 4. No user text is hardcoded outside `res/values/strings.xml` (NFR-007).
 5. Documents that say "to be verified" are checked against the open items.
 6. Approved documents are changed only through a CHG.
-- Scenarios that need the test to end first (reboot, forced stop; TC-019): install the app and test APKs with `adb install -r`, then `adb shell am instrument -w -e scenario <name> -e minutes <n> -e class app.apartment.mobile.reminders.ReminderScenarioSetupTest app.apartment.mobile.test/androidx.test.runner.AndroidJUnitRunner`. It seeds a rental with one same-day reminder and leaves the data in place.
+- Scenarios that need the test to end first (reboot, forced stop; TC-019): install the app and test APKs with `adb install -r`, then `adb shell am instrument -w -e scenario <name> -e minutes <n> -e class app.apartment.mobile.reminders.ReminderScenarioSetupTest app.apartment.mobile.debug.test/androidx.test.runner.AndroidJUnitRunner`. It seeds a rental with one same-day reminder and leaves the data in place.
 - Release file: `./gradlew :app:assembleRelease` (signing key and passwords: DOC-OPS section 2).
 
 ## Technology assessments
 - Before adopting a library, SDK, model or service, use the project skill `tech-fit-assessment` (`.claude/skills/tech-fit-assessment/`). It produces a report in `docs/03-architecture/assessments/` covering compatibility with the approved documents, price and licence, software load, optimization, processing power of the Owner phone and a test plan against the project. The first one is DOC-TFA-001 (local assistant, OI-049).
 - `scripts/device_probe.sh [-s <serial>] [<package>]` in the skill folder reads chipset, cores, memory, storage, battery and app size from a connected device. It only reads. It was checked for the no-device case; run it on the phone for the first real probe.
+
+## Test policy: emulator first, then the phone, without damage (Owner rule, 2026-11-02)
+1. **Stage 1, no risk to the phone:** JVM unit tests and the emulator (`./gradlew :app:testDebugUnitTest :app:connectedDebugAndroidTest` with `ANDROID_SERIAL=emulator-5554`). A change is not tried on the phone until stage 1 passes.
+2. **Stage 2, the physical phone:** the same suites on the moto g72, then the checks only the phone can answer (real alarms, reboot, permission dialogs, WhatsApp, file picker, font size, speed, memory). Reports say which stage each result comes from.
+3. **The test app is a different app.** The debug build installs as `app.apartment.mobile.debug`, named "Apartment (debug)", with its own data. The signed release (`app.apartment.mobile`) is the app the Owner uses and is never the target of a test, so a test cannot wipe real data. Both can be installed together.
+4. **Care on the phone:** do not uninstall, clear data, reboot, force-stop or change system settings (font size, airplane mode, permissions) without telling the Owner first; restore what was changed; ask for an exported backup before anything that could touch the release app; avoid screenshots of personal screens (messages, file lists) and prefer shell checks.
+5. **Emulator tips:** it needs about 4 GB of free RAM (stop Gradle daemons first); if `adb` shows it offline, restart it with `-gpu swiftshader_indirect`.

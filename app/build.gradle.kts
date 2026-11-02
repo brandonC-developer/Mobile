@@ -31,6 +31,12 @@ android {
         }
     }
     buildTypes {
+        // The debug build is a different app on the phone (own id, own data, own name), so tests never touch the
+        // release app that holds the Owner data (Owner rule of 2026-11-02: emulator first, then the phone, without damage).
+        debug {
+            applicationIdSuffix = ".debug"
+            versionNameSuffix = "-debug"
+        }
         release {
             isMinifyEnabled = false
             if (providers.gradleProperty("APARTMENT_STORE_FILE").orNull != null) {

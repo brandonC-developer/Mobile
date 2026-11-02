@@ -26,8 +26,8 @@ Assess each one, and write "unknown" where there is no evidence. `references/dim
 ## How to research
 Prefer primary sources: official documentation, the licence file, the repository, the vendor pricing page. Secondary articles only point you to the primary source. Fetch the primary page and quote the number; if a page cannot be read, say so and mark the fact unverified instead of filling the gap from memory. Do not invent prices, versions, sizes or benchmarks. When you estimate a cost, show the assumptions so the Owner can change them.
 
-## Test against the project
-An assessment that stops at reading is only half done. Add a test plan the Owner can approve:
+## Test against the project (emulator first, then the phone)
+An assessment that stops at reading is only half done. Add a test plan the Owner can approve. Owner rule: validate on the emulator and the JVM first, then repeat on the physical phone, and say which stage each number comes from; the point is to prevent damage. Phone tests use the separate debug app (`app.apartment.mobile.debug`), never the release app that holds the Owner data, and nothing is uninstalled, cleared, rebooted or reconfigured on the phone without telling the Owner first.
 - what to measure (size added, memory, latency, accuracy, battery), on which device, with which pass criteria;
 - the cheapest experiment that answers it (a throwaway spike, a benchmark, a manual check), reusing the project test tools (`docs/07-development/development-guide.md`);
 - what you already measured and what is pending. If the phone is connected, run `scripts/device_probe.sh` and include its output; if the technology can be tried cheaply, try it and report the numbers.

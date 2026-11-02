@@ -5,6 +5,7 @@ Format: one entry per approved change, citing IDs.
 ## [Unreleased]
 ### Added
 - ADR-0005 (Jetpack Compose and Material 3) drafted as Proposed; Owner chose it 2026-11-02. Milestone H0 built: Gradle project in `app/`, Compose placeholder activity, Room dependencies, no permissions, Android backup blocked, unit tests for TC-026 pass. OI-045 logs the technical values chosen by the agent. DOC-DEV 0.1 drafted.
+- Test policy recorded (development guide): emulator first, then the phone, with the debug build installed as the separate app `app.apartment.mobile.debug` ("Apartment (debug)") so tests never touch the release app and its data. Stage 1 passed on the emulator (74 unit, 60 device). Phone stage pending: the phone is disconnected.
 - DOC-TFA-001 written (assessment of a local assistant: fit, price, load, processing power, options, advantages and disadvantages, test plan) and the project skill `tech-fit-assessment` added under `.claude/skills/`; roadmap section added.
 - OI-049 logged: research on a local assistant with a very small language model (nothing built; spike proposed).
 - OI-045 to OI-048 resolved by the Owner. OI-048 applied as CHG-003 (proposed): the current week returns only after more than 5 minutes away; `HomeReset` rule, `appLeft` and `appReturned` in the view model, 3 unit tests and 4 view-model tests (TC-035). New release file built; installing it on the Owner phone is pending (phone disconnected).

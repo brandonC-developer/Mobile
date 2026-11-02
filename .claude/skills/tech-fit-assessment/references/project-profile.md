@@ -27,6 +27,9 @@ Offline Android app for one landlord: properties, tenants, rentals, monthly coll
 ## Owner phone
 Motorola moto g72, Android 13, chipset MediaTek Helio G99 (2 Cortex-A76 and 6 Cortex-A55 cores, Mali-G57 MC2), 6 or 8 GB RAM (confirm with `scripts/device_probe.sh`), serial in `adb devices`. A free-RAM check showed the development computer has about 6 GB free of 16 GB when many tools are open, which matters for emulators and builds.
 
+## Testing rule (Owner, 2026-11-02)
+Emulator and JVM first, then the physical phone; say which stage each result comes from. The debug build is a separate app, `app.apartment.mobile.debug` ("Apartment (debug)"), so tests never touch the release app `app.apartment.mobile`, which may hold real data. Do not uninstall, clear data, reboot or change settings on the phone without telling the Owner first, and prefer shell checks to screenshots of personal screens. Full text: development guide, "Test policy".
+
 ## Tools to test against the project
 Unit and device tests, the delivery test, the scenario setup test and the emulator are described in `docs/07-development/development-guide.md`. The emulator is Android API 37, not the target 13; speed and battery questions need the real phone.
 
