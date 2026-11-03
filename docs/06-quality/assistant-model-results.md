@@ -12,7 +12,7 @@ refs: [DOC-TFA-001, DOC-TST-AST, DOC-TST-AST-R1, OI-049, RSK-015]
 
 **Spike, throwaway, on its own branch `spike/local-model`** (commit `7ce534b`), not on `main`: it changes the build (a test-only runtime dependency in the debug app and a compiler flag), which the product should not carry. Model: Qwen3-0.6B, file `Qwen3-0.6B_dynamic_wi4b32_afp32.litertlm` (343 490 560 bytes, Apache-2.0), runtime LiteRT-LM 0.19.0 (`litertlm-android`). Both devices ran the separate debug app `app.apartment.mobile.debug`; the release app was not touched. The model file was pushed with adb; the app downloads nothing.
 
-**Accuracy on the phrase set is NOT measured yet** (see "What failed"). Everything below is size, memory, speed and a first look at the answers.
+Accuracy on the 100-phrase set was measured on 2026-11-02 (section "Accuracy on the 100 phrases"). It fails the targets.
 
 ## Measured facts
 | Item | Result | Where |
@@ -37,6 +37,26 @@ Targets proposed in DOC-TFA-001: answer in under 3 s, no out-of-memory, under 1%
 - The JSON was sometimes wrapped in code fences.
 - The model **invented slots**: with the long instructions it sometimes added `property: 3` and `tenant: maria` that were in the examples, not in the message; with the short instructions it filled every key with nonsense (amount 500, range "200-800"). Shorter instructions did not make it faster (38 to 49 s) and made the output worse.
 
+## Accuracy on the 100 phrases (measured 2026-11-02, moto g72, GPU backend, Qwen3-0.6B 343 MB int4, long instructions)
+Scored by `ModelScoreTest` (branch `spike/local-model`) against the same labels and roster as the rule baseline. Answers in the "thought" channel or inside code fences were accepted as JSON, so the scoring is lenient.
+
+| Group | Intent correct | Intent and all slots | Invalid JSON | Harmful writes (a wrong write intent) |
+|-------|----------------|----------------------|--------------|---------------------------------------|
+| Authored, test split (77) | 33.8% (26) | 16.9% (13) | 14 | 21 |
+| Authored, dev split (13) | 61.5% (8) | 30.8% (4) | 1 | 2 |
+| Owner phrases (10) | 30.0% (3) | 10.0% (1) | 0 | 4 |
+
+For comparison, the rule baseline reached 97.4% on the authored test split (optimistic) and 6 of 10 on the Owner phrases, with 1 harmful error.
+
+Time per answer over the 100 phrases: median 15.4 s; some answers took minutes (p90 340 s, max 368 s) because the model kept generating after the JSON and invented extra "Human:" turns. Load 13.4 s; peak memory 2.2 GB (PSS).
+
+What the answers show:
+- It copies slots from the instruction examples (property 3, tenant María, day 20, amount 250000) into phrases that do not mention them.
+- It fills fields with "none", "no_think" or the phrase's own words.
+- Typical wrong writes: "paga el 25" read as a question, "cambia el día" read as a change of amount, "marca como pagado" read as end_rental, WhatsApp read as call.
+- 14 of 77 test answers were not valid JSON.
+- The phone's USB link dropped four times during GPU load; the run was resumed from the saved answers, so the data is complete (100 of 100).
+
 ## What failed
 - A full emulator run of 100 phrases ended after about 25 minutes with a native crash (`Segmentation fault` in `liblitertlm_jni.so`, 16:48). Results were written only at the end, so nothing was saved, and the computer ran hot for no result. Cause unknown; the phrase that triggered it is unknown. The test now appends every answer immediately and resumes after a crash.
 - The phone disconnected from adb right before the planned full run (GPU backend), so the run did not start.
@@ -44,7 +64,8 @@ Targets proposed in DOC-TFA-001: answer in under 3 s, no out-of-memory, under 1%
 ## Reading (agent)
 1. As configured, this model is **not usable for an interactive chat** on the moto g72: 11 s at best, 40 to 57 s on the CPU, and it takes 1.2 to 2.2 GB of the free memory.
 2. Speed is dominated by the model's computation, not by the length of the instructions (the short version was not faster).
-3. The next information worth having is accuracy on the 100 phrases (resumable run on the phone GPU) and a smaller model (FunctionGemma 270M, about half the size) before concluding. If accuracy is poor as well, the rule parser with a better phrase coverage and a clarification step is the sensible option A for the product.
+3. Accuracy is also poor (34% intent on the test split, 21 wrong writes in 77 phrases), so speed and memory are not the only blockers. This says this small general model with prompt-only instructions fails; it does not say larger or fine-tuned models would. FunctionGemma 270M is a base for fine-tuning (58% to 85% reported after tuning) and would need training data.
+4. The sensible option for the product is the rule parser with wider phrase coverage, name and apartment resolution from the database, and a clarification question. These measurements do not justify a model. Saved by not adding it: a runtime dependency, a Kotlin upgrade, about 23 MB of library and 2 GB of memory.
 
 ## Pending
-Reconnect the phone; run all 100 phrases on the GPU backend with the new resumable test, score with `ModelScoreTest`; then FunctionGemma if the Gemma terms are accepted (its files are gated).
+Owner decision on OI-049: close the model path and build the rule-based assistant (agent recommendation), or measure one more model (FunctionGemma needs the Owner to accept the Gemma terms). The branch `spike/local-model` can be deleted or kept as evidence.
