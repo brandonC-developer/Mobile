@@ -1,16 +1,16 @@
 ---
 id: DOC-CMP
 title: Component Design
-status: Approved
-version: 0.1
-date: 2026-11-01
-approved_by: Brandon
-refs: [DOC-FR, DOC-NFR, DOC-DAT, ADR-0001, ADR-0002, ADR-0003, ADR-0004]
+status: In review
+version: 0.2
+date: 2026-11-19
+approved_by:
+refs: [DOC-FR, DOC-NFR, DOC-DAT, ADR-0001, ADR-0002, ADR-0003, ADR-0004, ADR-0005]
 ---
 
 # Component Design
 
-> **Status:** Approved by the Owner in commit `a1bc3ba` (2026-11-02); drafted by the agent. Component names and splits are a proposal; the UI toolkit and the dependency injection approach are left to implementation and are not decided here.
+> **Status:** Previously approved by the Owner in commit `a1bc3ba` (2026-11-02), with the UI toolkit later approved in `ADR-0005` (`f9fcf3f`, Jetpack Compose and Material 3); returned to `In review` for editorial sync `CHG-004` (no component contract changed). Component names and splits are a proposal; the dependency injection approach is left to implementation and is not decided here.
 
 One Android app (ADR-0001), no backend. Data flows from the local store up to the screens; nothing reads from anywhere else (NFR-002).
 
@@ -20,7 +20,7 @@ One Android app (ADR-0001), no backend. Data flows from the local store up to th
 - **Responsibility:** show and edit properties, tenants and rentals; calendar; weekly summary; reminder settings; backup export and import; permission warning.
 - **Uses:** CMP-002, CMP-003, CMP-004, CMP-007, CMP-008, CMP-009.
 - **Traces:** FR-001 to FR-017 · FR-018 to FR-020 · FR-024 · FR-025 to FR-029 · NFR-007 · NFR-009
-- **Rules:** all text in Spanish; amounts shown with the colon symbol and no cents; the weekly summary always opens on the current week (FR-016).
+- **Rules:** all text in Spanish; amounts shown with the colon symbol and no cents; the weekly summary opens on the current week at launch and when returning after more than 5 minutes away or after being closed (FR-016, CHG-003).
 
 ### CMP-002 — Data store
 - **Responsibility:** the Room database with ENT-001 to ENT-004; operations that must be atomic: delete a tenant with its rentals, check and create a rental, replace all data on import.
@@ -44,6 +44,7 @@ One Android app (ADR-0001), no backend. Data flows from the local store up to th
 ### CMP-006 — System event receiver
 - **Responsibility:** on boot completed and on exact-alarm permission change, ask CMP-004 to rebuild the reminders.
 - **Known limits (verified on the Owner phone, ADR-0003):** after a reboot it runs only after the first unlock; after a force stop nothing runs until the app is opened.
+- **Traces:** FR-021 · NFR-004 · ADR-0003 · INT-008
 
 ### CMP-007 — Backup service
 - **Responsibility:** export to the JSON file and import from it as described in ADR-0004; validation before any write; replacement in one transaction through CMP-002; then rebuild reminders.
@@ -61,4 +62,4 @@ One Android app (ADR-0001), no backend. Data flows from the local store up to th
 CMP-001 → CMP-002, CMP-003, CMP-004, CMP-007, CMP-008, CMP-009. CMP-004 → CMP-002, CMP-003. CMP-005 → CMP-002. CMP-006 → CMP-004. CMP-007 → CMP-002, CMP-004.
 
 ## Open points
-The window limit of CMP-004 (ADR-0003 step 5) is a configuration value to be chosen below the 500-alarm system limit.
+Resolved in OI-046: the window limit of CMP-004 is 100 collection reminders plus 1 renewal reminder (60-month look-ahead), well below the 500-alarm system limit.

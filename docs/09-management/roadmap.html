@@ -143,15 +143,15 @@ footer { margin-top: 64px; padding-top: 20px; border-top: 1px solid var(--line);
 
 <div class="wrap">
 <header class="hero">
-  <span class="label">Apartment Mobile · app Android para arrendador · actualizado tras el commit 6d7a78c · 2 nov 2026</span>
+  <span class="label">Apartment Mobile · app Android para arrendador · actualizado el 19 nov 2026 · sincronización documental CHG-004 (en revisión)</span>
   <h1>Del borrador aprobado a la app en tu teléfono</h1>
   <p>Roadmap por fases, hitos de desarrollo, mockups, framework de UX, casos de uso y secuencias. Los documentos están aprobados; el código avanza por hitos. Esta página se actualiza después de cada commit.</p>
   <div class="facts">
-    <div><b>Fase 7</b><span>H0 a H6 construidos</span></div>
-    <div><b>134</b><span>pruebas automáticas, todas verdes</span></div>
-    <div><b>17</b><span>documentos aprobados</span></div>
-    <div><b>31 de 34</b><span>casos de prueba con resultado</span></div>
-    <div><b>2</b><span>cambios esperan tu aprobación</span></div>
+    <div><b>Fase 7</b><span>H0 a H6 + CHG-003 construidos</span></div>
+    <div><b>134</b><span>pruebas automáticas de producto (74 unit + 60 disp.)</span></div>
+    <div><b>18</b><span>documentos aprobados (8 en revisión por CHG-004)</span></div>
+    <div><b>32 de 35</b><span>casos de prueba con resultado (23 pasan, 9 parciales)</span></div>
+    <div><b>1</b><span>cambio editorial espera aprobación (CHG-004)</span></div>
   </div>
 </header>
 
@@ -162,12 +162,12 @@ footer { margin-top: 64px; padding-top: 20px; border-top: 1px solid var(--line);
     <li class="done"><span class="dot"></span><h3>1 · Esqueleto <span class="chip done">Hecha</span></h3><p>Estructura de documentos, plantillas y reglas del proyecto.</p></li>
     <li class="done"><span class="dot"></span><h3>2 · Contexto en bruto <span class="chip done">Hecha</span></h3><p>Tus decisiones registradas una por una en el registro de pendientes (OI).</p></li>
     <li class="done"><span class="dot"></span><h3>3 · Visión, alcance y glosario <span class="chip done">Aprobada</span></h3><p>Objetivos <span class="id">OBJ-001</span> a <span class="id">OBJ-005</span>.</p></li>
-    <li class="done"><span class="dot"></span><h3>4 · Requisitos <span class="chip done">Aprobada</span></h3><p>29 funcionales y 10 no funcionales, 15 casos de uso. Aprobación válida en el commit <span class="id">a1bc3ba</span>. Cambios posteriores en trámite: CHG-001 y CHG-002.</p></li>
-    <li class="done"><span class="dot"></span><h3>5 · Arquitectura <span class="chip done">Aprobada</span></h3><p>ADR-0001 a ADR-0004 aprobados. ADR-0005 (Compose y Material 3), elegido por ti, está propuesto.</p></li>
+    <li class="done"><span class="dot"></span><h3>4 · Requisitos <span class="chip done">Aprobada</span></h3><p>29 funcionales y 10 no funcionales, 15 casos de uso. Aprobación en <span class="id">a1bc3ba</span>; <span class="id">CHG-001</span>, <span class="id">CHG-002</span> y <span class="id">CHG-003</span> aprobados en <span class="id">f9fcf3f</span>. En revisión: <span class="id">CHG-004</span> (limpieza editorial).</p></li>
+    <li class="done"><span class="dot"></span><h3>5 · Arquitectura <span class="chip done">Aprobada</span></h3><p>ADR-0001 a ADR-0005 aprobados (commits <span class="id">a1bc3ba</span> y <span class="id">f9fcf3f</span>).</p></li>
     <li class="done"><span class="dot"></span><h3>6 · Diseño, datos, seguridad y pruebas <span class="chip done">Aprobada</span></h3><p>Modelo de datos, componentes, interfaces, seguridad, plan de pruebas, riesgos, casos de uso y framework de UX.</p></li>
-    <li class="review"><span class="dot"></span><h3>7 · Desarrollo <span class="chip done">H0 a H6 construidos</span></h3><p>Los siete hitos están construidos. El APK final firmado (0.1.0) ya está instalado en tu teléfono, probado con reinicio, sin conexión, con letra grande, permisos, WhatsApp e importación.</p></li>
+    <li class="review"><span class="dot"></span><h3>7 · Desarrollo <span class="chip done">H0 a H6 + CHG-003 construidos</span></h3><p>Los siete hitos están construidos. El APK final firmado (0.1.0) ya está instalado en tu teléfono, probado con reinicio, sin conexión, con letra grande, permisos, WhatsApp e importación.</p></li>
   </ol>
-  <div class="gate"><b>Desarrollo terminado.</b> Todos los hitos pasan sus pruebas en tu teléfono. <b>Falta de ti:</b> aprobar CHG-001, CHG-002 y ADR-0005, y decidir nada más: OI-045 a OI-048 ya están resueltos. La app ya está instalada: puedes empezar a usarla.</div>
+  <div class="gate"><b>Desarrollo base terminado.</b> H0 a H6 pasan en tu teléfono y CHG-001, CHG-002, CHG-003 y ADR-0005 ya fueron aprobados (<code>f9fcf3f</code>). <b>Falta de ti:</b> revisar/aprobar CHG-004 (limpieza documental), instalar el APK actualizado con CHG-003, y decidir OI-049 (asistente local) y OI-050 (marca de pagado).</div>
 </section>
 
 <section id="hitos">
@@ -452,7 +452,7 @@ sequenceDiagram
 <section id="ia">
   <h2>Evaluación: asistente local con IA</h2>
   <p class="lead">Para saber si un modelo muy pequeño puede entender frases como "¿qué cobro esta semana?" o "mueve el pago de María al 20" sin salir del teléfono. Es una evaluación hecha con el skill <code>tech-fit-assessment</code> (abajo). Nada se construyó. Informe completo: <code>docs/03-architecture/assessments/local-assistant-fit.md</code> (OI-049).</p>
-  <div class="gate"><b>Veredicto: desconocido, medir primero.</b> Se puede y las licencias no cuestan, pero tres datos decisivos faltan: qué tan bien entienden español los modelos de 270 a 600 millones de parámetros, qué tan rápido corren en tu Helio G99, y cuánto pesaría en la app.</div>
+  <div class="gate"><b>Resultado medido (Qwen3-0.6B):</b> demasiado lento (mediana 15,4 s), pesado (2,2 GB) e impreciso (33,8 %, 21 escrituras erróneas). <b>Recomendación del agente:</b> cerrar la vía del modelo y construir el asistente por reglas (opción A). Decisión pendiente en OI-049.</div>
 
   <h3 style="margin-top:28px">Compatibilidad con el proyecto</h3>
   <div class="scroll"><table>
@@ -522,13 +522,14 @@ sequenceDiagram
     <article class="card"><h3>Pruebas</h3><ul>
       <li><b>74</b> pruebas unitarias y <b>60</b> en el emulador, todas verdes (1 omitida a propósito: la de entrega real de avisos, que dura 2 minutos).</li>
       <li>Lint: <b>0 errores</b>. Los avisos restantes son versiones más nuevas de librerías (deuda RSK-015).</li><li><b>Regla de pruebas:</b> primero el emulador, después tu teléfono, para no dañar nada. La app de pruebas ahora es otra app en el teléfono (<code>Apartment (debug)</code>, con sus propios datos), así que ninguna prueba toca la app que usas. Etapa 1 pasada en el emulador (74 unitarias y 60 de dispositivo) y etapa 2 pasada en tu teléfono (60 de dispositivo, 0 fallos) sin tocar tu app.</li>
-      <li>Plan de pruebas: <b>34</b> casos, <b>31</b> con resultado; 3 sin ejecutar y 8 parciales (textos y red por revisar, edición de propiedad, entre otros).</li>
+      <li>Plan de pruebas: <b>35</b> casos, <b>32</b> con resultado (23 pasan, 9 parciales, 3 planeados: TC-007, TC-033, TC-034).</li>
     </ul></article>
     <article class="card"><h3>Documentación</h3><ul>
       <li>Todas las referencias entre documentos (FR, NFR, UC, TC, CMP, ADR…) existen.</li>
       <li>Faltaban casos de prueba para 3 criterios de aceptación y para NFR-010: añadí TC-032 a TC-034. Ahora todo criterio tiene prueba.</li>
-      <li>Textos ya viejos ("por verificar") actualizados en FR-021, NFR-004, ADR-0004 y la arquitectura. Quedan como <b>CHG-002</b>, pendiente de tu aprobación.</li>
-      <li>Riesgos: RSK-012 cerrado, RSK-005 y RSK-010 mitigados, 3 nuevos (RSK-015 a 017).</li>
+      <li>Textos ya viejos ("por verificar") actualizados en FR-021, NFR-004, ADR-0004 y la arquitectura como <b>CHG-002</b>, ya aprobado por ti en <code>f9fcf3f</code> junto con CHG-001, CHG-003 y ADR-0005.</li>
+      <li>Sincronización del 19 de noviembre (<b>CHG-004</b> propuesto, en revisión): matriz completa de 39 filas en <code>DOC-TRC</code>, <code>Refs</code> en los 29 FR y 10 NFR, traza de <code>CMP-006</code>, cierre de deudas <code>RSK-011</code>/<code>013</code>/<code>014</code>, alineación de encabezados y de esta página.</li>
+      <li>Riesgos: RSK-011, RSK-012, RSK-013 y RSK-014 cerrados (junto a RSK-009); RSK-005 y RSK-010 mitigados; RSK-015 a RSK-018 registrados.</li>
     </ul></article>
     <article class="card"><h3>Código</h3><ul>
       <li>Corregí un error visible: decía "1 activos" y "sus 1 alquileres". Ahora usa singular y plural correctos, con prueba.</li>
@@ -542,24 +543,24 @@ sequenceDiagram
   <h2>Pendiente y qué sigue</h2>
   <div class="grid">
     <article class="card"><h3>Necesito de ti</h3><ul class="next">
-      <li><b>Empezar a usar la app:</b> está instalada en tu teléfono, limpia. Exporta una copia de seguridad de vez en cuando (RSK-007).</li><li><b>Instalar la versión nueva</b> en tu teléfono (el cambio de OI-048: vuelve a Semana solo tras 5 minutos fuera). Reconecta el cable y la instalo conservando tus datos.</li>
-      <li><b>Aprobar</b> con un commit <code>approve: CHG-001, CHG-002, CHG-003, ADR-0005</code> (fecha de inicio del alquiler, sincronización de documentos y Compose).</li>
-      <li><b>Revisar</b> OI-047 (detalles de la copia y el contacto que elegí yo) y ADR-0005 (Compose).</li><li><b>Guardar la llave de firma</b> (RSK-018): la guía DOC-OPS dice dónde está y cómo respaldarla. Sin ella no se puede actualizar la app sin borrar sus datos.</li>
-      <li><b>RSK-007:</b> ¿un recordatorio para exportar la copia de seguridad?</li><li><b>OI-049, asistente local con IA:</b> investigación hecha, nada construido. Falta que decidas qué peticiones debe entender y si hacemos una prueba medida en tu teléfono.</li>
-      <li><b>OI-001 a OI-007:</b> temas de gobierno aún abiertos (no bloquean).</li>
+      <li><b>Empezar a usar la app e instalar el APK actualizado:</b> la versión base está instalada y limpia, pero falta compilar e instalar el release actualizado con <code>CHG-003</code> (volver a Semana solo tras 5 minutos fuera) y cerrar <code>TC-035</code>, <code>TC-007</code>, <code>TC-033</code> y <code>TC-034</code> en el teléfono.</li>
+      <li><b>Revisar y aprobar la limpieza documental:</b> revisar el diff de sincronización y aprobarlo con un commit <code>approve: CHG-004</code>.</li>
+      <li><b>Decidir OI-049 (asistente local):</b> cerrar la vía del modelo y avanzar con el traductor por reglas (recomendado tras medir Qwen3-0.6B), o medir FunctionGemma; además decidir si se conserva o elimina la rama <code>spike/local-model</code>.</li>
+      <li><b>Decidir OI-050 (marca de pagado):</b> definirla como requisito formal y <code>CHG</code> propio (cambia pantalla de semana, Room y esquema JSON del respaldo).</li>
+      <li><b>Guardar la llave de firma (RSK-018) y configurar remoto Git (OI-001):</b> respaldar <code>apartment-release.jks</code> y sus cuatro propiedades fuera de la PC (DOC-OPS); sin ella no se puede actualizar la app sin borrar sus datos.</li>
+      <li><b>RSK-007 y gobierno (OI-002 a OI-007):</b> decidir si agregar recordatorio para exportar copia de seguridad y cerrar puntos de gobierno abiertos (no bloquean).</li>
     </ul></article>
     <article class="card"><h3>Por verificar</h3><ul class="next">
-      <li>Avisos tras un tiempo largo de reposo natural, con batería y sin cable (solo se probó con cable y con Doze forzado).</li>
-      <li>Material Design 3 y la guía oficial de WhatsApp en sus sitios (no pude leerlos; el enlace ya se probó en tu teléfono).</li>
+      <li>Avisos tras un tiempo largo de reposo natural, con batería y sin cable (solo se probó con cable y con Doze forzado; RSK-003).</li>
+      <li>Guía oficial de WhatsApp en su sitio (el enlace <code>wa.me</code> ya se verificó en tu teléfono en TC-021).</li>
       <li>Material Design 3 en su sitio oficial.</li>
-      <li>Si la copia automática de Android aplica a un APK instalado a mano.</li>
+      <li>Si la copia automática de Android aplica a un APK instalado a mano (RSK-006).</li>
     </ul></article>
     <article class="card"><h3>Siguiente hito</h3><ul class="next">
-      <li>Los siete hitos están hechos. Lo siguiente depende de lo que vayas viendo al usarla: ajustes de diseño, OI-048 y los casos de prueba que quedan.</li>
-      
+      <li>Los siete hitos base están hechos. Lo siguiente depende de tus decisiones sobre <code>CHG-004</code>, el release con <code>CHG-003</code>, <code>OI-049</code> y <code>OI-050</code>.</li>
     </ul></article>
   </div>
 </section>
 
-<footer>Documentos aprobados por ti en el commit <code>a1bc3ba</code>; lo posterior (CHG-001, CHG-002, ADR-0005, OI-045, OI-046) es propuesta del agente. Fuentes en <code>docs/</code>; esta página en <code>docs/09-management/roadmap.html</code>.</footer>
+<footer>Documentos aprobados por ti en <code>a1bc3ba</code> y <code>f9fcf3f</code> (CHG-001 a CHG-003, ADR-0005). La sincronización editorial CHG-004 y los estudios OI-049/OI-050 están en revisión o borrador. Fuentes en <code>docs/</code>; esta página en <code>docs/09-management/roadmap.html</code>.</footer>
 </div>

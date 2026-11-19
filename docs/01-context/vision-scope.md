@@ -1,16 +1,16 @@
 ---
 id: DOC-VIS
 title: Vision and Scope
-status: Approved
-version: 0.1
-date: 2026-11-01
-approved_by: Brandon
+status: In review
+version: 0.2
+date: 2026-11-19
+approved_by:
 refs: [DOC-PEN, DOC-GLO]
 ---
 
 # Vision and Scope
 
-> **Status:** Draft proposed by the agent from the Owner decisions recorded in [`pending-register`](../09-management/pending-register.md). Statements cite the open item (OI) or context input (CTX) they come from.
+> **Status:** Previously approved by the Owner in commit `a1bc3ba` (2026-11-02); returned to `In review` for editorial sync `CHG-004` (no scope or objective meaning changed). Statements cite the open item (OI) or context input (CTX) they come from.
 
 ## Purpose
 A mobile app for a landlord to keep track of the rent collections due from their tenants and to be reminded of them, working without Internet. The user is the landlord (OI-026), and for now the only user is the Owner (OI-018).
@@ -25,6 +25,8 @@ Success indicators are proposals for the Owner to confirm. Objectives are propos
 | OBJ-003 | The landlord is reminded before each collection without depending on Internet | Proposal: reminders arrive at the chosen time within 5 minutes (OI-017) with no connection | Proposed |
 | OBJ-004 | The landlord can contact a tenant quickly | Proposal: from a rental, WhatsApp or a phone call opens in the external app (OI-028) | Proposed |
 | OBJ-005 | The landlord can keep a copy of their data and recover it on another phone | Proposal: an exported file restores all data on a clean install (OI-016, OI-037) | Proposed |
+
+*Note (CHG-004): DOC-VIS was approved in `a1bc3ba`; updating individual `OBJ-001`–`OBJ-005` row statuses from `Proposed` to `Approved` awaits explicit Owner confirmation.*
 
 ## Scope
 **In scope** (decisions in the pending register):

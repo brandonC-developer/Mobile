@@ -1,16 +1,16 @@
 ---
 id: DOC-TST
 title: Test Plan
-status: Approved
-version: 0.1
-date: 2026-11-01
-approved_by: Brandon
+status: In review
+version: 0.2
+date: 2026-11-19
+approved_by:
 refs: [DOC-FR, DOC-NFR, DOC-DAT, DOC-CMP, ADR-0002, ADR-0003, ADR-0004]
 ---
 
 # Test Plan
 
-> **Status:** Approved by the Owner in commit `a1bc3ba` (2026-11-02); drafted by the agent. The test tools are a recommendation to confirm at implementation. Every case is `Planned`; none has been run.
+> **Status:** Previously approved by the Owner in commit `a1bc3ba` (2026-11-02; updated in `CHG-002`/`CHG-003`, approved in `f9fcf3f`); returned to `In review` for editorial sync `CHG-004`. Current coverage: 35 test cases (23 `Passed`, 9 `Partly passed`, 3 `Planned`).
 
 ## Strategy
 | Level | Scope | Environment |
@@ -62,4 +62,6 @@ Entry: the requirements and ADRs of the item are approved. Exit: every Must case
 | TC-035 | AC-FR-016-3 (CHG-003) | Unit | Leave the app on the Alquileres tab at one week ahead; come back after 2 minutes, then after 6 minutes; also after a file picker trip on the phone | Within 5 minutes the tab and week are kept; after more than 5 minutes the current week shows | Partly passed (unit rule and view-model tests pass on the emulator; the real file picker trip on the Owner phone with the new release is pending) |
 
 ## Results
-Run on 2026-11-02 (emulator Medium_Phone_API_37.0, JVM): H6 on the Owner phone (moto g72, Android 13): the whole device suite (55 tests, 1 skipped by design) passes; the delivery test (TC-016) passed with the screen off (delay 1 s) and with the screen off and deep idle forced (delay 0 s), USB attached; after a forced stop the system held 184 alarm lines before and 10 after, so the alarms are gone until the app is opened (TC-019, first half). Pending on the phone: reboot, reopening after a forced stop, real permission dialogs, WhatsApp chat, file picker, airplane mode, largest font. H5: TC-022 and TC-024 pass; TC-021 and TC-023 partly (the real WhatsApp chat and the system file picker are pending on the Owner phone); the export flow was also done by hand on the emulator (warning, then the system share menu with `apartment-backup-2026-11-02.json`). H4: TC-008, TC-015, TC-018 (alarms rebuilt from the database, no duplicates, none left after ending or deleting a rental, offsets removed when turned off, renewal reminder), TC-017 (notification content), TC-020 (warning shown only when a permission is missing, never blocking; unit and screen level) and TC-026 (manifest: only the three reminder permissions, private alarm receiver) pass as automated tests. TC-016 on the emulator (exact alarm allowed, screen on): reminder planned 11:44:00 arrived 11:44:00.8, delay under 1 second. NOT yet run on the Owner phone: TC-016 with the screen off, TC-019 (reboot, force stop), the real permission dialogs of TC-020. H3: TC-012, TC-013 and TC-014 pass as automated screen tests (`app/src/androidTest/.../WeekCalendarUiTest.kt`, fixed date 2026-11-04) plus calendar and week-navigation unit tests; the week and calendar screens were also looked at on the emulator. H1 and H2 data and logic cases pass as automated tests: TC-005, TC-006, TC-009, TC-011, TC-013, TC-031 (unit, `app/src/test`) and TC-004, TC-010, plus the edit and end rules of FR-005 to FR-012 (device, `app/src/androidTest`). The UI flow of UC-001, UC-002, UC-003 (create tenant, properties and a rental; occupied property shown unavailable; next collection date shown) was exercised by hand on the emulator. Not yet run on the Owner phone. Other cases are still planned.
+- **Stage 1 (JVM + emulator `Medium_Phone_API_37.0`, 2026-11-02):** 74 product unit tests (plus 2 spike tests in `AssistantBaselineTest`) and 60 device tests pass (`0` failures).
+- **Stage 2 (Owner phone `moto g72`, Android 13, separate debug app `app.apartment.mobile.debug`, 2026-11-02):** 60 device tests pass (2 skipped by design, `0` failures). Signed release `0.1.0` installed and verified on the phone for screen-off and forced-Doze reminders (`TC-016`), reboot + first-unlock rebuild and force stop + reopen rebuild (`TC-019`, `TC-027`), permission flow (`TC-020`), WhatsApp + dialer (`TC-021`), real file picker import (`TC-023`), airplane mode (`TC-025`), APK install (`TC-028`), and largest 2.0x font size (`TC-030`).
+- **Remaining gaps:** 3 `Planned` cases (`TC-007`, `TC-033`, `TC-034`), 9 `Partly passed` cases (`TC-003`, `TC-004`, `TC-008`, `TC-014`, `TC-017`, `TC-020`, `TC-026`, `TC-029`, and `TC-035` pending phone test with the post-`CHG-003` release APK), plus long natural idle on battery without USB (`RSK-003`).

@@ -1,16 +1,16 @@
 ---
 id: DOC-ARC
 title: Architecture
-status: Approved
-version: 0.1
-date: 2026-11-01
-approved_by: Brandon
-refs: [DOC-VIS, DOC-FR, DOC-NFR, DOC-DAT, DOC-CMP, DOC-INT, DOC-SEC, DOC-RSK, ADR-0001, ADR-0002, ADR-0003, ADR-0004]
+status: In review
+version: 0.2
+date: 2026-11-19
+approved_by:
+refs: [DOC-VIS, DOC-FR, DOC-NFR, DOC-DAT, DOC-CMP, DOC-INT, DOC-SEC, DOC-RSK, ADR-0001, ADR-0002, ADR-0003, ADR-0004, ADR-0005]
 ---
 
 # Architecture
 
-> **Status:** Approved by the Owner in commit `a1bc3ba` (2026-11-02); drafted by the agent. It summarizes and points to other documents; the reasons for each decision live in the ADRs, which are approved. Use cases are in [use-cases](../02-requirements/use-cases/use-cases.md).
+> **Status:** Previously approved by the Owner in commit `a1bc3ba` (2026-11-02; updated in `CHG-002` and `ADR-0005`, approved in `f9fcf3f`); returned to `In review` for editorial sync `CHG-004` (no architectural decision changed). It summarizes and points to other documents; the reasons for each decision live in the ADRs, which are approved. Use cases are in [use-cases](../02-requirements/use-cases/use-cases.md).
 
 ## 1. Introduction and goals
 A personal Android app for one landlord to track monthly rent collections and be reminded locally. Objectives OBJ-001 to OBJ-005 are in [vision-scope](../01-context/vision-scope.md). Terms: [glossary](../01-context/glossary.md).
@@ -43,13 +43,13 @@ Collections and reminders are computed from rentals and settings, not stored (FR
 ## 5. Building block view (VW-002)
 Nine components, CMP-001 to CMP-009, defined in [components](../04-design/components.md): screens, data store, collection calculator, reminder scheduler, reminder receiver and notifier, system event receiver, backup service, external actions, permissions helper. Data entities ENT-001 to ENT-004 in [data-model](../04-design/data-model.md).
 
-**Where each component lives in the code** (status 2026-11-02; package `app.apartment.mobile`):
+**Where each component lives in the code** (status 2026-11-19; package `app.apartment.mobile`):
 
 | Component | Code | State |
 |-----------|------|-------|
-| CMP-001 Screens | `ui/` (`AppRoot`, `WeekScreen`, `CalendarScreen`, `RentalsScreen`, `RentalFormScreen`, `RentalDetailScreen`, `PeopleScreen`, `SettingsScreen`) | Built, except backup screens |
+| CMP-001 Screens | `ui/` (`AppRoot`, `WeekScreen`, `CalendarScreen`, `RentalsScreen`, `RentalFormScreen`, `RentalDetailScreen`, `PeopleScreen`, `SettingsScreen`, `BackupDialogs`) | Built |
 | CMP-002 Data store | `data/` (`AppDatabase`, entities, DAOs, `Repository`) | Built |
-| CMP-003 Collection calculator | `domain/CollectionCalculator.kt`, `CalendarNavigation.kt`, `RentalRules.kt`, `Format.kt` | Built |
+| CMP-003 Collection calculator | `domain/CollectionCalculator.kt`, `CalendarNavigation.kt`, `RentalRules.kt`, `Format.kt`, `HomeReset.kt` | Built |
 | CMP-004 Reminder scheduler | `domain/ReminderPlanner.kt`, `reminders/ReminderScheduler.kt` | Built |
 | CMP-005 Reminder receiver and notifier | `reminders/Notifier.kt`, `reminders/Receivers.kt` (`AlarmReceiver`) | Built |
 | CMP-006 System event receiver | `reminders/Receivers.kt` (`SystemEventReceiver`) | Built |
@@ -75,7 +75,7 @@ One APK installed directly on the Owner phone (moto g72, Android 13). No servers
 - **Backup of the platform:** Android automatic backup and device transfer disabled (OI-042).
 
 ## 9. Decisions
-ADR-0001 to ADR-0004 in [adr](adr/). Not repeated here.
+ADR-0001 to ADR-0005 in [adr](adr/). Not repeated here.
 
 ## 10. Quality requirements
 NFR-001 to NFR-010; verification cases in the [test plan](../06-quality/test-plan.md).

@@ -3,6 +3,9 @@
 Format: one entry per approved change, citing IDs.
 
 ## [Unreleased]
+### Changed
+- Documentation cleanup and synchronization (2026-11-19, `CHG-004` proposed): completed the 39-row traceability matrix in `DOC-TRC` 0.2; populated backward `Refs` across `FR-001` to `FR-029` (`DOC-FR` 0.2) and `NFR-001` to `NFR-010` (`DOC-NFR` 0.2) plus `CMP-006` (`DOC-CMP` 0.2); closed resolved debt/risk items `RSK-011`, `RSK-013` and `RSK-014` (`DOC-RSK` 0.2); updated `DOC-PEN` 0.5 (`OI-039`, `OI-048`), `DOC-TFA-001` 0.2 (measured `Qwen3-0.6B` verdict), `DOC-VIS` 0.2, `DOC-ARC` 0.2, `DOC-INT` 0.2, `DOC-TST` 0.2, `DOC-IDX` 0.2 and `roadmap.html`. Edited formerly-Approved documents were returned to `In review` per `DOC-GOV`.
+
 ### Added
 - ADR-0005 (Jetpack Compose and Material 3) drafted as Proposed; Owner chose it 2026-11-02. Milestone H0 built: Gradle project in `app/`, Compose placeholder activity, Room dependencies, no permissions, Android backup blocked, unit tests for TC-026 pass. OI-045 logs the technical values chosen by the agent. DOC-DEV 0.1 drafted.
 - Owner confirmed eliminar = terminar and borrar = permanent removal from the local database (stronger confirmation proposed).
@@ -56,7 +59,7 @@ Format: one entry per approved change, citing IDs.
 - Initial documentation skeleton (phase 1): folders, empty templates, governance, traceability rules, agent instructions.
 
 ## Change records (CHG)
-Changes to approved elements, as `governance.md` requires: reason, impact, approval. Approved by the Owner commit "approve: CHG-001, CHG-002, CHG-003, ADR-0005".
+Changes to approved elements, as `governance.md` requires: reason, impact, approval. `CHG-001` to `CHG-003` were approved by the Owner commit `"approve: CHG-001, CHG-002, CHG-003, ADR-0005"` (`f9fcf3f`); `CHG-004` is proposed and awaiting Owner approval.
 
 ### CHG-001 — Rental start date
 - **Status:** Approved (Owner commit "approve: CHG-001, CHG-002, CHG-003, ADR-0005").
@@ -75,3 +78,9 @@ Changes to approved elements, as `governance.md` requires: reason, impact, appro
 - **Reason:** on the Owner phone the app returned to the Semana tab after every short trip it started itself (file picker, permission screens), taking the landlord out of what they were doing.
 - **Changes:** FR-016 description and AC-FR-016-1 reworded, AC-FR-016-3 added; UC-004 note; TC-035 added.
 - **Impact:** CMP-001 (view model keeps the time the app left the screen); no data or alarm change.
+
+### CHG-004 — Post-H6 documentation cleanup and synchronization
+- **Status:** Proposed (2026-11-19; awaiting Owner commit `approve: CHG-004`). No requirement or ADR changes meaning.
+- **Reason:** resolve stale banners, missing traceability references, outdated test/risk/roadmap counts, and post-`f9fcf3f` status drift across documentation.
+- **Changes:** `DOC-VIS` 0.2, `DOC-FR` 0.2 (`Refs` on `FR-001`..`FR-029`, `OI-041` note), `DOC-NFR` 0.2 (`Refs` on `NFR-001`..`NFR-010`), `DOC-ARC` 0.2 (`ADR-0005` refs, `CMP-001`/`CMP-003` code map), `DOC-CMP` 0.2 (`CMP-001` `CHG-003` alignment, `CMP-006` traces, `OI-046` window), `DOC-INT` 0.2 (`INT-004` verified `wa.me`, `SEC-007`), `DOC-TST` 0.2 (header and Results sync), `DOC-RSK` 0.2 (`RSK-011`/`RSK-013`/`RSK-014` closed, `RSK-017` wording); plus Draft docs `DOC-IDX` 0.2, `DOC-TRC` 0.2 (39-row traceability matrix), `DOC-PEN` 0.5 (`OI-039`, `OI-048`), `DOC-TFA-001` 0.2 (measured verdict), and `roadmap.html`.
+- **Impact:** none on code; edited formerly-Approved documents returned to `In review` per `DOC-GOV` until re-approved by the Owner.

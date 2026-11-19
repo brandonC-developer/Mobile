@@ -1,16 +1,16 @@
 ---
 id: DOC-FR
 title: Functional Requirements
-status: Approved
-version: 0.1
-date: 2026-11-01
-approved_by: Brandon
+status: In review
+version: 0.2
+date: 2026-11-19
+approved_by:
 refs: [DOC-VIS, DOC-PEN]
 ---
 
 # Functional Requirements
 
-> **Status:** Approved by the Owner in commit `a1bc3ba` (2026-11-02); drafted by the agent. Each one comes from an Owner decision recorded in the [pending register](../09-management/pending-register.md); the OI is cited in **Origin**. Priorities use MoSCoW (OI-008) and are proposals.
+> **Status:** Previously approved by the Owner in commit `a1bc3ba` (2026-11-02; `CHG-001`, `CHG-002`, and `CHG-003` approved in `f9fcf3f`); returned to `In review` for editorial sync `CHG-004` (traceability `Refs` populated and `OI-041` note updated; no requirement meaning changed). Each one comes from an Owner decision recorded in the [pending register](../09-management/pending-register.md); the OI is cited in **Origin**. Priorities use MoSCoW (OI-008) and are proposals.
 
 Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vision-scope](../01-context/vision-scope.md).
 
@@ -24,7 +24,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
   - AC-FR-001-1: A property with a name and no description can be saved.
   - AC-FR-001-2: A property without a name cannot be saved.
 - **Priority:** Must
-- **Refs:** none yet
+- **Refs:** UC-001 · CMP-001 · CMP-002 · ENT-001 · ADR-0002 · TC-001
 
 ### FR-002 — Edit a property
 - **Status:** Approved
@@ -33,7 +33,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
 - **Acceptance criteria:**
   - AC-FR-002-1: After editing, the new name appears wherever the property is shown, including rentals and the weekly summary.
 - **Priority:** Must
-- **Refs:** none yet
+- **Refs:** UC-001 · CMP-001 · CMP-002 · ENT-001 · ADR-0002 · TC-033
 
 ### FR-003 — Properties are never deleted
 - **Status:** Approved
@@ -43,7 +43,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
   - AC-FR-003-1: No screen or action deletes a property, whether it is free or occupied.
   - AC-FR-003-2: Deleting a tenant or a rental leaves the property in place.
 - **Priority:** Must
-- **Refs:** none yet
+- **Refs:** UC-001 · CMP-001 · CMP-002 · ENT-001 · ADR-0002 · TC-002
 
 ## Tenants
 
@@ -55,7 +55,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
   - AC-FR-004-1: A tenant with a full name and no phone can be saved.
   - AC-FR-004-2: A tenant without a full name cannot be saved.
 - **Priority:** Must
-- **Refs:** none yet
+- **Refs:** UC-002 · CMP-001 · CMP-002 · ENT-002 · ADR-0002 · TC-003 · TC-032
 
 ### FR-005 — Edit a tenant
 - **Status:** Approved
@@ -64,7 +64,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
 - **Acceptance criteria:**
   - AC-FR-005-1: A tenant with an active rental can be edited and the new data appears everywhere the tenant is shown.
 - **Priority:** Must
-- **Refs:** none yet
+- **Refs:** UC-002 · CMP-001 · CMP-002 · ENT-002 · ADR-0002 · TC-003
 
 ### FR-006 — Delete a tenant
 - **Status:** Approved
@@ -76,7 +76,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
   - AC-FR-006-3: After confirming, the tenant, their rentals and their pending reminders no longer exist.
   - AC-FR-006-4: The properties of the deleted rentals still exist and are free.
 - **Priority:** Must
-- **Refs:** none yet
+- **Refs:** UC-011 · CMP-001 · CMP-002 · CMP-004 · ENT-002 · ENT-003 · ADR-0002 · ADR-0004 · TC-004
 
 ## Rentals
 
@@ -89,7 +89,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
   - AC-FR-007-2: An amount that is zero, negative or not a whole number is rejected.
   - AC-FR-007-3: An end date earlier than today is rejected.
 - **Priority:** Must
-- **Refs:** none yet
+- **Refs:** UC-003 · CMP-001 · CMP-002 · ENT-003 · ADR-0002 · TC-005 · TC-032
 
 ### FR-008 — One active rental per property and per tenant
 - **Status:** Approved
@@ -100,7 +100,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
   - AC-FR-008-2: Creating a rental for a tenant with an active rental is rejected with a message.
   - AC-FR-008-3: After a rental ends, its tenant and its property can each be used in a new rental.
 - **Priority:** Must
-- **Refs:** none yet
+- **Refs:** UC-003 · CMP-001 · CMP-002 · ENT-003 · ADR-0002 · TC-006
 
 ### FR-009 — Fixed tenant and property
 - **Status:** Approved
@@ -109,7 +109,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
 - **Acceptance criteria:**
   - AC-FR-009-1: The rental edit screen offers no way to change the tenant or the property.
 - **Priority:** Should
-- **Refs:** none yet
+- **Refs:** UC-008 · CMP-001 · ENT-003 · TC-007
 
 ### FR-010 — Edit a rental
 - **Status:** Approved
@@ -119,7 +119,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
   - AC-FR-010-1: After changing the payment day, the calendar and the weekly summary show the new dates for future collections.
   - AC-FR-010-2: After the change, no reminder is scheduled for the old dates.
 - **Priority:** Must
-- **Refs:** none yet
+- **Refs:** UC-008 · CMP-001 · CMP-002 · CMP-004 · ENT-003 · ADR-0003 · TC-008
 
 ### FR-011 — End a rental
 - **Status:** Approved
@@ -130,7 +130,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
   - AC-FR-011-2: A rental with no end date keeps generating collections until ended.
   - AC-FR-011-3: The property of an ended rental is shown as free.
 - **Priority:** Must
-- **Refs:** none yet
+- **Refs:** UC-009 · CMP-001 · CMP-002 · CMP-003 · CMP-004 · ENT-003 · ADR-0003 · TC-009
 
 ### FR-012 — Delete a rental
 - **Status:** Approved
@@ -141,7 +141,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
   - AC-FR-012-2: After confirming, the rental and its pending reminders no longer exist.
   - AC-FR-012-3: The tenant and the property still exist.
 - **Priority:** Must
-- **Refs:** none yet
+- **Refs:** UC-010 · CMP-001 · CMP-002 · CMP-004 · ENT-003 · ADR-0002 · ADR-0003 · TC-010
 
 ### FR-013 — Collection date of each month
 - **Status:** Approved
@@ -152,7 +152,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
   - AC-FR-013-2: With payment day 15, every collection falls on the 15th.
   - AC-FR-013-3 (CHG-001): A rental created on the 5th with payment day 3 shows no collection on the 3rd of that month, not even in the weekly summary of the previous week; its first collection is on the 3rd of the next month. A rental created on its payment day shows that day's collection.
 - **Priority:** Must
-- **Refs:** none yet
+- **Refs:** UC-003 · CMP-001 · CMP-003 · CMP-004 · ENT-003 · ADR-0003 · ADR-0004 · CHG-001 · TC-011 · TC-031
 
 ## Calendar and weekly summary
 
@@ -165,7 +165,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
   - AC-FR-014-2: Dates before today show no collections.
   - AC-FR-014-3: The calendar does not show statuses such as paid or overdue.
 - **Priority:** Must
-- **Refs:** none yet
+- **Refs:** UC-005 · CMP-001 · CMP-003 · ENT-003 · TC-012
 
 ### FR-015 — Weekly summary
 - **Status:** Approved
@@ -176,7 +176,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
   - AC-FR-015-2: A collection due on the 31st with the week crossing into the next month appears in that week.
   - AC-FR-015-3: A week with no collections shows an empty state.
 - **Priority:** Must
-- **Refs:** none yet
+- **Refs:** UC-004 · CMP-001 · CMP-003 · ENT-003 · TC-013
 
 ### FR-016 — Weekly summary navigation
 - **Status:** Approved
@@ -187,7 +187,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
   - AC-FR-016-2: The landlord can move one week back and one week forward from the current week, and no further.
   - AC-FR-016-3 (CHG-003): Coming back to the app within 5 minutes, for example after the file picker or a permission screen, keeps the tab and the week that were open.
 - **Priority:** Must
-- **Refs:** none yet
+- **Refs:** UC-004 · CMP-001 · CMP-003 · CHG-003 · TC-014 · TC-035
 
 ### FR-017 — Week total
 - **Status:** Approved
@@ -196,7 +196,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
 - **Acceptance criteria:**
   - AC-FR-017-1: The total equals the sum of the amounts listed for that week.
 - **Priority:** Should
-- **Refs:** none yet
+- **Refs:** UC-004 · CMP-001 · CMP-003 · TC-013
 
 ## Reminders
 
@@ -208,7 +208,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
   - AC-FR-018-1: Only the selected offsets produce a reminder.
   - AC-FR-018-2: Turning an offset off removes its pending reminders.
 - **Priority:** Must
-- **Refs:** none yet
+- **Refs:** UC-006 · UC-012 · CMP-001 · CMP-004 · ENT-004 · ADR-0003 · TC-015
 
 ### FR-019 — Reminder time
 - **Status:** Approved
@@ -217,7 +217,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
 - **Acceptance criteria:**
   - AC-FR-019-1: After changing the time, pending reminders are rescheduled to the new time.
 - **Priority:** Must
-- **Refs:** none yet
+- **Refs:** UC-012 · CMP-001 · CMP-004 · ENT-004 · ADR-0003 · TC-016
 
 ### FR-020 — Reminder content
 - **Status:** Approved
@@ -226,7 +226,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
 - **Acceptance criteria:**
   - AC-FR-020-1: A reminder shows property, tenant, amount and due date.
 - **Priority:** Should
-- **Refs:** none yet
+- **Refs:** UC-006 · CMP-001 · CMP-005 · INT-003 · SEC-006 · TC-017
 
 ### FR-021 — Rolling schedule of reminders
 - **Status:** Approved
@@ -236,7 +236,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
   - AC-FR-021-1: After opening the app, the nearest reminders up to the limit are scheduled.
   - AC-FR-021-2: After editing, ending or deleting a rental, no reminder remains for dates that no longer apply.
 - **Priority:** Must
-- **Refs:** none yet
+- **Refs:** UC-006 · UC-015 · CMP-002 · CMP-004 · CMP-006 · INT-002 · INT-008 · ADR-0001 · ADR-0003 · TC-018
 
 ### FR-022 — Renewal reminder
 - **Status:** Approved
@@ -245,7 +245,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
 - **Acceptance criteria:**
   - AC-FR-022-1: When the window does not cover all future collections, a renewal reminder exists after the last scheduled reminder.
 - **Priority:** Should
-- **Refs:** none yet
+- **Refs:** UC-006 · UC-015 · CMP-004 · CMP-005 · ADR-0003 · TC-018
 
 ### FR-023 — Notification permissions
 - **Status:** Approved
@@ -255,7 +255,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
   - AC-FR-023-1: Creating the first rental shows the explanation and then the permission requests.
   - AC-FR-023-2: The requests are not shown again once granted.
 - **Priority:** Must
-- **Refs:** none yet
+- **Refs:** UC-003 · CMP-009 · INT-003 · ADR-0001 · ADR-0003 · TC-020
 
 ### FR-024 — Warning when permissions are denied
 - **Status:** Approved
@@ -265,7 +265,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
   - AC-FR-024-1: With either permission denied, the warning is visible and all other functions work.
   - AC-FR-024-2: With both granted, no warning is shown.
 - **Priority:** Must
-- **Refs:** none yet
+- **Refs:** UC-003 · CMP-001 · CMP-009 · ADR-0003 · TC-020
 
 ## Contact
 
@@ -277,7 +277,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
   - AC-FR-025-1: With a phone, the action opens the external WhatsApp app on that number.
   - AC-FR-025-2: Without a phone, the action is disabled or hidden.
 - **Priority:** Should
-- **Refs:** none yet
+- **Refs:** UC-007 · CMP-001 · CMP-008 · INT-004 · TC-021
 
 ### FR-026 — Call the tenant
 - **Status:** Approved
@@ -287,7 +287,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
   - AC-FR-026-1: With a phone, the action opens the dialer with that number.
   - AC-FR-026-2: Without a phone, the action is disabled or hidden.
 - **Priority:** Should
-- **Refs:** none yet
+- **Refs:** UC-007 · CMP-001 · CMP-008 · INT-005 · TC-021
 
 ## Backup
 
@@ -299,7 +299,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
   - AC-FR-027-1: The warning is shown before the share menu.
   - AC-FR-027-2: The file contains a schema version and all stored data.
 - **Priority:** Must
-- **Refs:** none yet
+- **Refs:** UC-013 · CMP-001 · CMP-007 · INT-006 · ADR-0002 · ADR-0004 · SEC-002 · TC-022
 
 ### FR-028 — Import a backup
 - **Status:** Approved
@@ -310,7 +310,7 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
   - AC-FR-028-2: After confirming, the data equals the content of the file and reminders match it.
   - AC-FR-028-3: Exporting and then importing on a clean install yields the same data.
 - **Priority:** Must
-- **Refs:** none yet
+- **Refs:** UC-014 · CMP-001 · CMP-007 · INT-007 · ADR-0002 · ADR-0004 · TC-023
 
 ### FR-029 — Reject an invalid backup
 - **Status:** Approved
@@ -320,9 +320,9 @@ Terms are defined in the [glossary](../01-context/glossary.md). Objectives: [vis
   - AC-FR-029-1: A file with a newer schema version is rejected and the data is unchanged.
   - AC-FR-029-2: A file that is not valid JSON, or lacks required fields, is rejected and the data is unchanged.
 - **Priority:** Must
-- **Refs:** none yet
+- **Refs:** UC-014 · CMP-001 · CMP-007 · ADR-0002 · ADR-0004 · SEC-004 · TC-024
 
 ## Not yet covered
-- **Home screen content (OI-041):** CTX-001 §5.5 mentioned the next payment, its amount and the days left. The Owner has not decided whether the home screen shows more than the weekly summary.
+- **Home screen content (OI-041):** resolved by the Owner on 2026-11-01; the home screen shows only the weekly summary and its total (FR-015, FR-017).
 - **Use cases (UC):** written in [use-cases](use-cases/use-cases.md) (UC-001 to UC-015); they add no requirement.
 - **Withdrawn from the source:** obligation statuses, paid marking, overdue (OI-011, OI-012, OI-024); obligations other than rent (OI-022).

@@ -2,8 +2,8 @@
 id: DOC-TFA-001
 title: Technology fit assessment, local assistant with a very small language model
 status: Draft
-version: 0.1
-date: 2026-11-02
+version: 0.2
+date: 2026-11-19
 approved_by:
 refs: [NFR-001, NFR-002, NFR-005, NFR-006, NFR-007, ADR-0001, ADR-0003, ADR-0005, OI-049, RSK-007, SEC-007]
 ---
@@ -19,7 +19,10 @@ The Owner asked whether a very small language model can run on the phone, offlin
 - UC-C (remove): "end or delete the rental of Luis". The Owner's words "cuál quita" are ambiguous and need a clarification.
 
 ## 2. Verdict
-**Unknown, measure first.** It is technically possible and costs nothing in licences, and nothing found conflicts with a hard rule if the model file is loaded by the landlord instead of downloaded. The three facts that decide it are unmeasured: Spanish accuracy of the 270M to 600M models, speed and memory on the Helio G99, and the size added to the app.
+**Measured outcome (2026-11-02): option B1 (`Qwen3-0.6B` via LiteRT-LM) fails on the moto g72; option A (Spanish rule-based parser) is the recommended path.**
+- **Option B1 (`Qwen3-0.6B`, 343 MB int4, LiteRT-LM 0.19.0):** fails all target thresholds on the moto g72 — median **15.4 s/answer** (CPU 38–57 s), **1.2–2.2 GB RAM (PSS)**, **33.8% intent accuracy** on the 77-phrase test split (**3/10** on Owner phrases), **21 wrong writes**, and requires upgrading Kotlin (`1.9.24` fails without `-Xskip-metadata-version-check`) plus ≥22.7 MB of native libraries (`DOC-TST-AST-R2`).
+- **Option A (rule-based Spanish parser):** compatible with zero runtime/memory overhead; reached **6/10 exact** untuned on real Owner phrases after reading tenant/property rosters from data (`97.4%` optimistic on the authored test split; `DOC-TST-AST-R1`).
+- **Option B2 (`FunctionGemma 270M` fine-tuned):** unmeasured (requires accepting Gemma terms and Spanish fine-tuning). Decision on closing the model path remains open with the Owner (`OI-049`).
 
 ## 3. Fit against the project
 | Rule (id) | Result | Evidence |
@@ -103,8 +106,8 @@ Owner phone: Motorola moto g72, MediaTek Helio G99 with 2 Cortex-A76 and 6 Corte
 | Test | Measures | Device | Pass criterion (proposal) | Status |
 |------|----------|--------|---------------------------|--------|
 | Device probe `device_probe.sh` | Chipset, cores, RAM, free storage | moto g72 | Free RAM above the model plus 1 GB | Done 2026-11-02: 5.86 GB RAM total, about 2.2 GB available at rest, 5.7 GB storage free (95% used), 8 cores, Android 13 (measured). A 639 MB model fits but with little margin |
-| Spanish phrase set | Intent and slot accuracy | none (offline set) | At least 90% intents and 85% slots for the chosen option | Pending: needs the Owner's 6 to 10 real phrases to build 60 to 100 |
-| Option A baseline | Accuracy and cost of rules | JVM | Reaches the same targets without a model, or shows its limits | Done 2026-11-02 on the agent-written set: 97.4% intent, 98.4% slot F1, 1 harmful error; optimistic because the same author wrote phrases and rules; see DOC-TST-AST-R1. Needs the Owner phrases for a fair test |
+| Spanish phrase set | Intent and slot accuracy | none (offline set) | At least 90% intents and 85% slots for the chosen option | Done 2026-11-02: 90 authored Spanish phrases (13 dev / 77 test, DOC-TST-AST) plus 10 real Owner phrases (`assistant-owner-phrases.psv`) and data roster (`assistant-test-roster.psv`) |
+| Option A baseline | Accuracy and cost of rules | JVM | Reaches the same targets without a model, or shows its limits | Done 2026-11-02 on the agent-written set: 97.4% intent, 98.4% slot F1, 1 harmful error (optimistic because the same author wrote phrases and rules); Owner phrases (10): 6/10 exact after roster-from-data fix and verb policy (DOC-TST-AST-R1) |
 | Models B1 and B2 on phone | Tokens per second, peak RAM, time to answer, battery per 20 requests | moto g72 | Answer in under 3 s on the phone; no out-of-memory; battery under 1% per 20 requests (all proposals) | Partly done 2026-11-02 for B1 (Qwen3-0.6B, 343 MB, LiteRT-LM): 11 to 13 s on GPU, 38 to 57 s on CPU per answer, 1.2 to 2.2 GB memory; accuracy measured on 100 phrases: 33.8% intent on the test split, 21 wrong writes, median 15 s per answer; fails the targets; see DOC-TST-AST-R2 |
 | Size added | Release file and storage | build machine | Under 60 MB without the model; model loaded by file | Pending |
 | Regression | Existing 74 unit and 60 device tests, TC-026 manifest (no Internet) | emulator and phone | All pass | Pending |
@@ -112,8 +115,9 @@ Throwaway spike code needs the Owner's authorization and is deleted afterwards u
 
 ## 11. Verified, unverified, sources
 **Verified (documented):** FunctionGemma is a 270M function-calling model, not a chat model, 32K context, tagged call format, accuracy 58% to 85% after fine-tuning on Mobile Actions ([card](https://huggingface.co/google/functiongemma-270m-it), [docs](https://ai.google.dev/gemma/docs/functiongemma)); LiteRT-LM supports Android with a stable Kotlin API and lists FunctionGemma, Gemma3-1B, Qwen2.5 0.5B and 1.5B, Qwen3-0.6B ([overview](https://developers.google.com/edge/litert-lm/overview)); Gemma 3 270M and 1B have 32K context and the family claims 140+ languages ([model card](https://ai.google.dev/gemma/docs/core/model_card_3)); Gemini Nano access goes through AICore and ML Kit ([Android](https://developer.android.com/ai/gemini-nano), [ML Kit](https://developers.google.com/ml-kit/genai)); llama.cpp Android build notes ([guide](https://github.com/ggml-org/llama.cpp/blob/master/docs/android.md)); SmolChat is Apache-2.0 and embeds llama.cpp through JNI ([repository](https://github.com/shubham0204/SmolChat-Android)); licences and prices as in section 4.
-**Not verified:** Spanish accuracy of every candidate; speed, memory and battery on the moto g72; added app size of the runtime; RAM of this phone variant; compatibility of the LiteRT-LM Kotlin library with minSdk 33, Kotlin 1.9.24 and AGP 8.5.2 (the guide states no minimums); sizes of the FunctionGemma and Gemma files; the battery figure for Gemma 3 270M; whether the Helio G99 neural unit is usable.
+**Verified (measured on the moto g72 and JVM, 2026-11-02):** phone specs via `device_probe.sh` (5.86 GB RAM total, ~2.2 GB available at rest, 5.7 GB storage free / 95% used, Helio G99 8 cores, Android 13); LiteRT-LM 0.19.0 incompatible with Kotlin 1.9.24 without `-Xskip-metadata-version-check` and adds 22.7 MB `arm64-v8a` native library; `Qwen3-0.6B` (343 MB `.litertlm`) speed (median 15.4 s GPU, 38–57 s CPU), RAM (1.2–2.2 GB PSS), and 100-phrase Spanish accuracy (33.8% test intent, 3/10 Owner phrases, 21 wrong writes, `DOC-TST-AST-R2`); rule-based baseline accuracy (`DOC-TST-AST-R1`).
+**Not verified:** `FunctionGemma 270M` and `Gemma 3 270M` file sizes and Spanish accuracy; battery per 20 requests; whether the Helio G99 neural unit is usable.
 
 ## 12. Recommendation and decisions needed
-Practical note from the 2026-11-02 checks: LiteRT-LM is the cheaper first try for a spike because it needs no NDK, while llama.cpp needs the NDK and CMake installed first. Recommendation (not an approval): do not start with a model. Build or prototype the rule-based baseline for the few requests that matter, and measure the two small models on the phone with a Spanish phrase set; decide with an ADR after the numbers. Keep the model away from the data and behind the existing confirmations.
-Decisions needed from the Owner: (1) which 6 to 10 requests the assistant must understand, including what "cuál quita" means; (2) whether voice input is wanted; (3) authorization for a throwaway spike on the phone; (4) reconnecting the phone so the probe and the speed tests can run.
+Measured spikes (`DOC-TST-AST-R1`, `DOC-TST-AST-R2`) show `Qwen3-0.6B` is unusable interactively on the moto g72. Recommendation (not an approval): **close the on-device model path** and build the **rule-based Spanish assistant (option A)** behind the existing confirmations, reading tenant/property rosters from Room with 1-request correction memory (`DOC-TFA-001A`).
+Decisions needed from the Owner (`OI-049`, `OI-050`): (1) close the model path and adopt option A, or measure `FunctionGemma 270M` (requires accepting Gemma terms and Spanish fine-tuning); (2) keep or delete throwaway branch `spike/local-model`; (3) decide `OI-050` (paid mark) as a separate requirement and CHG before any assistant relies on it.
